@@ -80,6 +80,18 @@ switch (inputMenu)
         break;
 
     case 4:
+        ContaBancaria BuscarConta(ContaBancaria[] contasBancarias, int numero)
+        {
+            for (int i = 0; i < contasBancarias.Length; i++)
+            {
+                if (contasBancarias[i] != null && contasBancarias[i].NumeroConta == numero)
+                {
+                    return contasBancarias[i];
+                }
+            }
+            return null;
+        }
+
         int opcaoMenuBanco;
         int qtdMaxContas = 5;
         ContaBancaria[] contasBancarias = new ContaBancaria[qtdMaxContas];
@@ -122,25 +134,24 @@ switch (inputMenu)
                     break;
 
                 case 2:
-                    ContaBancaria contaEncontrada = null;
-                    
                     Console.WriteLine("Número da conta para depositar: ");
                     int contaParaDeposito = int.Parse(Console.ReadLine());
+
+                    ContaBancaria contaEncontrada = BuscarConta(contasBancarias, contaParaDeposito);
+
                     Console.WriteLine("Valor para depositar: ");
                     decimal valorParaDeposito = decimal.Parse(Console.ReadLine());
 
-                    for (int i = 0; i < contasBancarias.Length; i++)
+                    if (contaEncontrada != null)
                     {
-                        if (contasBancarias[i] != null && contasBancarias[i].NumeroConta == contaParaDeposito)
-                        {
-                            contaEncontrada = contasBancarias[i];
-                            break;
-                        }
+                        contaEncontrada.Depositar(valorParaDeposito, contaEncontrada.NumeroConta);
                     }
-
-                    contaEncontrada.Depositar(valorParaDeposito, contaEncontrada.NumeroConta);
-
+                    else
+                    {
+                        Console.WriteLine("Conta não encontrada.");
+                    }
                     break;
+
                 case 3:
                     contaEncontrada = null;
 
@@ -158,9 +169,16 @@ switch (inputMenu)
                         }
                     }
 
-                    contaEncontrada.Sacar(valorParaSaque, contaEncontrada.NumeroConta);
-
+                    if (contaEncontrada != null)
+                    {
+                        contaEncontrada.Sacar(valorParaSaque, contaEncontrada.NumeroConta);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Conta não encontrada.");
+                    }
                     break;
+
                 case 4:
                     contaEncontrada = null;
 
@@ -176,8 +194,14 @@ switch (inputMenu)
                         }
                     }
 
-                    contaEncontrada.ExibirSaldo(contaEncontrada.NumeroConta);
-
+                    if (contaEncontrada != null)
+                    {
+                        contaEncontrada.ExibirSaldo(contaEncontrada.NumeroConta);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Conta não encontrada.");
+                    }
                     break;
             }
 
