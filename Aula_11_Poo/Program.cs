@@ -1,5 +1,4 @@
 ﻿using Aula_11_Poo;
-using System.Threading.Channels;
 int inputMenu;
 
 Console.WriteLine("Exercícios POO - Aula 11");
@@ -65,8 +64,8 @@ switch (inputMenu)
                         Console.WriteLine("Não há espaço para mais cadastros.");
                         break;
                     }
-
                     break;
+
                 case 2:
 
                     for (int i = 0; i < pessoas.Length; i++)
