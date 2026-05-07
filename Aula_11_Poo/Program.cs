@@ -1,5 +1,4 @@
 ﻿using Aula_11_Poo;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 int inputMenu;
 
 Console.WriteLine("Exercícios POO - Aula 11");
@@ -8,7 +7,6 @@ Console.WriteLine("2. Pessoa");
 Console.WriteLine("3. Produto");
 Console.WriteLine("4. ContaBancaria");
 Console.WriteLine("5. Aluno");
-
 Console.Write("Digite a opção para acessar: ");
 inputMenu = int.Parse(Console.ReadLine());
 
@@ -153,21 +151,13 @@ switch (inputMenu)
                     break;
 
                 case 3:
-                    contaEncontrada = null;
-
                     Console.WriteLine("Número da conta para sacar: ");
                     int contaParaSaque = int.Parse(Console.ReadLine());
+
+                    contaEncontrada = BuscarConta(contasBancarias, contaParaSaque);
+
                     Console.WriteLine("Valor para sacar: ");
                     decimal valorParaSaque = decimal.Parse(Console.ReadLine());
-
-                    for (int i = 0; i < contasBancarias.Length; i++)
-                    {
-                        if (contasBancarias[i] != null && contasBancarias[i].NumeroConta == contaParaSaque)
-                        {
-                            contaEncontrada = contasBancarias[i];
-                            break;
-                        }
-                    }
 
                     if (contaEncontrada != null)
                     {
@@ -180,19 +170,10 @@ switch (inputMenu)
                     break;
 
                 case 4:
-                    contaEncontrada = null;
-
                     Console.WriteLine("Número da conta: ");
                     int contaParaConsultar = int.Parse(Console.ReadLine());
 
-                    for (int i = 0; i < contasBancarias.Length; i++)
-                    {
-                        if (contasBancarias[i] != null && contasBancarias[i].NumeroConta == contaParaConsultar)
-                        {
-                            contaEncontrada = contasBancarias[i];
-                            break;
-                        }
-                    }
+                    contaEncontrada = BuscarConta(contasBancarias, contaParaConsultar);
 
                     if (contaEncontrada != null)
                     {
@@ -214,15 +195,6 @@ switch (inputMenu)
             opcaoMenuBanco = int.Parse(Console.ReadLine());
 
         }
-
-        //ContaBancaria conta1 = new ContaBancaria()
-        //{
-        //    Titular = "Gabriel",
-        //    Saldo = 1005.95m
-        //};
-        //conta1.ExibirSaldo();
-        //conta1.Sacar(98.14m);
-        //conta1.Depositar(33.21m);
         break;
 
     case 5:
