@@ -1,4 +1,5 @@
 ﻿using Aula_11_Poo;
+using System.Threading.Channels;
 int inputMenu;
 
 Console.WriteLine("Exercícios POO - Aula 11");
@@ -22,26 +23,93 @@ switch (inputMenu)
         break;
 
     case 2:
-        int qtdMaxPessoas = 3;
+        int qtdMaxPessoas = 5;
+        int qtdPessoasCadastradas = 0;
+        int opcaoMenuPessoa;
         Pessoa[] pessoas = new Pessoa[qtdMaxPessoas];
 
-        pessoas[0] = new Pessoa { Nome = "Gabriel 1", Idade = 30 };
-        pessoas[1] = new Pessoa { Nome = "Gabriel 2", Idade = 31 };
-        pessoas[2] = new Pessoa { Nome = "Gabriel 3", Idade = 32 };
+        Console.WriteLine("===  MÓDULO 'PESSOAS'  ===");
+        Console.WriteLine("1. Criar Conta");
+        Console.WriteLine("2. Listar Contas");
+        Console.WriteLine("3. Pesquisar Conta");
+        Console.WriteLine("4. Sair");
+        Console.WriteLine("Informe a opção: ");
+        opcaoMenuPessoa = int.Parse(Console.ReadLine());
 
-        Console.Write("Informe um nome para pesquisar: ");
-        string nomePesquisa = Console.ReadLine();
-        Pessoa pesquisar = new Pessoa();
-
-        if (pesquisar.EhCadastrado(pessoas, nomePesquisa))
+        while (opcaoMenuPessoa != 4)
         {
-            Console.WriteLine("Pessoa encontrada!");
-        }
-        else
-        {
-            Console.WriteLine("Pessoa não encontrada.");
-        }
+            switch (opcaoMenuPessoa)
+            {
+                case 1:
+                    if (qtdPessoasCadastradas < qtdMaxPessoas)
+                    {
+                        Console.Write("Informe o nome da pessoa: ");
+                        string nomePessoa = Console.ReadLine();
 
+                        Console.Write("Informe a idade: ");
+                        int idadePessoa = int.Parse(Console.ReadLine());
+
+                        for (int i = 0; i < pessoas.Length; i++)
+                        {
+                            if (pessoas[i] == null)
+                            {
+                                pessoas[i] = new Pessoa { Nome = nomePessoa, Idade = idadePessoa };
+                                qtdPessoasCadastradas++;
+                                Console.WriteLine("Pessoa cadastrada com sucesso!");
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Não há espaço para mais cadastros.");
+                        break;
+                    }
+
+                    break;
+                case 2:
+
+                    for (int i = 0; i < pessoas.Length; i++)
+                    {
+                        if (pessoas[i] != null)
+                        {
+                            Console.WriteLine($"Nome: {pessoas[i].Nome}. Idade: {pessoas[i].Idade}.");
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    break;
+                case 3:
+                    Console.Write("Informe um nome para pesquisar: ");
+                    string nomePesquisa = Console.ReadLine();
+                    Pessoa pesquisar = new Pessoa();
+
+                    if (pesquisar.EhCadastrado(pessoas, nomePesquisa))
+                    {
+                        Console.WriteLine("Pessoa encontrada!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Pessoa não encontrada.");
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+
+            Console.WriteLine("===  MÓDULO 'PESSOAS'  ===");
+            Console.WriteLine("1. Criar Conta");
+            Console.WriteLine("2. Listar Contas");
+            Console.WriteLine("3. Pesquisar Conta");
+            Console.WriteLine("4. Sair");
+            Console.WriteLine("Informe a opção: ");
+            opcaoMenuPessoa = int.Parse(Console.ReadLine());
+
+        }
         break;
 
     case 3:
