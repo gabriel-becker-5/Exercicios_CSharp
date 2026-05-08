@@ -84,8 +84,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula_07_Desafio_02_v2", "Au
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_TESTE_SQL", "_TESTE_SQL\_TESTE_SQL.csproj", "{DB793EE4-9716-40C3-90F9-44D7D45A865F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula_03", "Aula_03\Aula_03.csproj", "{1696BDDA-0C4D-493C-B68A-454D78CCC24F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -256,10 +254,6 @@ Global
 		{DB793EE4-9716-40C3-90F9-44D7D45A865F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB793EE4-9716-40C3-90F9-44D7D45A865F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB793EE4-9716-40C3-90F9-44D7D45A865F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1696BDDA-0C4D-493C-B68A-454D78CCC24F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1696BDDA-0C4D-493C-B68A-454D78CCC24F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1696BDDA-0C4D-493C-B68A-454D78CCC24F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1696BDDA-0C4D-493C-B68A-454D78CCC24F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
