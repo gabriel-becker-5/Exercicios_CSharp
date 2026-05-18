@@ -1,4 +1,9 @@
-﻿namespace Aula_11_Poo
+﻿// Exercício 02
+// Peça nome e idade ao usuário
+// Crie o objeto com os dados informados
+// Exiba a mensagem de apresentação
+
+namespace Aula_11_Poo
 {
     internal class Pessoa
     {

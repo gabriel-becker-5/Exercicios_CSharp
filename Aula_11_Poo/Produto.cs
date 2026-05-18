@@ -1,4 +1,9 @@
-﻿namespace Aula_11_Poo
+﻿// Exercício 01
+// Crie 3 produtos diferentes
+// Atribua valores para Nome e Preço
+// Exiba todos no console
+
+namespace Aula_11_Poo
 {
     internal class Produto
     {

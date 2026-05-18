@@ -1,4 +1,8 @@
-﻿namespace Aula_10_Poo
+﻿// Exercício 3 - Produto
+// Crie uma classe 'Produto' com: Nome e Preço
+// Crie 2 objetos diferentes e exiba suas informações
+
+namespace Aula_10_Poo
 {
     internal class Produto
     {

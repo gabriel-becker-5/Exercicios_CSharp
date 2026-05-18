@@ -1,4 +1,9 @@
-﻿namespace Aula_11_Poo
+﻿// Exercício 03
+// Adicione um método VerificarSituacao()
+// Se >=7 --> Aprovado. Se no Reprovado
+// Exibir resultado ao final
+
+namespace Aula_11_Poo
 {
     internal class Aluno
     {

@@ -1,4 +1,8 @@
-﻿namespace Aula_10_Poo
+﻿// Exercício 1 - Classe simples
+// Crie classe chamada Carro com: marca e modelo
+// Crie um objeto e exiba os valores no console
+
+namespace Aula_10_Poo
 {
     internal class Carro
     {

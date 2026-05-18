@@ -1,10 +1,6 @@
-﻿// DESAFIO AULA 11 POO
-// OBJETIVO: SIMULAÇÃO REAL
-// ENUNCIADO: CRIE UM SISTEMA DE ALUNOS
-// 1. CADASTRAR ALUNOS
-// 2. LISTAR ALUNOS
-// 3. MOSTRAR MÉDIA DA TURMA
-// 4. MOSTRAR QUANTOS FORAM APROVADOS
+﻿// Desafio Aula 11 POO
+// Crie um sistema de Alunos
+// Com as funções: Cadastrar aluno, listar alunos, mostrar média da turma e mostrar quantos foram aprovados
 
 namespace Desafio_Aula_11_POO
 {

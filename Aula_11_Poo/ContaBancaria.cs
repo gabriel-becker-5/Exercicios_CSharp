@@ -1,4 +1,9 @@
-﻿namespace Aula_11_Poo
+﻿// Exercício 04
+// Crie métodos: depositar(valor), sacar(valor)
+// Atualize o saldo corretamente
+// Exiba o saldo após as operações
+
+namespace Aula_11_Poo
 {
     internal class ContaBancaria
     {

@@ -22,6 +22,11 @@ switch (inputMenu)
         break;
 
     case 2:
+        // Exercício 10 - Crie um sistema de Cadastro de Pessoas
+        // Cadastre até 5 pessoas
+        // Permita listar todas
+        // Permita buscar por nome
+
         int qtdMaxPessoas = 5;
         int qtdPessoasCadastradas = 0;
         int opcaoMenuPessoa;
@@ -82,6 +87,11 @@ switch (inputMenu)
 
                     break;
                 case 3:
+                    // Exercício 06 - Utilizando Array de Pessoa
+                    // Peço um nome ao usuário
+                    // Verifique se existe
+                    // Exiba: Encontrado | Não encontrado
+
                     Console.Write("Informe um nome para pesquisar: ");
                     string nomePesquisa = Console.ReadLine();
                     Pessoa pesquisar = new Pessoa();
@@ -112,6 +122,11 @@ switch (inputMenu)
         break;
 
     case 3:
+        // Exercício 05 - Utilizando Array de Produto
+        // Crie um array de 3 produtos
+        // Preencha com dados
+        // Exiba todos os produtos
+
         int qtdMaxProdutos = 3;
         Produto[] produtos = new Produto[qtdMaxProdutos];
 
@@ -138,6 +153,9 @@ switch (inputMenu)
             Console.WriteLine($"Produto: {produtos[i].Nome} | Preço: R$ {produtos[i].Preco}");
         }
 
+        // Exercício 07 - Utilizando Array de Produto
+        // Identifique o mais caro
+        // Exiba nome e preço
         Console.WriteLine("=== Produto Mais Caro em Estoque ===");
         Produto maisCaro = new Produto();
         produtos[maisCaro.ObterPosicaoProdMaiscaro(produtos)].ExibirDadosProduto();
@@ -145,6 +163,13 @@ switch (inputMenu)
         break;
 
     case 4:
+        // Exercício 09 - Crie um menu de opções para a Classe ContaBancaria
+        // 1 - Criar conta
+        // 2 - Depositar
+        // 3 - Sacar
+        // 4 - Ver Saldo
+        // 5 - Sair
+
         ContaBancaria BuscarConta(ContaBancaria[] contasBancarias, int numero)
         {
             for (int i = 0; i < contasBancarias.Length; i++)
@@ -279,6 +304,11 @@ switch (inputMenu)
         {
             Console.WriteLine("Reprovado");
         }
+
+        // Exercício 08 - Repetição + Cadastro
+        // Cadastre 3 alunos usando FOR
+        // Armazene em um array
+        // Exiba todos ao final
 
         Aluno[] alunos = new Aluno[3];
 
