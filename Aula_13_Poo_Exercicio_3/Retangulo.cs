@@ -2,13 +2,12 @@
 {
     public class Retangulo : Forma
     {
-        public double Largura;
-        public double Altura;
-        public double Area;
+        public double Largura { get; private set; }
+        public double Altura { get; private set; }
 
-        public override void CalcularArea()
+        public override double CalcularArea()
         {
-            Console.WriteLine("Área do Retangulo: " + Largura * Altura);
+            return Largura * Altura;
         }
 
         public Retangulo(double largura, double altura)

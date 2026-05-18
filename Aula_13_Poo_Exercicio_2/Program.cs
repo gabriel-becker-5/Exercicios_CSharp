@@ -5,6 +5,5 @@
 // Crie um objeto Funcionario e exiba nome, idade e cargo
 
 using Aula_13_Poo_Exercicio_2;
-
-Funcionario novoFuncionario = new Funcionario("Gabriel", 31, "Pricing Analyst");
-Console.WriteLine($"Nome: {novoFuncionario.Nome}. Idade: {novoFuncionario.Idade}. Cargo: {novoFuncionario.Cargo}.");
+Funcionario novoFuncionario = new Funcionario("Gabriel", 31, "Analista de Preços");
+novoFuncionario.ExibirCadastro();

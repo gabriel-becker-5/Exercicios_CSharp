@@ -2,6 +2,6 @@
 {
     public abstract class Forma
     {
-        public abstract void CalcularArea();
+        public abstract double CalcularArea();
     }
 }
