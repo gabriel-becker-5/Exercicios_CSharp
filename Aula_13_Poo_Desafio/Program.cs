@@ -9,36 +9,35 @@
 
 using Aula_13_Poo_Desafio;
 
-int turnos = 15;
-Guerreiro guerreiro1 = new Guerreiro("Ragnar");
-Mago mago1 = new Mago("Gandalf");
-Arqueiro arqueiro1 = new Arqueiro("Robin");
+//int turnos = 15;
+//Guerreiro guerreiro1 = new Guerreiro("Ragnar");
+//Mago mago1 = new Mago("Gandalf");
+//Arqueiro arqueiro1 = new Arqueiro("Robin");
 
-for (int i = 0; i < turnos; i++)
-{
-    Console.WriteLine("======================================");
-    Console.WriteLine($"Turno: {i + 1}");
-    Console.WriteLine("======================================");
-    guerreiro1.ExibirInfosPersonagem();
-    Console.WriteLine(guerreiro1.Atacar());
-    Console.WriteLine("");
-    mago1.ExibirInfosPersonagem();
-    Console.WriteLine(mago1.Atacar());
-    Console.WriteLine("");
-    arqueiro1.ExibirInfosPersonagem();
-    Console.WriteLine(arqueiro1.Atacar());
-}
-
-
-//List<Personagem> personagens = new()
+//for (int i = 0; i < turnos; i++)
 //{
-//    new Guerreiro("Ragnar", 100),
-//    new Mago("Gabriel", 100),
-//    new Arqueiro("Robin", 100)
-//};
-
-//foreach (Personagem personagem in personagens)
-//{
-//    personagem.ExibirInfosPersonagem();
-//    personagem.Atacar();
+//    Console.WriteLine("======================================");
+//    Console.WriteLine($"Turno: {i + 1}");
+//    Console.WriteLine("======================================");
+//    guerreiro1.ExibirInfosPersonagem();
+//    Console.WriteLine(guerreiro1.Atacar());
+//    Console.WriteLine("");
+//    mago1.ExibirInfosPersonagem();
+//    Console.WriteLine(mago1.Atacar());
+//    Console.WriteLine("");
+//    arqueiro1.ExibirInfosPersonagem();
+//    Console.WriteLine(arqueiro1.Atacar());
 //}
+
+List<Personagem> personagens = new()
+{
+    new Guerreiro("Ragnar"),
+    new Mago("Gandalf"),
+    new Arqueiro("Robin")
+};
+
+foreach (Personagem personagem in personagens)
+{
+    personagem.ExibirInfosPersonagem();
+    personagem.Atacar();
+};
