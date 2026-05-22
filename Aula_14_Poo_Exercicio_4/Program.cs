@@ -5,3 +5,16 @@
 // Classe 'Push' exibe: Notificação Push: [mensagem]
 // Crie uma List<Notificacao> e dispare todas as notificações de uma vez
 
+using Aula_14_Poo_Exercicio_4;
+
+List<Notificacao> notificacoes =
+[
+    new Email("123"),
+    new SMS("!@#"),
+    new Push("ASD")
+];
+
+foreach (Notificacao notificacao in notificacoes)
+{
+    Console.WriteLine(notificacao.Enviar());
+};

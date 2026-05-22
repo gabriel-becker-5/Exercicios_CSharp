@@ -1,6 +1,15 @@
 ﻿namespace Aula_14_Poo_Exercicio_4
 {
-    internal class Push
+    public class Push : Notificacao
     {
+
+        public override string Enviar()
+        {
+            return $"Notificação Push: [{Mensagem}].";
+        }
+
+        public Push(string mensagem) : base(mensagem)
+        {
+        }
     }
 }
