@@ -11,7 +11,20 @@ using Aula_17_Poo_Exercicio_4;
 void CadastrarPessoa(string nome, int idade)
 {
     
-    Console.WriteLine($"");
-
-    throw new IdadeInvalidaException();
+    if (idade < 0 || idade > 150)
+    {
+        throw new IdadeInvalidaException();
+    }
+    
+    Console.WriteLine($"Nome: {nome}, Idade: {idade}");
 };
+
+try
+{
+    CadastrarPessoa("João", 25);
+    CadastrarPessoa("Maria", -3);
+}
+catch (IdadeInvalidaException ex)
+{
+    Console.WriteLine(ex.Message);
+}
