@@ -20,7 +20,7 @@ do
     tentativa++;
     if (tentativa > 1)
     {
-        Console.WriteLine("Entrada inválida!");
+        Console.WriteLine("Informe um número válido!");
     }
     Console.Write("Informe o Primeiro Número: ");
     input = Console.ReadLine();
@@ -33,7 +33,7 @@ do
     tentativa++;
     if (tentativa > 1)
     {
-        Console.WriteLine("Entrada inválida!");
+        Console.WriteLine("Informe um número válido!");
     }
     Console.Write("Informe o Segundo Número: ");
     input = Console.ReadLine();
