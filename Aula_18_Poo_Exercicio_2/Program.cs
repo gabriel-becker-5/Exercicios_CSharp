@@ -13,10 +13,8 @@ async Task<double> CalcularMediaAsync(List<int> numeros)
 
 List<int> numerosEscolhidos = [10, 6542, 43, -4654, 23115];
 
-Console.Write("Números escolhidos: ");
-foreach (int numero in numerosEscolhidos)
-    Console.Write(numero + ", ");
+Console.WriteLine($"Números escolhidos: {string.Join(", ", numerosEscolhidos)}");
 
-Console.WriteLine();
+double media = await CalcularMediaAsync(numerosEscolhidos);
 
-Console.WriteLine($"Média dos números: {await CalcularMediaAsync(numerosEscolhidos)}");
+Console.WriteLine($"Média dos números: {media}");

@@ -7,8 +7,8 @@
 
 async Task SaudarAsync(string nome)
 {
-    Console.WriteLine($"Olá, {nome}! Bem-vindo ao async/await.");
     await Task.Delay(1000);
+    Console.WriteLine($"Olá, {nome}! Bem-vindo ao async/await.");
 }
 
 await SaudarAsync("Gabriel");

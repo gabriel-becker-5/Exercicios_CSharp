@@ -10,23 +10,34 @@
 async Task<int> DividirAsync(int a, int b)
 {
     if (b == 0)
-        throw new ArgumentException();
+        throw new ArgumentException("O número divisor não pode ser zero.");
 
     await Task.Delay(500);
     return a / b;  
-};
-
+}
 
 try
 {
-    Console.WriteLine($"Resultado da Divisão: {await DividirAsync(1, 5)}");
-    Console.WriteLine($"Resultado da Divisão: {await DividirAsync(1, 0)}");
+    Console.WriteLine($"Resultado da Divisão: {await DividirAsync(50, 5)}.");
 }
-catch (Exception ex)
+catch (ArgumentException ex)
 {
-    Console.WriteLine($"Erro inesperado: {ex.Message}");
+    Console.WriteLine($"Erro: {ex.Message}");
 }
 finally
 {
     Console.WriteLine("Operação concluída.");
-};
+}
+
+try
+{
+    Console.WriteLine($"Resultado da Divisão: {await DividirAsync(10, 0)}.");
+}
+catch (ArgumentException ex)
+{
+    Console.WriteLine($"Erro: {ex.Message}");
+}
+finally
+{
+    Console.WriteLine("Operação concluída.");
+}
