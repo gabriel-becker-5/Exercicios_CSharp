@@ -1,15 +1,20 @@
-﻿// Sistema de Estoque com coleções e LINQ
-// Crie uma classe Produto (Id, Nome, Categoria, Preco, Estoque)
-// Popule uma List<Produto> com pelo menos 8 produtos de 3 categorias
-// Use LINQ para gerar um relatório que exiba:
-// Produtos com estoque < 5 (alerta de reposição)
-// Produto mais caro e mais barato de cada categoria
-// Valor total do estoque (Preço x Estoque) por categoria
-// Top 3 produtos mais caros em ordem decrescente
-
-namespace Aula_16_Poo_Desafio
+﻿namespace Aula_16_Poo_Desafio
 {
-    internal class Produto
+    public class Produto
     {
+        public int Id { get; private set; }
+        public string Nome { get; private set; }
+        public string Categoria { get; private set; }
+        public decimal Preco {  get; private set; }
+        public int Estoque { get; private set; }
+
+        public Produto(int id, string nome, string categoria, decimal preco, int estoque)
+        {
+            Id = id;
+            Nome = nome;
+            Categoria = categoria;
+            Preco = preco;
+            Estoque = estoque;
+        }
     }
 }
