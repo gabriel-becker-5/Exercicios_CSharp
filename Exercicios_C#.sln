@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.6.11822.322 stable
+VisualStudioVersion = 18.6.11822.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula_11_Poo", "Aula_11_Poo\Aula_11_Poo.csproj", "{11111111-1111-1111-1111-111111111111}"
 EndProject
@@ -159,6 +159,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula_18_Poo_Desafio", "Aula_18_Poo_Desafio\Aula_18_Poo_Desafio.csproj", "{99AC43E2-71C8-454F-A9B8-4230E5144261}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercicio_Integrador_1", "Exercicio_Integrador_1\Exercicio_Integrador_1.csproj", "{4D2D7B1A-41F4-485B-83A1-993FEBF6900B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercicio_Integrador_2", "Exercicio_Integrador_2\Exercicio_Integrador_2.csproj", "{D05AAEA5-3BC3-4E1D-AC63-4AC2D8201DCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -482,6 +484,10 @@ Global
 		{4D2D7B1A-41F4-485B-83A1-993FEBF6900B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D2D7B1A-41F4-485B-83A1-993FEBF6900B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D2D7B1A-41F4-485B-83A1-993FEBF6900B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D05AAEA5-3BC3-4E1D-AC63-4AC2D8201DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D05AAEA5-3BC3-4E1D-AC63-4AC2D8201DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D05AAEA5-3BC3-4E1D-AC63-4AC2D8201DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D05AAEA5-3BC3-4E1D-AC63-4AC2D8201DCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
