@@ -250,7 +250,8 @@ List<Agendamento> Agendamentos = new List<Agendamento>
         Veiculos.FirstOrDefault(v => v.Placa == "AAA-0A15"),
         DateTime.UtcNow,
         Servicos.Where(s => s.Id == 3 || s.Id == 5).ToList(),
-        Pecas.Where(pe => pe.Id == 2 || pe.Id == 10).ToList()),
+        Pecas.Where(pe => pe.Id == 2 || pe.Id == 10).ToList()
+    ),
 
     new Agendamento(
     2,
@@ -290,6 +291,114 @@ List<Agendamento> Agendamentos = new List<Agendamento>
 
     new Agendamento(
         6,
+        Clientes.First(c => c.Id == 4),
+        Veiculos.First(v => v.Placa == "AAA-0A04"),
+        DateTime.UtcNow.AddDays(3),
+        Servicos.Where(s => s.Id >= 1 && s.Id <= 4).ToList(),
+        Pecas.Where(p => p.Id >= 8 && p.Id <= 12).ToList()
+    ),
+
+    new Agendamento(
+        7,
+        Clientes.First(p => p.Id == 6),
+        Veiculos.FirstOrDefault(v => v.Placa == "AAA-0A15"),
+        DateTime.UtcNow,
+        Servicos.Where(s => s.Id == 3 || s.Id == 5).ToList(),
+        Pecas.Where(pe => pe.Id == 2 || pe.Id == 10).ToList()
+    ),
+
+    new Agendamento(
+    8,
+    Clientes.First(c => c.Id == 1),
+    Veiculos.First(v => v.Placa == "AAA-0A05"),
+    DateTime.UtcNow.AddHours(2),
+    Servicos.Where(s => s.Id == 1 || s.Id == 2).ToList(),
+    Pecas.Where(p => p.Id == 14).ToList()
+    ),
+
+    new Agendamento(
+        9,
+        Clientes.First(c => c.Id == 3),
+        Veiculos.First(v => v.Placa == "AAA-0A02"),
+        DateTime.UtcNow.AddDays(1),
+        Servicos.Where(s => s.Id == 4 || s.Id == 5).ToList(),
+        Pecas.Where(p => p.Id >= 1 && p.Id <= 5).ToList()
+    ),
+
+    new Agendamento(
+        10,
+        Clientes.First(c => c.Id == 5),
+        Veiculos.First(v => v.Placa == "AAA-0A11"),
+        DateTime.UtcNow.AddHours(5),
+        Servicos.Where(s => s.Id == 7).ToList(),
+        Pecas.Where(p => p.Id == 6 || p.Id == 7).ToList()
+    ),
+
+    new Agendamento(
+        11,
+        Clientes.First(c => c.Id == 2),
+        Veiculos.First(v => v.Placa == "AAA-0A09"),
+        DateTime.UtcNow.AddDays(2),
+        Servicos.Where(s => s.Id == 3).ToList(),
+        Pecas.Where(p => p.Id == 2).ToList()
+    ),
+
+    new Agendamento(
+        12,
+        Clientes.First(c => c.Id == 4),
+        Veiculos.First(v => v.Placa == "AAA-0A04"),
+        DateTime.UtcNow.AddDays(3),
+        Servicos.Where(s => s.Id >= 1 && s.Id <= 4).ToList(),
+        Pecas.Where(p => p.Id >= 8 && p.Id <= 12).ToList()
+    ),
+
+    new Agendamento(
+        13,
+        Clientes.First(p => p.Id == 6),
+        Veiculos.FirstOrDefault(v => v.Placa == "AAA-0A15"),
+        DateTime.UtcNow,
+        Servicos.Where(s => s.Id == 3 || s.Id == 5).ToList(),
+        Pecas.Where(pe => pe.Id == 2 || pe.Id == 10).ToList()
+    ),
+
+    new Agendamento(
+    14,
+    Clientes.First(c => c.Id == 1),
+    Veiculos.First(v => v.Placa == "AAA-0A05"),
+    DateTime.UtcNow.AddHours(2),
+    Servicos.Where(s => s.Id == 1 || s.Id == 2).ToList(),
+    Pecas.Where(p => p.Id == 14).ToList()
+    ),
+
+    new Agendamento(
+        15,
+        Clientes.First(c => c.Id == 3),
+        Veiculos.First(v => v.Placa == "AAA-0A02"),
+        DateTime.UtcNow.AddDays(1),
+        Servicos.Where(s => s.Id == 4 || s.Id == 5).ToList(),
+        Pecas.Where(p => p.Id >= 1 && p.Id <= 5).ToList()
+    ),
+
+    new Agendamento(
+        16,
+        Clientes.First(c => c.Id == 5),
+        Veiculos.First(v => v.Placa == "AAA-0A11"),
+        DateTime.UtcNow.AddHours(5),
+        Servicos.Where(s => s.Id == 7).ToList(),
+        Pecas.Where(p => p.Id == 6 || p.Id == 7).ToList()
+    ),
+
+    new Agendamento(
+        17,
+        Clientes.First(c => c.Id == 2),
+        Veiculos.First(v => v.Placa == "AAA-0A09"),
+        DateTime.UtcNow.AddDays(2),
+        Servicos.Where(s => s.Id == 3).ToList(),
+        Pecas.Where(p => p.Id == 2).ToList()
+    ),
+
+    new Agendamento(
+        18,
         Clientes.First(c => c.Id == 4),
         Veiculos.First(v => v.Placa == "AAA-0A04"),
         DateTime.UtcNow.AddDays(3),
@@ -385,7 +494,7 @@ while (opcaoMenu != 0)
                             Console.Write("Quantidade de Veículos: ");
                             qtdVeiculosString = Console.ReadLine();
                             bool ehNumeroValido = int.TryParse(qtdVeiculosString, out qtdVeiculos);
-                            
+
                             while (!ehNumeroValido || qtdVeiculos <= 0)
                             {
                                 Console.WriteLine("Digite um número válido!");
@@ -397,7 +506,7 @@ while (opcaoMenu != 0)
 
                         if (tipoCliente == "C")
                         {
-                            Cliente novoCliente = new Cliente(Clientes.Count+1, nomeCliente, telefoneCliente, emailCliente, DateTime.UtcNow, 0);
+                            Cliente novoCliente = new Cliente(Clientes.Count + 1, nomeCliente, telefoneCliente, emailCliente, DateTime.UtcNow, 0);
                             Clientes.Add(novoCliente);
                         }
                         else if (tipoCliente == "V")
@@ -520,7 +629,7 @@ while (opcaoMenu != 0)
                     case 2:
                         Console.WriteLine();
                         Console.WriteLine("=== Listar Funcionários ===");
-                        
+
                         foreach (Funcionario funcionario in Funcionarios)
                         {
                             Console.WriteLine(funcionario.ExibirDados());
@@ -605,7 +714,7 @@ while (opcaoMenu != 0)
                             Veiculo novoVeiculo = new Caminhao(placaVeiculo, marcaVeiculo, modeloVeiculo, anoFabricacao);
                             Veiculos.Add(novoVeiculo);
                         }
-                        
+
                         Console.WriteLine("Veículo cadastrado com sucesso.");
                         Console.WriteLine();
                         placaVeiculo = "";
@@ -689,7 +798,7 @@ while (opcaoMenu != 0)
                             ehPrecoUnitarioValido = decimal.TryParse(precoUnitarioString, out precoUnitario);
                         }
 
-                        Peca novaPeca = new Peca(Pecas.Count+1, nomePeca, estoqueDisponivel, precoUnitario);
+                        Peca novaPeca = new Peca(Pecas.Count + 1, nomePeca, estoqueDisponivel, precoUnitario);
                         Console.WriteLine();
                         break;
 
@@ -837,16 +946,41 @@ while (opcaoMenu != 0)
                         foreach (Agendamento agendamento in Agendamentos)
                         {
                             Console.WriteLine($"Id: {agendamento.Id} | Hora: {agendamento.DataHora} | Cliente: {agendamento.Cliente.Nome} | Veículo: {agendamento.Veiculo.Placa} - {agendamento.Veiculo.Marca} {agendamento.Veiculo.Modelo} {agendamento.Veiculo.AnoFabricacao}");
-                            foreach (var peca in agendamento.Peca)
+                            foreach (Peca peca in agendamento.Peca)
                             {
-                                Console.WriteLine($"Peça: {agendamento.Peca[peca.Id].Nome}");
+                                try
+                                {
+                                    Console.WriteLine($"Peça: {agendamento.Peca[peca.Id].Nome}");
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }
+                                finally
+                                {
+                                }
                             }
-                            
+
+                            foreach (Servico servico in agendamento.Servico)
+                            {
+                                try
+                                {
+                                    Console.WriteLine($"Serviço: {agendamento.Servico[servico.Id].Nome}");
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }
+                                finally
+                                {
+                                }
+                            }
+
                             Console.WriteLine($"Serviço: {agendamento.Servico}");
                         }
                         Console.WriteLine();
                         break;
-                        break;
+
                     default:
                         break;
                 }
