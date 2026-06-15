@@ -15,14 +15,8 @@ namespace Exercicio_Integrador_2.Pessoas
             TotalGasto = 0;
         }
 
-        public virtual string ExibirDados()
-        {
-            return $"ID: {Id} | Nome: {Nome} | Telefone: {Telefone} | E-mail: {Email}";
-        }
-
         public void AtualizarTotalGasto() // PENDENTE, FALTA OS OBJETOS NECESSÁRIOS
         {
-
         }
     }
 }

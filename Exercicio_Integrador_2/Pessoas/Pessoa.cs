@@ -21,7 +21,7 @@ namespace Exercicio_Integrador_2.Pessoas
 
         public virtual string ExibirDados()
         {
-            return $"ID: {Id} | Nome: {Nome} | Telefone: {Telefone} | E-mail: {Email}";
+            return $"ID: {Id} | Nome: {Nome} | Telefone: {Telefone} | E-mail: {Email} | Tipo de Cliente: {GetType().Name}";
         }
     }
 }

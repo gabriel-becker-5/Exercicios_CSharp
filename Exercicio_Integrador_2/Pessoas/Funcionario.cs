@@ -16,7 +16,7 @@ namespace Exercicio_Integrador_2.Pessoas
 
         public override string ExibirDados()
         {
-            return $"{base.ExibirDados()} | Cargo: {Cargo} | Salário: {Salario:C2}";
+            return $"ID: {Id} | Nome: {Nome} | Telefone: {Telefone} | E-mail: {Email} | Cargo: {Cargo} | Salário: {Salario:C2}";
         }
     }
 }

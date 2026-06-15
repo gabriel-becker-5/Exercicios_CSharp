@@ -27,7 +27,7 @@ namespace Exercicio_Integrador_2.Veiculos
 
         virtual public string ApresentarDadosVeiculo()
         {
-            return $"Placa: {Placa} | Marca: {Marca} | Modelo: {Modelo} | Ano de Fabricação: {AnoFabricacao}";
+            return $"Placa: {Placa} | Marca: {Marca} | Modelo: {Modelo} | Ano de Fabricação: {AnoFabricacao} | Tipo de Veículo: {GetType().Name}";
         }
     }
 }

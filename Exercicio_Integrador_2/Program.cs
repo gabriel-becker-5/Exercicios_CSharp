@@ -945,13 +945,17 @@ while (opcaoMenu != 0)
                         Console.WriteLine("=== Listar Agendamentos ===");
                         foreach (Agendamento agendamento in Agendamentos)
                         {
-                            Console.WriteLine($"Id: {agendamento.Id} | Hora: {agendamento.DataHora} | Cliente: {agendamento.Cliente.Nome} | Veículo: {agendamento.Veiculo.Placa} - {agendamento.Veiculo.Marca} {agendamento.Veiculo.Modelo} {agendamento.Veiculo.AnoFabricacao}");
+                            Console.WriteLine($"==================== Ordem de Serviço: {agendamento.Id} ====================");
+                            Console.WriteLine($"Hora: {agendamento.DataHora} | Cliente: {agendamento.Cliente.Nome} - {agendamento.Cliente.GetType().Name}");
+                            Console.WriteLine($"Veículo: {agendamento.Veiculo.Placa} - {agendamento.Veiculo.Marca} {agendamento.Veiculo.Modelo} {agendamento.Veiculo.AnoFabricacao}");
+                            Console.WriteLine("=========================================================");
+                            Console.Write("| Relação de Peças: ");
                             foreach (Peca peca in agendamento.Peca)
                             {
                                 try
                                 {
-                                    Console.WriteLine($"Peça: {agendamento.Peca[peca.Id].Nome}");
-                                }
+                                    Console.Write($"{peca.Nome}, ");
+                                }                  
                                 catch (Exception ex)
                                 {
                                     Console.WriteLine(ex.Message);
@@ -960,12 +964,13 @@ while (opcaoMenu != 0)
                                 {
                                 }
                             }
-
+                            Console.WriteLine();
+                            Console.Write("| Relação de Serviços: ");
                             foreach (Servico servico in agendamento.Servico)
                             {
                                 try
                                 {
-                                    Console.WriteLine($"Serviço: {agendamento.Servico[servico.Id].Nome}");
+                                    Console.Write($"{servico.Nome}, ");
                                 }
                                 catch (Exception ex)
                                 {
@@ -975,8 +980,9 @@ while (opcaoMenu != 0)
                                 {
                                 }
                             }
-
-                            Console.WriteLine($"Serviço: {agendamento.Servico}");
+                            Console.WriteLine();
+                            Console.WriteLine("=========================================================");
+                            Console.WriteLine();
                         }
                         Console.WriteLine();
                         break;

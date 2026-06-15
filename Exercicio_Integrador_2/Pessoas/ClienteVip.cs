@@ -11,9 +11,5 @@ namespace Exercicio_Integrador_2.Pessoas
             base(id, nome, telefone, email, datacadastro, totalgasto)
         {
         }
-        public virtual string ExibirDados()
-        {
-            return $"ID: {Id} | Nome: {Nome} | Telefone: {Telefone} | E-mail: {Email}";
-        }
     }
 }
