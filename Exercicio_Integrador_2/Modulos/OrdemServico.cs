@@ -24,6 +24,59 @@ namespace Exercicio_Integrador_2.Modulos
                             List<Servico> listaservicos, List<Peca> listapecas, DateTime dataabertura, 
                             StatusOrdemServico status)
         {
+            Numero = numero;
+            Cliente = cliente;
+            Veiculo = veiculo;
+            FuncionarioResponsavel = funcionarioResponsavel;
+            ListaServicos = listaservicos;
+            ListaPecas = listapecas;
+            DataAbertura = dataabertura;
+            Status = status;
+        }
+
+        public void FinalizarOrdemServico()
+        {
+            Status = StatusOrdemServico.Finalizada;
+        }
+
+        public void CancelarOrdemServico()
+        {
+            Status = StatusOrdemServico.Cancelada;
+        }
+
+        public void DetalharOrdemServico()
+        {
+            Console.WriteLine($"====================== Ordem de Serviço nº: {Numero} ======================");
+            Console.WriteLine($"Status: {Status} | Data Abertura: {DataAbertura}");
+            Console.WriteLine($"Cliente: {Cliente.Nome} - {Cliente.GetType().Name}");
+            Console.WriteLine($"Veículo: {Veiculo.Placa}  |  {Veiculo.Marca} {Veiculo.Modelo} {Veiculo.AnoFabricacao}");
+            Console.WriteLine($"Responsável: {FuncionarioResponsavel.Nome} | {FuncionarioResponsavel.Cargo}");
+            Console.WriteLine("--------------------------------------------------------------------");
+            Console.WriteLine("| Relação de Peças & Serviços");
+            Console.WriteLine("-------------------------------------------------------------------");
+
+            decimal valorTotalPecas = 0;
+            decimal valorTotalServicos = 0;
+
+            foreach (Peca peca in ListaPecas)
+            {
+                Console.WriteLine($"- {peca.Nome} | Valor Unitário: {peca.PrecoUnitario:C2} | Quantidade: 1");
+                valorTotalPecas += peca.PrecoUnitario;
+            }
+            
+            foreach (Servico servico in ListaServicos)
+            {
+                Console.WriteLine($"- {servico.Nome} | Valor Hora: {servico.ValorBase:C2} | Tempo Execução: {servico.TempoEstimadoHoras} hora(s)");
+                valorTotalServicos += servico.ValorBase * servico.TempoEstimadoHoras;
+            }
+
+            decimal valorTotalOS = valorTotalPecas + valorTotalServicos;
+
+            Console.WriteLine("--------------------------------------------------------------------");
+            Console.WriteLine($"Peças: {valorTotalPecas:C2}");
+            Console.WriteLine($"Serviços: {valorTotalServicos:C2}");
+            Console.WriteLine($"Valor Total: {valorTotalOS:C2}");
+            Console.WriteLine("====================================================================");
         }
     }
 }

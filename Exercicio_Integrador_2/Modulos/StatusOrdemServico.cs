@@ -5,6 +5,6 @@ namespace Exercicio_Integrador_2.Modulos
 {
     public enum StatusOrdemServico
     {
-        Aberta, AguardandoPecas, EmAndamento, Finalizada, Cancelada
+        Agendada, Aberta, AguardaPecas, EmAndamento, Finalizada, Cancelada
     }
 }
