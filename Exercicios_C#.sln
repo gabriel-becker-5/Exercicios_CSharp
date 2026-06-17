@@ -162,6 +162,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercicio_Integrador_1", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercicio_Integrador_2", "Exercicio_Integrador_2\Exercicio_Integrador_2.csproj", "{D05AAEA5-3BC3-4E1D-AC63-4AC2D8201DCB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula_19_Exercicios", "Aula_19_Exercicios\Aula_19_Exercicios.csproj", "{433229B1-B8C5-4045-8611-8D817A18F9E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -488,6 +490,10 @@ Global
 		{D05AAEA5-3BC3-4E1D-AC63-4AC2D8201DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D05AAEA5-3BC3-4E1D-AC63-4AC2D8201DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D05AAEA5-3BC3-4E1D-AC63-4AC2D8201DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{433229B1-B8C5-4045-8611-8D817A18F9E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{433229B1-B8C5-4045-8611-8D817A18F9E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{433229B1-B8C5-4045-8611-8D817A18F9E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{433229B1-B8C5-4045-8611-8D817A18F9E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
