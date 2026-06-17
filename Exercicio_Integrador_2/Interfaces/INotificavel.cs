@@ -5,10 +5,10 @@ Exemplos: Email, WhatsApp e SMS. Escolha apenas uma implementação. */
 
 namespace Exercicio_Integrador_2.Interfaces
 {
-    public interface INotificavel
+    interface INotificavel
     {
-        public void EnviarNotificacaoAsync() // PENDENTE IMPLEMENTAÇÃO
-        {
-        }
+        Task ConfirmarAgendamentosAsync(string mensagem);
+
+        Task ConclusaoOrdemDeServicoAsync(string mensagem);
     }
 }
