@@ -1,4 +1,14 @@
-﻿/* 
+﻿/* MVC
+Models: Cliente, Funcionario, Veiculo, OrdemServico, Agendamento, Servico, Peca
+Controllers: ClienteController, VeiculoController, OrdemServicoController, AgendamentoController
+Views: ClienteView, VeiculoView, OrdemServicoView, AgendamentoView 
+Services: ClienteService, AgendamentoService, OrdemServicoService, RelatorioService, NotificacaoService
+Repositories: ClienteRepository, VeiculoRepository, OrdemServicoRepository, AgendamentoRepository
+
+Ordem de Implementação: Models, Controllers, Views, Services e Repositories.
+ */
+
+/* 
 Exercício Integrador: Sistema de Gestão de Oficina Mecânica
 Objetivo: Desenvolver uma aplicação console em C# para gerenciamento de uma oficina mecânica.
 A aplicação deverá controlar clientes, funcionários, veículos, serviços, ordens de serviço, estoque de peças e agendamentos.
@@ -108,6 +118,8 @@ As operações devem ser tratadas como tarefas demoradas, sem bloquear a execuç
 - Simular envio quando uma ordem for finalizada
 */
 
+using Exercicio_Integrador_2.Excecoes;
+using Exercicio_Integrador_2.Interfaces;
 using Exercicio_Integrador_2.Modulos;
 using Exercicio_Integrador_2.Pessoas;
 using Exercicio_Integrador_2.Veiculos;
@@ -128,7 +140,6 @@ List<Funcionario> Funcionarios = new List<Funcionario>
     new Funcionario(8, "Kassio", "47 98888-9999", "kassio@email.com", "Mecânico Sênior", 6500),
     new Funcionario(9, "Alan", "47 98888-9999", "alan@email.com", "Mecânico Júnior", 3000)
 };
-
 
 List<Veiculo> Veiculos = new List<Veiculo>
 {
@@ -155,7 +166,7 @@ List<Veiculo> Veiculos = new List<Veiculo>
 
 List<Peca> Pecas = new List<Peca>
 {
-    new Peca(1, "Bieleta", 1, 100.50m),
+    new Peca(1, "Bieleta", 0, 100.50m),
     new Peca(2, "Filtro de Óleo", 10, 25.90m),
     new Peca(3, "Filtro de Ar", 8, 35.50m),
     new Peca(4, "Pastilha de Freio", 12, 89.90m),
@@ -186,36 +197,36 @@ List<Servico> Servicos = new List<Servico>
 List<OrdemServico> OrdensDeServico = new List<OrdemServico>
 {
     new OrdemServico(
-    1,
-    Clientes.FirstOrDefault(p => p.Id == 1),
-    Veiculos.FirstOrDefault(v => v.Placa == "AAA-0A00"),
-    Funcionarios.FirstOrDefault(p => p.Id == 9),
-    Servicos.Where(s => s.Id >= 1 && s.Id <= 3).ToList(),
-    Pecas.Where(pe => pe.Id == 2).ToList(),
-    DateTime.UtcNow,
-    StatusOrdemServico.Aberta
+        1,
+        Clientes.FirstOrDefault(p => p.Id == 1),
+        Veiculos.FirstOrDefault(v => v.Placa == "AAA-0A00"),
+        Funcionarios.FirstOrDefault(p => p.Id == 9),
+        Servicos.Where(s => s.Id >= 1 && s.Id <= 3).ToList(),
+        Pecas.Where(pe => pe.Id == 2).ToList(),
+        DateTime.UtcNow,
+        StatusOrdemServico.Aberta
     ),
 
     new OrdemServico(
-    2,
-    Clientes.FirstOrDefault(p => p.Id == 2),
-    Veiculos.FirstOrDefault(v => v.Placa == "AAA-0A01"),
-    Funcionarios.FirstOrDefault(p => p.Id == 8),
-    Servicos.Where(s => s.Id > 0).ToList(),
-    Pecas.Where(pe => pe.Id > 0).ToList(),
-    DateTime.UtcNow,
-    StatusOrdemServico.Aberta
+        2,
+        Clientes.FirstOrDefault(p => p.Id == 2),
+        Veiculos.FirstOrDefault(v => v.Placa == "AAA-0A01"),
+        Funcionarios.FirstOrDefault(p => p.Id == 8),
+        Servicos.Where(s => s.Id > 0).ToList(),
+        Pecas.Where(pe => pe.Id > 0).ToList(),
+        DateTime.UtcNow,
+        StatusOrdemServico.Aberta
     ),
 
     new OrdemServico(
-    3,
-    Clientes.FirstOrDefault(p => p.Id == 5),
-    Veiculos.FirstOrDefault(v => v.Placa == "AAA-0A11"),
-    Funcionarios.FirstOrDefault(p => p.Id == 8),
-    Servicos.Where(s => s.Id >= 4 && s.Id <= 5).ToList(),
-    Pecas.Where(pe => pe.Id >= 9 && pe.Id <= 11).ToList(),
-    DateTime.UtcNow,
-    StatusOrdemServico.EmAndamento
+        3,
+        Clientes.FirstOrDefault(p => p.Id == 5),
+        Veiculos.FirstOrDefault(v => v.Placa == "AAA-0A11"),
+        Funcionarios.FirstOrDefault(p => p.Id == 8),
+        Servicos.Where(s => s.Id >= 4 && s.Id <= 5).ToList(),
+        Pecas.Where(pe => pe.Id >= 9 && pe.Id <= 11).ToList(),
+        DateTime.UtcNow,
+        StatusOrdemServico.EmAndamento
     ),
 
     new OrdemServico(
@@ -238,9 +249,8 @@ List<OrdemServico> OrdensDeServico = new List<OrdemServico>
         Pecas.Where(pe => pe.Id == 2 || pe.Id == 10).ToList(),
         DateTime.UtcNow,
         StatusOrdemServico.Finalizada
-    ),
+    )
 };
-
 
 List<Agendamento> Agendamentos = new List<Agendamento>
 {
@@ -248,29 +258,29 @@ List<Agendamento> Agendamentos = new List<Agendamento>
         1,
         Clientes.First(p => p.Id == 6),
         Veiculos.FirstOrDefault(v => v.Placa == "AAA-0A15"),
-        DateTime.UtcNow,
         Servicos.Where(s => s.Id == 3 || s.Id == 5).ToList(),
         Pecas.Where(pe => pe.Id == 2 || pe.Id == 10).ToList(),
+        DateTime.UtcNow.AddDays(5),
         StatusOrdemServico.Agendada
     ),
 
     new Agendamento(
-    2,
-    Clientes.First(c => c.Id == 1),
-    Veiculos.First(v => v.Placa == "AAA-0A05"),
-    DateTime.UtcNow.AddHours(2),
-    Servicos.Where(s => s.Id == 1 || s.Id == 2).ToList(),
-    Pecas.Where(p => p.Id == 14).ToList(),
-    StatusOrdemServico.Agendada
+        2,
+        Clientes.First(c => c.Id == 1),
+        Veiculos.First(v => v.Placa == "AAA-0A05"),
+        Servicos.Where(s => s.Id == 1 || s.Id == 2).ToList(),
+        Pecas.Where(p => p.Id == 14).ToList(),
+        DateTime.UtcNow.AddHours(6),
+        StatusOrdemServico.Agendada
     ),
 
     new Agendamento(
         3,
         Clientes.First(c => c.Id == 3),
         Veiculos.First(v => v.Placa == "AAA-0A02"),
-        DateTime.UtcNow.AddDays(1),
         Servicos.Where(s => s.Id == 4 || s.Id == 5).ToList(),
         Pecas.Where(p => p.Id >= 1 && p.Id <= 5).ToList(),
+        DateTime.UtcNow.AddDays(1),
         StatusOrdemServico.Agendada
     ),
 
@@ -278,9 +288,9 @@ List<Agendamento> Agendamentos = new List<Agendamento>
         4,
         Clientes.First(c => c.Id == 5),
         Veiculos.First(v => v.Placa == "AAA-0A11"),
-        DateTime.UtcNow.AddHours(5),
         Servicos.Where(s => s.Id == 7).ToList(),
         Pecas.Where(p => p.Id == 6 || p.Id == 7).ToList(),
+        DateTime.UtcNow.AddHours(15),
         StatusOrdemServico.Agendada
     ),
 
@@ -288,9 +298,9 @@ List<Agendamento> Agendamentos = new List<Agendamento>
         5,
         Clientes.First(c => c.Id == 2),
         Veiculos.First(v => v.Placa == "AAA-0A09"),
-        DateTime.UtcNow.AddDays(2),
         Servicos.Where(s => s.Id == 3).ToList(),
         Pecas.Where(p => p.Id == 2).ToList(),
+        DateTime.UtcNow.AddDays(3),
         StatusOrdemServico.Agendada
     ),
 
@@ -298,9 +308,9 @@ List<Agendamento> Agendamentos = new List<Agendamento>
         6,
         Clientes.First(c => c.Id == 4),
         Veiculos.First(v => v.Placa == "AAA-0A04"),
-        DateTime.UtcNow.AddDays(3),
         Servicos.Where(s => s.Id >= 1 && s.Id <= 4).ToList(),
         Pecas.Where(p => p.Id >= 8 && p.Id <= 12).ToList(),
+        DateTime.UtcNow.AddDays(10),
         StatusOrdemServico.Agendada
     ),
 
@@ -308,29 +318,29 @@ List<Agendamento> Agendamentos = new List<Agendamento>
         7,
         Clientes.First(p => p.Id == 6),
         Veiculos.FirstOrDefault(v => v.Placa == "AAA-0A15"),
-        DateTime.UtcNow,
         Servicos.Where(s => s.Id == 3 || s.Id == 5).ToList(),
         Pecas.Where(pe => pe.Id == 2 || pe.Id == 10).ToList(),
+        DateTime.UtcNow.AddHours(20),
         StatusOrdemServico.Agendada
     ),
 
     new Agendamento(
-    8,
-    Clientes.First(c => c.Id == 1),
-    Veiculos.First(v => v.Placa == "AAA-0A05"),
-    DateTime.UtcNow.AddHours(2),
-    Servicos.Where(s => s.Id == 1 || s.Id == 2).ToList(),
-    Pecas.Where(p => p.Id == 14).ToList(),
-    StatusOrdemServico.Agendada
+        8,
+        Clientes.First(c => c.Id == 1),
+        Veiculos.First(v => v.Placa == "AAA-0A05"),
+        Servicos.Where(s => s.Id == 1 || s.Id == 2).ToList(),
+        Pecas.Where(p => p.Id == 14).ToList(),
+        DateTime.UtcNow.AddHours(2),
+        StatusOrdemServico.Agendada
     ),
 
     new Agendamento(
         9,
         Clientes.First(c => c.Id == 3),
         Veiculos.First(v => v.Placa == "AAA-0A02"),
-        DateTime.UtcNow.AddDays(1),
         Servicos.Where(s => s.Id == 4 || s.Id == 5).ToList(),
         Pecas.Where(p => p.Id >= 1 && p.Id <= 5).ToList(),
+        DateTime.UtcNow.AddDays(4),
         StatusOrdemServico.Agendada
     ),
 
@@ -338,9 +348,9 @@ List<Agendamento> Agendamentos = new List<Agendamento>
         10,
         Clientes.First(c => c.Id == 5),
         Veiculos.First(v => v.Placa == "AAA-0A11"),
-        DateTime.UtcNow.AddHours(5),
         Servicos.Where(s => s.Id == 7).ToList(),
         Pecas.Where(p => p.Id == 6 || p.Id == 7).ToList(),
+        DateTime.UtcNow.AddHours(6),
         StatusOrdemServico.Agendada
     ),
 
@@ -348,9 +358,9 @@ List<Agendamento> Agendamentos = new List<Agendamento>
         11,
         Clientes.First(c => c.Id == 2),
         Veiculos.First(v => v.Placa == "AAA-0A09"),
-        DateTime.UtcNow.AddDays(2),
         Servicos.Where(s => s.Id == 3).ToList(),
         Pecas.Where(p => p.Id == 2).ToList(),
+        DateTime.UtcNow.AddDays(6),
         StatusOrdemServico.Agendada
     ),
 
@@ -358,9 +368,9 @@ List<Agendamento> Agendamentos = new List<Agendamento>
         12,
         Clientes.First(c => c.Id == 4),
         Veiculos.First(v => v.Placa == "AAA-0A04"),
-        DateTime.UtcNow.AddDays(3),
         Servicos.Where(s => s.Id >= 1 && s.Id <= 4).ToList(),
         Pecas.Where(p => p.Id >= 8 && p.Id <= 12).ToList(),
+        DateTime.UtcNow.AddDays(9),
         StatusOrdemServico.Agendada
     ),
 
@@ -368,29 +378,29 @@ List<Agendamento> Agendamentos = new List<Agendamento>
         13,
         Clientes.First(p => p.Id == 6),
         Veiculos.FirstOrDefault(v => v.Placa == "AAA-0A15"),
-        DateTime.UtcNow,
         Servicos.Where(s => s.Id == 3 || s.Id == 5).ToList(),
         Pecas.Where(pe => pe.Id == 2 || pe.Id == 10).ToList(),
+        DateTime.UtcNow.AddHours(1),
         StatusOrdemServico.Agendada
     ),
 
     new Agendamento(
-    14,
-    Clientes.First(c => c.Id == 1),
-    Veiculos.First(v => v.Placa == "AAA-0A05"),
-    DateTime.UtcNow.AddHours(2),
-    Servicos.Where(s => s.Id == 1 || s.Id == 2).ToList(),
-    Pecas.Where(p => p.Id == 14).ToList(),
-    StatusOrdemServico.Agendada
+        14,
+        Clientes.First(c => c.Id == 1),
+        Veiculos.First(v => v.Placa == "AAA-0A05"),
+        Servicos.Where(s => s.Id == 1 || s.Id == 2).ToList(),
+        Pecas.Where(p => p.Id == 14).ToList(),
+        DateTime.UtcNow.AddHours(4),
+        StatusOrdemServico.Agendada
     ),
 
     new Agendamento(
         15,
         Clientes.First(c => c.Id == 3),
         Veiculos.First(v => v.Placa == "AAA-0A02"),
-        DateTime.UtcNow.AddDays(1),
         Servicos.Where(s => s.Id == 4 || s.Id == 5).ToList(),
         Pecas.Where(p => p.Id >= 1 && p.Id <= 5).ToList(),
+        DateTime.UtcNow.AddDays(2),
         StatusOrdemServico.Agendada
     ),
 
@@ -398,9 +408,9 @@ List<Agendamento> Agendamentos = new List<Agendamento>
         16,
         Clientes.First(c => c.Id == 5),
         Veiculos.First(v => v.Placa == "AAA-0A11"),
-        DateTime.UtcNow.AddHours(5),
         Servicos.Where(s => s.Id == 7).ToList(),
         Pecas.Where(p => p.Id == 6 || p.Id == 7).ToList(),
+        DateTime.UtcNow.AddHours(15),
         StatusOrdemServico.Agendada
     ),
 
@@ -408,9 +418,9 @@ List<Agendamento> Agendamentos = new List<Agendamento>
         17,
         Clientes.First(c => c.Id == 2),
         Veiculos.First(v => v.Placa == "AAA-0A09"),
-        DateTime.UtcNow.AddDays(2),
         Servicos.Where(s => s.Id == 3).ToList(),
         Pecas.Where(p => p.Id == 2).ToList(),
+        DateTime.UtcNow.AddDays(7),
         StatusOrdemServico.Agendada
     ),
 
@@ -418,15 +428,15 @@ List<Agendamento> Agendamentos = new List<Agendamento>
         18,
         Clientes.First(c => c.Id == 4),
         Veiculos.First(v => v.Placa == "AAA-0A04"),
-        DateTime.UtcNow.AddDays(3),
         Servicos.Where(s => s.Id >= 1 && s.Id <= 4).ToList(),
         Pecas.Where(p => p.Id >= 8 && p.Id <= 12).ToList(),
+        DateTime.UtcNow.AddDays(4),
         StatusOrdemServico.Agendada
     )
 };
 
 int opcaoMenu = -1;
-Console.WriteLine("=== Bem vindo ao Sistema de Gestão de Oficinas ===");
+Console.WriteLine("=== Bem vindo ao Sistema de Gestão para Oficinas ===");
 
 while (opcaoMenu != 0)
 {
@@ -444,7 +454,6 @@ while (opcaoMenu != 0)
     Console.WriteLine("0. Sair");
     Console.Write("Selecione uma das opções: ");
     string inputUsuario = Console.ReadLine();
-
     bool opcaoMenuEhValida = int.TryParse(inputUsuario, out opcaoMenu);
 
     while (!opcaoMenuEhValida)
@@ -914,8 +923,8 @@ while (opcaoMenu != 0)
                         {
                             Console.WriteLine("Digite um número válido!");
                             Console.Write("Informe o Valor Base por Hora: ");
-                        valorBaseServicoString = Console.ReadLine();
-                        ehValorServicoValido = decimal.TryParse(valorBaseServicoString, out valorBaseServico);
+                            valorBaseServicoString = Console.ReadLine();
+                            ehValorServicoValido = decimal.TryParse(valorBaseServicoString, out valorBaseServico);
                         }
 
                         Console.Write("Informe o Tempo Estimado em Horas: ");
@@ -931,7 +940,7 @@ while (opcaoMenu != 0)
                             ehTempoEstimadoValido = decimal.TryParse(tempoEstimadoServicoString, out tempoEstimadoServico);
                         }
 
-                        Servico novoServico = new Servico(Servicos.Count+1, descricaoServico, valorBaseServico, tempoEstimadoServico);
+                        Servico novoServico = new Servico(Servicos.Count + 1, descricaoServico, valorBaseServico, tempoEstimadoServico);
                         Servicos.Add(novoServico);
                         Console.WriteLine("Serviço cadastrado com sucesso.");
                         descricaoServico = "";
@@ -985,23 +994,31 @@ while (opcaoMenu != 0)
                     case 1:
                         Console.WriteLine();
                         Console.WriteLine("=== Criar novo Agendamento ===");
-                        Console.Write("ID do Cliente: ");
                         int idDoCliente;
+                        Console.Write("ID do Cliente: ");
                         string idDoClienteString = Console.ReadLine();
                         bool ehIdValida = int.TryParse(idDoClienteString, out idDoCliente);
-
-                        while (!ehIdValida || idDoCliente <= 0)
+                        Cliente clienteSelecionado = Clientes.FirstOrDefault(c => c.Id == idDoCliente);
+                        while (clienteSelecionado == null)
                         {
-                            Console.WriteLine("Digite um número válido!");
-                            Console.Write("Informe o ID do Cliente: ");
+                            Console.WriteLine("Informe uma ID válida!");
+                            Console.Write("ID do Cliente: ");
                             idDoClienteString = Console.ReadLine();
                             ehIdValida = int.TryParse(idDoClienteString, out idDoCliente);
+                            clienteSelecionado = Clientes.FirstOrDefault(c => c.Id == idDoCliente);
                         }
-                        Cliente clienteSelecionado = Clientes.FirstOrDefault(c => c.Id == idDoCliente);
 
                         Console.Write("Placa do Veículo: ");
                         string placaDoVeiculo = Console.ReadLine();
                         Veiculo veiculoSelecionado = Veiculos.FirstOrDefault(v => v.Placa == placaDoVeiculo.ToUpper());
+
+                        while (veiculoSelecionado == null)
+                        {
+                            Console.WriteLine("Informe um veículo válido!");
+                            Console.Write("Placa do Veículo: ");
+                            placaDoVeiculo = Console.ReadLine();
+                            veiculoSelecionado = Veiculos.FirstOrDefault(v => v.Placa == placaDoVeiculo.ToUpper());
+                        }
 
                         Console.Write("Data e Hora do Agendamento (DD/MM/AAAA HH:MM): ");
                         DateTime dataHoraAgendamento;
@@ -1025,17 +1042,18 @@ while (opcaoMenu != 0)
                             Console.Write("ID do Serviço: ");
                             string idDoServicoString = Console.ReadLine();
                             bool ehIdServicoValida = int.TryParse(idDoServicoString, out idDoServico);
-                            
-                            while (!ehIdServicoValida || idDoServico <= 0)
+                            Servico servicoParaAddOS = Servicos.FirstOrDefault(s => s.Id == idDoServico);
+
+                            while (servicoParaAddOS == null)
                             {
-                                Console.WriteLine("Digite um número válido!");
+                                Console.WriteLine("Informe um ID de Serviço válido!");
                                 Console.Write("ID do Serviço: ");
                                 idDoServicoString = Console.ReadLine();
                                 ehIdServicoValida = int.TryParse(idDoServicoString, out idDoServico);
+                                servicoParaAddOS = Servicos.FirstOrDefault(s => s.Id == idDoServico);
                             }
-
-                            Servico servicoParaAddOS = Servicos.FirstOrDefault(s => s.Id == idDoServico);
                             ServicosSelecionados.Add(servicoParaAddOS);
+
                             maisServicos = "";
                             Console.Write("Há mais Serviços para adicionar? (S/N): ");
                             maisServicos = Console.ReadLine();
@@ -1056,16 +1074,16 @@ while (opcaoMenu != 0)
                             Console.Write("ID da Peça: ");
                             string idDaPecaString = Console.ReadLine();
                             bool ehIdPecaValida = int.TryParse(idDaPecaString, out idDaPeca);
+                            Peca pecasParaAddOS = Pecas.FirstOrDefault(p => p.Id == idDaPeca);
 
-                            while (!ehIdPecaValida || idDaPeca <= 0)
+                            while (pecasParaAddOS == null)
                             {
-                                Console.WriteLine("Digite um número válido!");
+                                Console.WriteLine("Digite um ID de Peça válido!");
                                 Console.Write("ID da Peça: ");
                                 idDaPecaString = Console.ReadLine();
                                 ehIdPecaValida = int.TryParse(idDaPecaString, out idDaPeca);
+                                pecasParaAddOS = Pecas.FirstOrDefault(p => p.Id == idDaPeca);
                             }
-
-                            Peca pecasParaAddOS = Pecas.FirstOrDefault(p => p.Id == idDaPeca);
                             PecasSelecionadas.Add(pecasParaAddOS);
 
                             maisPecas = "";
@@ -1079,17 +1097,22 @@ while (opcaoMenu != 0)
                             }
                         }
 
+                        Agendamento novoAgendamento = new Agendamento(Agendamentos.Count + 1, clienteSelecionado, veiculoSelecionado,
+                            ServicosSelecionados, PecasSelecionadas, dataHoraAgendamento, StatusOrdemServico.Agendada);
+
                         try
                         {
-                            Agendamento novoAgendamento = new Agendamento(Agendamentos.Count+1, clienteSelecionado, veiculoSelecionado, dataHoraAgendamento,
-                                ServicosSelecionados, PecasSelecionadas, StatusOrdemServico.Agendada);
-                            Agendamentos.Add(novoAgendamento);
-                            Console.WriteLine("Agendamento realizado com sucesso.");
+                            bool possuiConflito = Agendamentos.Any(a => a.ConflitaCom(novoAgendamento));
                         }
-                        catch (Exception ex)
+                        catch (HorarioIndisponivelException ex)
                         {
-                            Console.WriteLine(ex.Message);
+                            Console.WriteLine("Conflito de Agenda! " + ex.Message);
+                            Console.WriteLine();
+                            break;
                         }
+
+                        Agendamentos.Add(novoAgendamento);
+                        Console.WriteLine("Agendamento realizado com sucesso.");
                         Console.WriteLine();
                         break;
 
@@ -1101,16 +1124,17 @@ while (opcaoMenu != 0)
                         int ordemServico;
                         string ordemServicoString = Console.ReadLine();
                         bool ehOSValida = int.TryParse(ordemServicoString, out ordemServico);
+                        Agendamento agendamentoParaCancelar = Agendamentos.FirstOrDefault(a => a.Id == ordemServico);
 
-                        while (!ehOSValida || ordemServico <= 0)
+                        while (agendamentoParaCancelar == null)
                         {
-                            Console.WriteLine("Digite um número válido!");
+                            Console.WriteLine("Informe um Agendamento válido!");
                             Console.Write("Informe o número do Agendamento: ");
                             ordemServicoString = Console.ReadLine();
                             ehOSValida = int.TryParse(ordemServicoString, out ordemServico);
+                            agendamentoParaCancelar = Agendamentos.FirstOrDefault(a => a.Id == ordemServico);
                         }
 
-                        Agendamento agendamentoParaCancelar = Agendamentos.FirstOrDefault(a => a.Id == ordemServico);
                         Console.WriteLine();
                         agendamentoParaCancelar.DetalharAgendamento();
 
@@ -1188,37 +1212,47 @@ while (opcaoMenu != 0)
                     case 1:
                         Console.WriteLine();
                         Console.WriteLine("=== Criar nova Ordem de Serviço ===");
-                        Console.Write("ID do Cliente: ");
                         int idDoCliente;
+                        Console.Write("ID do Cliente: ");
                         string idDoClienteString = Console.ReadLine();
                         bool ehIdValida = int.TryParse(idDoClienteString, out idDoCliente);
+                        Cliente clienteSelecionado = Clientes.FirstOrDefault(c => c.Id == idDoCliente);
 
-                        while (!ehIdValida || idDoCliente <= 0)
+                        while (clienteSelecionado == null)
                         {
-                            Console.WriteLine("Digite um número válido!");
+                            Console.WriteLine("Digite um ID de Cliente válido!");
                             Console.Write("ID do Cliente: ");
                             idDoClienteString = Console.ReadLine();
                             ehIdValida = int.TryParse(idDoClienteString, out idDoCliente);
+                            clienteSelecionado = Clientes.FirstOrDefault(c => c.Id == idDoCliente);
                         }
-                        Cliente clienteSelecionado = Clientes.FirstOrDefault(c => c.Id == idDoCliente);
 
                         Console.Write("Placa do Veículo: ");
                         string placaDoVeiculo = Console.ReadLine();
                         Veiculo veiculoSelecionado = Veiculos.FirstOrDefault(v => v.Placa == placaDoVeiculo.ToUpper());
 
+                        while (veiculoSelecionado == null)
+                        {
+                            Console.WriteLine("Informe um veículo válido!");
+                            Console.Write("Placa do Veículo: ");
+                            placaDoVeiculo = Console.ReadLine();
+                            veiculoSelecionado = Veiculos.FirstOrDefault(v => v.Placa == placaDoVeiculo.ToUpper());
+                        }
+
                         Console.Write("ID do Funcionário: ");
                         int idDoFuncionario;
                         string idDoFuncionarioString = Console.ReadLine();
                         bool ehIdFuncionarioValida = int.TryParse(idDoFuncionarioString, out idDoFuncionario);
+                        Funcionario funcionarioSelecionado = Funcionarios.FirstOrDefault(c => c.Id == idDoFuncionario);
 
-                        while (!ehIdFuncionarioValida || idDoFuncionario <= 0)
+                        while (funcionarioSelecionado == null)
                         {
-                            Console.WriteLine("Digite um número válido!");
+                            Console.WriteLine("Informe um ID de funcionário válido!");
                             Console.Write("ID do Funcionário: ");
                             idDoFuncionarioString = Console.ReadLine();
                             ehIdFuncionarioValida = int.TryParse(idDoFuncionarioString, out idDoFuncionario);
+                            funcionarioSelecionado = Funcionarios.FirstOrDefault(c => c.Id == idDoFuncionario);
                         }
-                        Funcionario funcionarioSelecionado = Funcionarios.FirstOrDefault(c => c.Id == idDoFuncionario);
 
                         string maisServicos = "";
                         int idDoServico;
@@ -1229,16 +1263,17 @@ while (opcaoMenu != 0)
                             Console.Write("ID do Serviço: ");
                             string idDoServicoString = Console.ReadLine();
                             bool ehIdServicoValida = int.TryParse(idDoServicoString, out idDoServico);
+                            Servico servicoParaAddOS = Servicos.FirstOrDefault(s => s.Id == idDoServico);
 
-                            while (!ehIdServicoValida || idDoServico <= 0)
+                            while (servicoParaAddOS == null)
                             {
-                                Console.WriteLine("Digite um número válido!");
+                                Console.WriteLine("Informe um ID de Serviço válido!");
                                 Console.Write("ID do Serviço: ");
                                 idDoServicoString = Console.ReadLine();
                                 ehIdServicoValida = int.TryParse(idDoServicoString, out idDoServico);
+                                servicoParaAddOS = Servicos.FirstOrDefault(s => s.Id == idDoServico);
                             }
 
-                            Servico servicoParaAddOS = Servicos.FirstOrDefault(s => s.Id == idDoServico);
                             ServicosSelecionados.Add(servicoParaAddOS);
                             maisServicos = "";
                             Console.Write("Há mais Serviços para adicionar? (S/N): ");
@@ -1260,16 +1295,17 @@ while (opcaoMenu != 0)
                             Console.Write("ID da Peça: ");
                             string idDaPecaString = Console.ReadLine();
                             bool ehIdPecaValida = int.TryParse(idDaPecaString, out idDaPeca);
+                            Peca pecasParaAddOS = Pecas.FirstOrDefault(p => p.Id == idDaPeca);
 
-                            while (!ehIdPecaValida || idDaPeca <= 0)
+                            while (pecasParaAddOS == null)
                             {
-                                Console.WriteLine("Digite um número válido!");
+                                Console.WriteLine("Digite um ID de Peça válido!");
                                 Console.Write("ID da Peça: ");
                                 idDaPecaString = Console.ReadLine();
                                 ehIdPecaValida = int.TryParse(idDaPecaString, out idDaPeca);
+                                pecasParaAddOS = Pecas.FirstOrDefault(p => p.Id == idDaPeca);
                             }
 
-                            Peca pecasParaAddOS = Pecas.FirstOrDefault(p => p.Id == idDaPeca);
                             PecasSelecionadas.Add(pecasParaAddOS);
 
                             maisPecas = "";
@@ -1288,8 +1324,8 @@ while (opcaoMenu != 0)
                         string statusOrdemServicoString = Console.ReadLine();
                         StatusOrdemServico statusOrdem = StatusOrdemServico.Aberta;
 
-                        while (statusOrdemServicoString.ToUpper() != "A" && statusOrdemServicoString.ToUpper() != "P" 
-                            && statusOrdemServicoString.ToUpper() != "E" && statusOrdemServicoString.ToUpper() != "F" 
+                        while (statusOrdemServicoString.ToUpper() != "A" && statusOrdemServicoString.ToUpper() != "P"
+                            && statusOrdemServicoString.ToUpper() != "E" && statusOrdemServicoString.ToUpper() != "F"
                             && statusOrdemServicoString.ToUpper() != "C")
                         {
                             Console.WriteLine("Informe um status válido.");
@@ -1319,18 +1355,10 @@ while (opcaoMenu != 0)
                                 break;
                         }
 
-                        try
-                        {
-                            OrdemServico novaOrdemDeServico = new OrdemServico(OrdensDeServico.Count+1, clienteSelecionado, veiculoSelecionado,
-                                funcionarioSelecionado, ServicosSelecionados, PecasSelecionadas, DateTime.UtcNow, statusOrdem);
-                            OrdensDeServico.Add(novaOrdemDeServico);
-                            Console.WriteLine("Ordem de Serviço criada com sucesso.");
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                        }
-
+                        OrdemServico novaOrdemDeServico = new OrdemServico(OrdensDeServico.Count + 1, clienteSelecionado, veiculoSelecionado,
+                            funcionarioSelecionado, ServicosSelecionados, PecasSelecionadas, DateTime.UtcNow, statusOrdem);
+                        OrdensDeServico.Add(novaOrdemDeServico);
+                        Console.WriteLine("Ordem de Serviço criada com sucesso.");
                         Console.WriteLine();
                         break;
 
@@ -1341,37 +1369,38 @@ while (opcaoMenu != 0)
                         string desejaAddMaisServicos = "";
                         int idServicoAdicionar;
                         List<Servico> ServicosParaAdicionar = [];
-                        
+
                         Console.Write("Número da Ordem de Serviço: ");
                         string ordemDeServicoString = Console.ReadLine();
                         int ordemDeServicoAdicionar;
                         bool ehNroOrdemServicoValida = int.TryParse(ordemDeServicoString, out ordemDeServicoAdicionar);
+                        OrdemServico OSadicionar = OrdensDeServico.FirstOrDefault(os => os.Id == ordemDeServicoAdicionar);
 
-                        while (!ehNroOrdemServicoValida || ordemDeServicoAdicionar <= 0)
+                        while (OSadicionar == null)
                         {
-                            Console.WriteLine("Digite um número válido!");
+                            Console.WriteLine("Informe uma Ordem de Serviço válida!");
                             Console.Write("Número da Ordem de Serviço: ");
                             ordemDeServicoString = Console.ReadLine();
                             ehNroOrdemServicoValida = int.TryParse(ordemDeServicoString, out ordemDeServicoAdicionar);
+                            OSadicionar = OrdensDeServico.FirstOrDefault(os => os.Id == ordemDeServicoAdicionar);
                         }
-
-                        OrdemServico OSadicionar = OrdensDeServico.FirstOrDefault(os => os.Numero == ordemDeServicoAdicionar);
 
                         while (desejaAddMaisServicos.ToUpper() != "N")
                         {
                             Console.Write("ID do Serviço: ");
                             string idServicoAdicionarString = Console.ReadLine();
                             bool ehIdServicoValida = int.TryParse(idServicoAdicionarString, out idServicoAdicionar);
+                            Servico servicoParaAddOS = Servicos.FirstOrDefault(s => s.Id == idServicoAdicionar);
 
-                            while (!ehIdServicoValida || idServicoAdicionar <= 0)
+                            while (servicoParaAddOS == null)
                             {
-                                Console.WriteLine("Digite um número válido!");
+                                Console.WriteLine("Informe um ID de Serviço válido!");
                                 Console.Write("ID do Serviço: ");
                                 idServicoAdicionarString = Console.ReadLine();
                                 ehIdServicoValida = int.TryParse(idServicoAdicionarString, out idServicoAdicionar);
+                                servicoParaAddOS = Servicos.FirstOrDefault(s => s.Id == idServicoAdicionar);
                             }
 
-                            Servico servicoParaAddOS = Servicos.FirstOrDefault(s => s.Id == idServicoAdicionar);
                             ServicosParaAdicionar.Add(servicoParaAddOS);
                             desejaAddMaisServicos = "";
 
@@ -1405,16 +1434,17 @@ while (opcaoMenu != 0)
                         ordemDeServicoString = Console.ReadLine();
                         ordemDeServicoAdicionar = 0;
                         ehNroOrdemServicoValida = int.TryParse(ordemDeServicoString, out ordemDeServicoAdicionar);
+                        OSadicionar = OrdensDeServico.FirstOrDefault(os => os.Id == ordemDeServicoAdicionar);
 
-                        while (!ehNroOrdemServicoValida || ordemDeServicoAdicionar <= 0)
+                        while (OSadicionar == null)
                         {
-                            Console.WriteLine("Digite um número válido!");
+                            Console.WriteLine("Informe uma Ordem de Serviço válida!");
                             Console.Write("Número da Ordem de Serviço: ");
                             ordemDeServicoString = Console.ReadLine();
                             ehNroOrdemServicoValida = int.TryParse(ordemDeServicoString, out ordemDeServicoAdicionar);
+                            OSadicionar = OrdensDeServico.FirstOrDefault(os => os.Id == ordemDeServicoAdicionar);
                         }
 
-                        OSadicionar = OrdensDeServico.FirstOrDefault(os => os.Numero == ordemDeServicoAdicionar);
                         maisPecas = "";
                         idDaPeca = 0;
                         PecasSelecionadas = [];
@@ -1424,16 +1454,17 @@ while (opcaoMenu != 0)
                             Console.Write("ID da Peça: ");
                             string idDaPecaString = Console.ReadLine();
                             bool ehIdPecaValida = int.TryParse(idDaPecaString, out idDaPeca);
+                            Peca pecasParaAddOS = Pecas.FirstOrDefault(p => p.Id == idDaPeca);
 
-                            while (!ehIdPecaValida || idDaPeca <= 0)
+                            while (pecasParaAddOS == null)
                             {
-                                Console.WriteLine("Digite um número válido!");
+                                Console.WriteLine("Informe um ID de Peça válido!");
                                 Console.Write("ID da Peça: ");
                                 idDaPecaString = Console.ReadLine();
                                 ehIdPecaValida = int.TryParse(idDaPecaString, out idDaPeca);
+                                pecasParaAddOS = Pecas.FirstOrDefault(p => p.Id == idDaPeca);
                             }
 
-                            Peca pecasParaAddOS = Pecas.FirstOrDefault(p => p.Id == idDaPeca);
                             PecasSelecionadas.Add(pecasParaAddOS);
 
                             maisPecas = "";
@@ -1463,19 +1494,23 @@ while (opcaoMenu != 0)
                         ordemDeServicoString = Console.ReadLine();
                         int ordemDeServicoEmEdicao = 0;
                         ehNroOrdemServicoValida = int.TryParse(ordemDeServicoString, out ordemDeServicoEmEdicao);
+                        OrdemServico OrdemDeServicoEmEdicao = OrdensDeServico.FirstOrDefault(os => os.Id == ordemDeServicoEmEdicao);
 
-                        while (!ehNroOrdemServicoValida || ordemDeServicoEmEdicao <= 0)
+                        while (OrdemDeServicoEmEdicao == null)
                         {
-                            Console.WriteLine("Digite um número válido!");
+                            Console.WriteLine("Informe uma Ordem de Serviço válida!");
                             Console.Write("Número da Ordem de Serviço: ");
                             ordemDeServicoString = Console.ReadLine();
                             ehNroOrdemServicoValida = int.TryParse(ordemDeServicoString, out ordemDeServicoEmEdicao);
+                            OrdemDeServicoEmEdicao = OrdensDeServico.FirstOrDefault(os => os.Id == ordemDeServicoEmEdicao);
                         }
-
-                        OrdemServico OrdemDeServicoEmEdicao = OrdensDeServico.FirstOrDefault(os => os.Numero == ordemDeServicoEmEdicao);
 
                         OrdemDeServicoEmEdicao.FinalizarOrdemServico();
                         Console.WriteLine($"Ordem de Serviço nº {ordemDeServicoEmEdicao} foi finalizada com sucesso.");
+
+                        NotificacaoWPP notificacao = new NotificacaoWPP();
+                        string mensagem = $"Olá, {OrdemDeServicoEmEdicao.Cliente.Nome}, tudo bem? Estamos passando para avisa-lo que os reparos no seu veículo {OrdemDeServicoEmEdicao.Veiculo.Marca} {OrdemDeServicoEmEdicao.Veiculo.Modelo} foram concluídos.";
+                        notificacao.ConclusaoOrdemDeServicoAsync(mensagem);
 
                         Console.WriteLine();
                         break;
@@ -1488,20 +1523,19 @@ while (opcaoMenu != 0)
                         ordemDeServicoString = Console.ReadLine();
                         ordemDeServicoEmEdicao = 0;
                         ehNroOrdemServicoValida = int.TryParse(ordemDeServicoString, out ordemDeServicoEmEdicao);
+                        OrdemDeServicoEmEdicao = OrdensDeServico.FirstOrDefault(os => os.Id == ordemDeServicoEmEdicao);
 
-                        while (!ehNroOrdemServicoValida || ordemDeServicoEmEdicao <= 0)
+                        while (OrdemDeServicoEmEdicao == null)
                         {
-                            Console.WriteLine("Digite um número válido!");
+                            Console.WriteLine("Informe uma Ordem de Serviço válida!");
                             Console.Write("Número da Ordem de Serviço: ");
                             ordemDeServicoString = Console.ReadLine();
                             ehNroOrdemServicoValida = int.TryParse(ordemDeServicoString, out ordemDeServicoEmEdicao);
+                            OrdemDeServicoEmEdicao = OrdensDeServico.FirstOrDefault(os => os.Id == ordemDeServicoEmEdicao);
                         }
-
-                        OrdemDeServicoEmEdicao = OrdensDeServico.FirstOrDefault(os => os.Numero == ordemDeServicoEmEdicao);
 
                         OrdemDeServicoEmEdicao.CancelarOrdemServico();
                         Console.WriteLine($"Ordem de Serviço nº {ordemDeServicoEmEdicao} foi cancelada.");
-
                         Console.WriteLine();
                         break;
 
@@ -1509,15 +1543,14 @@ while (opcaoMenu != 0)
                     case 6:
                         Console.WriteLine();
                         Console.WriteLine("=== Listar Ordens de Serviço ===");
-
                         foreach (OrdemServico ordemServico in OrdensDeServico)
                         {
                             Console.WriteLine();
                             ordemServico.DetalharOrdemServico();
                         }
-
                         Console.WriteLine();
                         break;
+
                     default:
                         break;
                 }
@@ -1554,7 +1587,6 @@ while (opcaoMenu != 0)
                     case 1:
                         Console.WriteLine();
                         Console.WriteLine("=== Relatório | Faturamento Total ===");
-
                         decimal totalFaturadoPeca = OrdensDeServico
                             .Where(os => os.Status != StatusOrdemServico.Cancelada)
                             .SelectMany(os => os.ListaPecas)
@@ -1566,7 +1598,7 @@ while (opcaoMenu != 0)
                             .Sum(p => p.ValorBase * p.TempoEstimadoHoras);
 
                         decimal faturamentoTotal = totalFaturadoPeca + totalFaturadoServico;
-                        
+
                         Console.WriteLine($"Total Peças: {totalFaturadoPeca:C2}");
                         Console.WriteLine($"Total Serviços: {totalFaturadoServico:C2}");
                         Console.WriteLine($"Total Faturado: {faturamentoTotal:C2}");
@@ -1577,21 +1609,22 @@ while (opcaoMenu != 0)
                     case 2:
                         Console.WriteLine();
                         Console.WriteLine("=== Relatório | Serviços mais vendidos ===");
-                        var novoRelatorio = OrdensDeServico
+                        var ServicosMaisExecutados = OrdensDeServico
                             .SelectMany(os => os.ListaServicos)
                             .GroupBy(p => p.Nome)
                             .Select(g => new
                             {
                                 Servico = g.Key,
-                                QtdVendas = g.Count()
+                                QtdVendas = g.Count(),
+                                ValorFaturado = g.Sum(s => s.ValorBase * s.TempoEstimadoHoras)
                             })
                             .OrderByDescending(g => g.QtdVendas);
 
-                        foreach (var item in novoRelatorio)
+                        foreach (var servico in ServicosMaisExecutados)
                         {
-                            Console.WriteLine($"{item.Servico}: {item.QtdVendas}");
+                            var totalFaturado = servico.QtdVendas * servico.ValorFaturado;
+                            Console.WriteLine($"{servico.Servico}: {servico.QtdVendas} - Faturado: {totalFaturado:C2}");
                         }
-
                         Console.WriteLine();
                         break;
 
@@ -1599,20 +1632,63 @@ while (opcaoMenu != 0)
                     case 3:
                         Console.WriteLine();
                         Console.WriteLine("=== Relatório | Top Clientes por Faturamento ===");
+                        var ClientesMaiorFaturamento = OrdensDeServico
+                            .GroupBy(os => os.Cliente)
+                            .Select(g => new
+                            {
+                                Cliente = g.Key,
+                                Pecas = g
+                                .SelectMany(os => os.ListaPecas)
+                                .Sum(p => p.PrecoUnitario),
+
+                                Servicos = g
+                                .SelectMany(os => os.ListaServicos)
+                                .Sum(s => s.TempoEstimadoHoras * s.ValorBase),
+
+                                TotalFaturado = g.SelectMany(os => os.ListaPecas)
+                                .Sum(p => p.PrecoUnitario) +
+                                g.SelectMany(os => os.ListaServicos)
+                                .Sum(s => s.TempoEstimadoHoras * s.ValorBase)
+                            })
+                            .OrderByDescending(o => o.TotalFaturado);
+
+                        foreach (var cliente in ClientesMaiorFaturamento)
+                        {
+                            Console.WriteLine($"{cliente.Cliente.Nome} | Peças: {cliente.Pecas:C2} | Serviços: {cliente.Servicos:C2} | Total: {cliente.TotalFaturado:C2}");
+                        }
                         Console.WriteLine();
                         break;
+
                     // Peças mais utilizadas
                     case 4:
                         Console.WriteLine();
                         Console.WriteLine("=== Relatório | Peças mais vendidas ===");
+                        var PecasMaisVendidas = OrdensDeServico
+                            .SelectMany(os => os.ListaPecas)
+                            .GroupBy(p => p.Nome)
+                            .Select(g => new
+                            {
+                                Peca = g.Key,
+                                QtdVendas = g.Count(),
+                                ValorFaturado = g.Sum(s => s.PrecoUnitario)
+                            })
+                            .OrderByDescending(g => g.QtdVendas);
+
+                        foreach (var peca in PecasMaisVendidas)
+                        {
+                            Console.WriteLine($"{peca.Peca}: {peca.QtdVendas} - Faturado: {peca.ValorFaturado:C2}");
+                        }
                         Console.WriteLine();
                         break;
+
                     // Ordens em andamento
                     case 5:
                         Console.WriteLine();
-                        Console.WriteLine("=== Relatório | OS's em andamento ===");
+                        var OrdensServicoEmAndamento = OrdensDeServico.Where(os => os.Status == StatusOrdemServico.EmAndamento).Count();
+                        Console.WriteLine($"=== Relatório | OS's em andamento: {OrdensServicoEmAndamento} ===");
                         Console.WriteLine();
                         break;
+
                     default:
                         break;
                 }
@@ -1631,6 +1707,7 @@ while (opcaoMenu != 0)
                 Console.Write("Selecione uma das opções: ");
                 inputUsuario = Console.ReadLine();
                 opcaoMenuEhValida = int.TryParse(inputUsuario, out opcaoMenu);
+                NotificacaoWPP notificacao = new NotificacaoWPP();
 
                 while (!opcaoMenuEhValida)
                 {
@@ -1646,14 +1723,30 @@ while (opcaoMenu != 0)
                     case 1:
                         Console.WriteLine();
                         Console.WriteLine("=== Notificação | Confirmar Agendamento ===");
+                        List<Agendamento> agendamentosParaConfirmar = Agendamentos.Where(a => a.Status == StatusOrdemServico.Agendada).ToList();
+
+                        foreach (Agendamento agendamento in agendamentosParaConfirmar)
+                        {
+                            string mensagem = $"Olá, {agendamento.Cliente.Nome}, tudo bem? Seu veículo {agendamento.Veiculo.Marca} {agendamento.Veiculo.Modelo} tem um horário agendado para {agendamento.DataAgendamento}. Por gentileza poderia confirmar?";
+                            notificacao.ConfirmarAgendamentosAsync(mensagem);
+                        }
                         Console.WriteLine();
                         break;
+
                     // Enviar conclusão de serviço
                     case 2:
                         Console.WriteLine();
                         Console.WriteLine("=== Notificação | Conclusão da O.S. ===");
+                        List<OrdemServico> ordensDeServicoFinalizadas = OrdensDeServico.Where(a => a.Status == StatusOrdemServico.Finalizada).ToList();
+
+                        foreach (OrdemServico ordemServico in ordensDeServicoFinalizadas)
+                        {
+                            string mensagem = $"Olá, {ordemServico.Cliente.Nome}, tudo bem? Estamos passando para avisa-lo que os reparos no seu veículo {ordemServico.Veiculo.Marca} {ordemServico.Veiculo.Modelo} foram concluídos.";
+                            notificacao.ConclusaoOrdemDeServicoAsync(mensagem);
+                        }
                         Console.WriteLine();
                         break;
+
                     default:
                         break;
                 }

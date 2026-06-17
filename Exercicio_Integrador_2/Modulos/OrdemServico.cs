@@ -11,26 +11,26 @@ namespace Exercicio_Integrador_2.Modulos
 {
     public class OrdemServico
     {
-        public int Numero { get; private set; }
+        public int Id { get; private set; }
         public Cliente Cliente { get; private set; }
         public Veiculo Veiculo { get; private set; }
         public Funcionario FuncionarioResponsavel { get; private set; }
         public List<Servico> ListaServicos { get; private set; }
         public List<Peca> ListaPecas { get; private set; }
-        public DateTime DataAbertura { get; private set; }
+        public DateTime DataAberturaOS { get; private set; }
         public StatusOrdemServico Status { get; private set; }
 
-        public OrdemServico(int numero, Cliente cliente, Veiculo veiculo, Funcionario funcionarioResponsavel, 
-                            List<Servico> listaservicos, List<Peca> listapecas, DateTime dataabertura, 
+        public OrdemServico(int id, Cliente cliente, Veiculo veiculo, Funcionario funcionarioResponsavel, 
+                            List<Servico> listaservicos, List<Peca> listapecas, DateTime dataaberturaOS, 
                             StatusOrdemServico status)
         {
-            Numero = numero;
+            Id = id;
             Cliente = cliente;
             Veiculo = veiculo;
             FuncionarioResponsavel = funcionarioResponsavel;
             ListaServicos = listaservicos;
             ListaPecas = listapecas;
-            DataAbertura = dataabertura;
+            DataAberturaOS = dataaberturaOS;
             Status = status;
         }
 
@@ -46,8 +46,8 @@ namespace Exercicio_Integrador_2.Modulos
 
         public void DetalharOrdemServico()
         {
-            Console.WriteLine($"====================== Ordem de Serviço nº: {Numero} ======================");
-            Console.WriteLine($"Status: {Status} | Data Abertura: {DataAbertura}");
+            Console.WriteLine($"====================== Ordem de Serviço nº: {Id} ======================");
+            Console.WriteLine($"Status: {Status} | Data Abertura: {DataAberturaOS}");
             Console.WriteLine($"Cliente: {Cliente.Nome} - {Cliente.GetType().Name}");
             Console.WriteLine($"Veículo: {Veiculo.Placa}  |  {Veiculo.Marca} {Veiculo.Modelo} {Veiculo.AnoFabricacao}");
             Console.WriteLine($"Responsável: {FuncionarioResponsavel.Nome} | {FuncionarioResponsavel.Cargo}");
