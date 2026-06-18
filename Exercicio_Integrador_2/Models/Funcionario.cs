@@ -1,8 +1,4 @@
-﻿/* Classe Funcionario - Herda de Pessoa.
-Atributos: Cargo, Salario
-Métodos: ExibirDados() */
-
-namespace Exercicio_Integrador_2.Pessoas
+﻿namespace Exercicio_Integrador_2.Pessoas
 {
     public class Funcionario : Pessoa
     {

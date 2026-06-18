@@ -1,8 +1,4 @@
-﻿/* Classe Abstrata Pessoa -  Representa qualquer pessoa cadastrada no sistema.
-Atributos: Id, Nome, Telefone, Email
-Métodos: ExibirDados() */
-
-namespace Exercicio_Integrador_2.Pessoas
+﻿namespace Exercicio_Integrador_2.Pessoas
 {
     public abstract class Pessoa
     {
@@ -21,7 +17,7 @@ namespace Exercicio_Integrador_2.Pessoas
 
         public virtual string ExibirDados()
         {
-            return $"ID: {Id} | Nome: {Nome} | Telefone: {Telefone} | E-mail: {Email} | Tipo de Cliente: {GetType().Name}";
+            return $"ID: {Id} | Nome: {Nome} | Telefone: {Telefone} | E-mail: {Email}";
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿/* Classe Peça - Representa um item do estoque.
-Atributos: Id, Nome, Quantidade, PrecoUnitario
-Métodos: BaixarEstoque(), ReporEstoque() */
-
-namespace Exercicio_Integrador_2.Modulos
+﻿namespace Exercicio_Integrador_2.Models
 {
     public class Peca
     {
@@ -27,6 +23,11 @@ namespace Exercicio_Integrador_2.Modulos
         public void ReporEstoque(Peca peca, int qtdParaSubirEstoque) 
         {
             peca.QtdEstoque += qtdParaSubirEstoque;
+        }
+
+        public void DetalharPeca()
+        {
+            Console.WriteLine($"ID: {Id} | Descrição: {Nome} | Estoque: {QtdEstoque} | Valor unitário: {PrecoUnitario:C2}");
         }
     }
 }

@@ -1,13 +1,6 @@
-﻿/* Classe OrdemServico - Representa o atendimento de um cliente.
-Atributos: Numero, Cliente, Veiculo, FuncionarioResponsavel, ListaServicos, ListaPecas, DataAbertura e Status
-Métodos: AdicionarServico(), AdicionarPeca(), CalcularValorTotal(), Finalizar(), Cancelar()
-Enum Obrigatório - StatusOrdemServico
-Criar os seguintes estados: Aberta, EmAndamento, AguardandoPecas, Finalizada, Cancelada */
+﻿using Exercicio_Integrador_2.Pessoas;
 
-using Exercicio_Integrador_2.Pessoas;
-using Exercicio_Integrador_2.Veiculos;
-
-namespace Exercicio_Integrador_2.Modulos
+namespace Exercicio_Integrador_2.Models
 {
     public class OrdemServico
     {

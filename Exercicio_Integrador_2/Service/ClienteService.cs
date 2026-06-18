@@ -1,9 +1,18 @@
-﻿using Exercicio_Integrador_2.Pessoas;
+﻿using Exercicio_Integrador_2.Models;
+using Exercicio_Integrador_2.Pessoas;
+using Exercicio_Integrador_2.Repository;
 
 namespace Exercicio_Integrador_2.Service
 {
     public class ClienteService
     {
+        private readonly ClienteRepository _clienteRepository;
+
+        public ClienteService(ClienteRepository repository)
+        {
+            _clienteRepository = repository;
+        }
+
         public void CadastrarCliente()
         {
             Console.WriteLine("=== Cadastrar Cliente ===");
@@ -43,20 +52,34 @@ namespace Exercicio_Integrador_2.Service
                 }
             }
 
-            if (tipoCliente == "C")
+            if (tipoCliente.ToUpper() == "C")
             {
-                Cliente novoCliente = new Cliente(Clientes.Count + 1, nomeCliente, telefoneCliente, emailCliente, DateTime.UtcNow, 0);
-                Clientes.Add(novoCliente);
+                Cliente novoCliente = new Cliente(_clienteRepository.QtdClientesCadastrados()+1, 
+                                                  nomeCliente, 
+                                                  telefoneCliente, 
+                                                  emailCliente, 
+                                                  TipoDeCliente.Padrão);
+                _clienteRepository.CadastrarCliente(novoCliente);
             }
-            else if (tipoCliente == "V")
+            else if (tipoCliente.ToUpper() == "V")
             {
-                Cliente novoCliente = new ClienteVip(Clientes.Count + 1, nomeCliente, telefoneCliente, emailCliente, DateTime.UtcNow, 0);
-                Clientes.Add(novoCliente);
+                Cliente novoCliente = new Cliente(_clienteRepository.QtdClientesCadastrados()+1, 
+                                                  nomeCliente, 
+                                                  telefoneCliente, 
+                                                  emailCliente, 
+                                                  TipoDeCliente.VIP);
+                _clienteRepository.CadastrarCliente(novoCliente);
             }
             else
             {
-                Cliente novoCliente = new ClienteFrotista(Clientes.Count + 1, nomeCliente, telefoneCliente, emailCliente, DateTime.UtcNow, 0, nomeEmpresa, qtdVeiculos);
-                Clientes.Add(novoCliente);
+                Cliente novoCliente = new Cliente(_clienteRepository.QtdClientesCadastrados()+1, 
+                                                  nomeCliente, 
+                                                  telefoneCliente, 
+                                                  emailCliente, 
+                                                  TipoDeCliente.Frotista, 
+                                                  nomeEmpresa, 
+                                                  qtdVeiculos);
+                _clienteRepository.CadastrarCliente(novoCliente);
             }
 
             Console.WriteLine("Cliente cadastrado com sucesso.");
@@ -72,7 +95,7 @@ namespace Exercicio_Integrador_2.Service
         {
             Console.WriteLine();
             Console.WriteLine("=== Clientes Cadastrados ===");
-            foreach (Cliente cliente in Clientes)
+            foreach (Cliente cliente in _clienteRepository.ListarClientes())
             {
                 Console.WriteLine(cliente.ExibirDados());
             }
@@ -85,7 +108,8 @@ namespace Exercicio_Integrador_2.Service
             Console.WriteLine("=== Buscar Cliente ===");
             Console.Write("Informe o Nome para pesquisar: ");
             string nomePesquisaCliente = Console.ReadLine();
-            if (Clientes.Any(c => c.Nome.ToUpper() == nomePesquisaCliente.ToUpper()))
+
+            if (_clienteRepository.PesquisarClientePorNome(nomePesquisaCliente))
             {
                 Console.WriteLine("Pessoa cadastrada na base de Clientes.");
             }

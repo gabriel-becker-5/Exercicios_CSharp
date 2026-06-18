@@ -1,8 +1,4 @@
-﻿/* Classe Serviço - Representa um serviço executado pela oficina.
-Atributos: Id, Nome, ValorBase, TempoEstimadoHoras
-Exemplos de Serviços: Troca de óleo, Alinhamento, Balanceamento, Revisão, Diagnóstico eletrônico */
-
-namespace Exercicio_Integrador_2.Modulos
+﻿namespace Exercicio_Integrador_2.Models
 {
     public class Servico
     {
@@ -17,6 +13,11 @@ namespace Exercicio_Integrador_2.Modulos
             Nome = nome;
             ValorBase = valorbase;
             TempoEstimadoHoras = tempoestimadohoras;
+        }
+
+        public void DetalharServico()
+        {
+            Console.WriteLine($"ID: {Id} | Descrição: {Nome} | Valor Hora: {ValorBase:C2} | Tempo Estimado: {TempoEstimadoHoras} horas");
         }
     }
 }

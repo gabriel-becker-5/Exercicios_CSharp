@@ -1,12 +1,7 @@
-﻿/* Classe Agendamento - Representa um horário reservado.
-Atributos: Id, Cliente, Veiculo, DataHora, Servico
-Métodos: Confirmar(), Cancelar() */
-
-using Exercicio_Integrador_2.Excecoes;
+﻿using Exercicio_Integrador_2.Excecoes;
 using Exercicio_Integrador_2.Pessoas;
-using Exercicio_Integrador_2.Veiculos;
 
-namespace Exercicio_Integrador_2.Modulos
+namespace Exercicio_Integrador_2.Models
 {
     public class Agendamento
     {
