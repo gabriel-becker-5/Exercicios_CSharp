@@ -26,6 +26,31 @@ namespace Exercicio_Integrador_2.Service
             _pecaRepository = pecarepository;
         }
 
+        public bool CadastroClienteEhValido(string idClienteString)
+        {
+            int idCliente;
+            bool ehIdValida = int.TryParse(idClienteString, out idCliente);
+            Cliente clienteSelecionado = _clienteRepository.PesquisarClientePorID(idCliente);
+
+            if (clienteSelecionado == null || ehIdValida == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool PlacaEhValida(string placaVeiculo)
+        {
+            Veiculo veiculoSelecionado = _veiculoRepository.PesquisarVeiculoPorPlaca(placaVeiculo);
+
+            if (veiculoSelecionado == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public void CadastrarAgendamento()
         {
             Console.WriteLine("=== Criar novo Agendamento ===");
