@@ -180,7 +180,7 @@ namespace Exercicio_Integrador_2.Service
             }
 
             Console.WriteLine();
-            agendamentoParaCancelar.DetalharAgendamento();
+            Console.WriteLine(agendamentoParaCancelar.DetalharAgendamento());
 
             string confirmaCancelamento = "";
             Console.WriteLine();
@@ -214,7 +214,7 @@ namespace Exercicio_Integrador_2.Service
             foreach (Agendamento agendamento in listaDeAgendamentos)
             {
                 Console.WriteLine();
-                agendamento.DetalharAgendamento();
+                Console.WriteLine(agendamento.DetalharAgendamento());
             }
             Console.WriteLine();
         }
@@ -235,7 +235,7 @@ namespace Exercicio_Integrador_2.Service
                 ehIdAgendamentoValida = int.TryParse(idDoAgendamentoString, out idDoAgendamento);
             }
 
-            _agendamentoRepository.PesquisarAgendamentoPorID(idDoAgendamento).DetalharAgendamento();
+            Console.WriteLine(_agendamentoRepository.PesquisarAgendamentoPorID(idDoAgendamento).DetalharAgendamento());
         }
     }
 }

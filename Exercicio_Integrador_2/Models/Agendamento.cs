@@ -1,17 +1,18 @@
 ﻿using Exercicio_Integrador_2.Excecoes;
 using Exercicio_Integrador_2.Pessoas;
+using System.Text;
 
 namespace Exercicio_Integrador_2.Models
 {
     public class Agendamento
     {
         public int Id { get; private set; }
-        public Cliente Cliente { get; private set; } 
-        public Veiculo Veiculo { get; private set;}
+        public Cliente Cliente { get; private set; }
+        public Veiculo Veiculo { get; private set; }
         public List<Servico> ListaServicos { get; private set; }
         public List<Peca> ListaPecas { get; private set; }
         public DateTime DataAgendamento { get; private set; }
-        public StatusOrdemServico Status { get; private set; }        
+        public StatusOrdemServico Status { get; private set; }
 
         public bool ConflitaCom(Agendamento agendamento)
         {
@@ -27,7 +28,7 @@ namespace Exercicio_Integrador_2.Models
             return possuiConflito;
         }
 
-        public Agendamento(int id, Cliente cliente, Veiculo veiculo, List<Servico> listaservicos, 
+        public Agendamento(int id, Cliente cliente, Veiculo veiculo, List<Servico> listaservicos,
             List<Peca> listapecas, DateTime dataagendamento, StatusOrdemServico status)
         {
             Id = id;
@@ -49,24 +50,27 @@ namespace Exercicio_Integrador_2.Models
             Status = StatusOrdemServico.Cancelada;
         }
 
-        public void DetalharAgendamento()
+        public string DetalharAgendamento()
         {
-            Console.WriteLine($"======================= Agendamento nº: {Id} ========================");
-            Console.WriteLine($"Status: {Status} | Data Agendamento: {DataAgendamento}");
-            Console.WriteLine($"Cliente: {Cliente.Nome} - {Cliente.GetType().Name}");
-            Console.WriteLine($"Veículo: {Veiculo.Placa}  |  {Veiculo.Marca} {Veiculo.Modelo} {Veiculo.AnoFabricacao}");
-            Console.WriteLine("-------------------------------------------------------------------");
-            Console.WriteLine("| Relação de Peças & Serviços Agendados ");
-            Console.WriteLine("-------------------------------------------------------------------");
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"======================= Agendamento nº: {Id} ========================");
+            sb.AppendLine($"Status: {Status} | Data Agendamento: {DataAgendamento}");
+            sb.AppendLine($"Cliente: {Cliente.Nome} - {Cliente.GetType().Name}");
+            sb.AppendLine($"Veículo: {Veiculo.Placa}  |  {Veiculo.Marca} {Veiculo.Modelo} {Veiculo.AnoFabricacao}");
+            sb.AppendLine($"-------------------------------------------------------------------");
+            sb.AppendLine($"| Relação de Peças & Serviços Agendados");
+            sb.AppendLine($"-------------------------------------------------------------------");
             foreach (Peca peca in ListaPecas)
             {
-                Console.WriteLine($"- {peca.Nome} | Valor Unitário: {peca.PrecoUnitario:C2} | Quantidade: 1");
+                sb.AppendLine($"- {peca.Nome} | Valor Unitário: {peca.PrecoUnitario:C2} | Quantidade: 1");
             }
             foreach (Servico servico in ListaServicos)
             {
-                Console.WriteLine($"- {servico.Nome} | Valor Hora: {servico.ValorBase:C2} | Tempo Execução: {servico.TempoEstimadoHoras} hora(s)");
+                sb.AppendLine($"- {servico.Nome} | Valor Hora: {servico.ValorBase:C2} | Tempo Execução: {servico.TempoEstimadoHoras} hora(s)");
             }
-            Console.WriteLine("===================================================================");
+            sb.AppendLine($"===================================================================");
+
+            return sb.ToString();
         }
     }
 }
