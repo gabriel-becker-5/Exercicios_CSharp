@@ -370,7 +370,7 @@ namespace Exercicio_Integrador_2.Service
             foreach (OrdemServico os in listaOrdensServico)
             {
                 Console.WriteLine();
-                os.DetalharOrdemServico();
+                Console.WriteLine(os.DetalharOrdemServico());
             }
             Console.WriteLine();
         }

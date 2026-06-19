@@ -94,7 +94,7 @@ namespace Exercicio_Integrador_2.Service
             List<Peca> listaPecas = _pecaRepository.ListarTodasPecas();
             foreach (Peca peca in listaPecas)
             {
-                peca.DetalharPeca();
+                Console.WriteLine(peca.DetalharPeca());
             }
             Console.WriteLine();
         }

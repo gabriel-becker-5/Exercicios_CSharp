@@ -1,4 +1,5 @@
 ﻿using Exercicio_Integrador_2.Pessoas;
+using System.Text;
 
 namespace Exercicio_Integrador_2.Models
 {
@@ -37,39 +38,42 @@ namespace Exercicio_Integrador_2.Models
             Status = StatusOrdemServico.Cancelada;
         }
 
-        public void DetalharOrdemServico()
+        public string DetalharOrdemServico()
         {
-            Console.WriteLine($"====================== Ordem de Serviço nº: {Id} ======================");
-            Console.WriteLine($"Status: {Status} | Data Abertura: {DataAberturaOS}");
-            Console.WriteLine($"Cliente: {Cliente.Nome} - {Cliente.GetType().Name}");
-            Console.WriteLine($"Veículo: {Veiculo.Placa}  |  {Veiculo.Marca} {Veiculo.Modelo} {Veiculo.AnoFabricacao}");
-            Console.WriteLine($"Responsável: {FuncionarioResponsavel.Nome} | {FuncionarioResponsavel.Cargo}");
-            Console.WriteLine("--------------------------------------------------------------------");
-            Console.WriteLine("| Relação de Peças & Serviços");
-            Console.WriteLine("-------------------------------------------------------------------");
-
+            StringBuilder sb = new StringBuilder();
             decimal valorTotalPecas = 0;
             decimal valorTotalServicos = 0;
 
+            sb.AppendLine($"====================== Ordem de Serviço nº: {Id} ======================");
+            sb.AppendLine($"Status: {Status} | Data Abertura: {DataAberturaOS}");
+            sb.AppendLine($"Cliente: {Cliente.Nome} - {Cliente.GetType().Name}");
+            sb.AppendLine($"Veículo: {Veiculo.Placa}  |  {Veiculo.Marca} {Veiculo.Modelo} {Veiculo.AnoFabricacao}");
+            sb.AppendLine($"Responsável: {FuncionarioResponsavel.Nome} | {FuncionarioResponsavel.Cargo}");
+            sb.AppendLine("--------------------------------------------------------------------");
+            sb.AppendLine("| Relação de Peças & Serviços");
+            sb.AppendLine("-------------------------------------------------------------------");
+
             foreach (Peca peca in ListaPecas)
             {
-                Console.WriteLine($"- {peca.Nome} | Valor Unitário: {peca.PrecoUnitario:C2} | Quantidade: 1");
+                sb.AppendLine($"- {peca.Nome} | Valor Unitário: {peca.PrecoUnitario:C2} | Quantidade: 1");
                 valorTotalPecas += peca.PrecoUnitario;
             }
             
             foreach (Servico servico in ListaServicos)
             {
-                Console.WriteLine($"- {servico.Nome} | Valor Hora: {servico.ValorBase:C2} | Tempo Execução: {servico.TempoEstimadoHoras} hora(s)");
+                sb.AppendLine($"- {servico.Nome} | Valor Hora: {servico.ValorBase:C2} | Tempo Execução: {servico.TempoEstimadoHoras} hora(s)");
                 valorTotalServicos += servico.ValorBase * servico.TempoEstimadoHoras;
             }
 
             decimal valorTotalOS = valorTotalPecas + valorTotalServicos;
 
-            Console.WriteLine("--------------------------------------------------------------------");
-            Console.WriteLine($"Peças: {valorTotalPecas:C2}");
-            Console.WriteLine($"Serviços: {valorTotalServicos:C2}");
-            Console.WriteLine($"Valor Total: {valorTotalOS:C2}");
-            Console.WriteLine("====================================================================");
+            sb.AppendLine("--------------------------------------------------------------------");
+            sb.AppendLine($"Peças: {valorTotalPecas:C2}");
+            sb.AppendLine($"Serviços: {valorTotalServicos:C2}");
+            sb.AppendLine($"Valor Total: {valorTotalOS:C2}");
+            sb.AppendLine("====================================================================");
+
+            return sb.ToString();
         }
     }
 }

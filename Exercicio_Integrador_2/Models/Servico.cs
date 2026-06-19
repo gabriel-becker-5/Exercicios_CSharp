@@ -15,9 +15,9 @@
             TempoEstimadoHoras = tempoestimadohoras;
         }
 
-        public void DetalharServico()
+        public string DetalharServico()
         {
-            Console.WriteLine($"ID: {Id} | Descrição: {Nome} | Valor Hora: {ValorBase:C2} | Tempo Estimado: {TempoEstimadoHoras} horas");
+            return $"ID: {Id} | Descrição: {Nome} | Valor Hora: {ValorBase:C2} | Tempo Estimado: {TempoEstimadoHoras} horas";
         }
     }
 }

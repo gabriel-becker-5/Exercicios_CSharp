@@ -62,7 +62,7 @@ namespace Exercicio_Integrador_2.Service
             List<Servico> listaServicos = _servicoRepository.ListarTodosServicos();
             foreach (Servico servico in listaServicos)
             {
-                servico.DetalharServico();
+                Console.WriteLine(servico.DetalharServico());
             }
             Console.WriteLine();
         }

@@ -25,9 +25,9 @@
             peca.QtdEstoque += qtdParaSubirEstoque;
         }
 
-        public void DetalharPeca()
+        public string DetalharPeca()
         {
-            Console.WriteLine($"ID: {Id} | Descrição: {Nome} | Estoque: {QtdEstoque} | Valor unitário: {PrecoUnitario:C2}");
+            return $"ID: {Id} | Descrição: {Nome} | Estoque: {QtdEstoque} | Valor unitário: {PrecoUnitario:C2}";
         }
     }
 }
