@@ -1,5 +1,4 @@
-﻿using Exercicio_Integrador_2.Excecoes;
-using Exercicio_Integrador_2.Pessoas;
+﻿using Exercicio_Integrador_2.Pessoas;
 using System.Text;
 
 namespace Exercicio_Integrador_2.Models
@@ -13,20 +12,6 @@ namespace Exercicio_Integrador_2.Models
         public List<Peca> ListaPecas { get; private set; }
         public DateTime DataAgendamento { get; private set; }
         public StatusOrdemServico Status { get; private set; }
-
-        public bool ConflitaCom(Agendamento agendamento)
-        {
-            bool possuiConflito = DataAgendamento.Day == agendamento.DataAgendamento.Day &&
-                   DataAgendamento.Month == agendamento.DataAgendamento.Month &&
-                   DataAgendamento.Year == agendamento.DataAgendamento.Year &&
-                   DataAgendamento.Hour == agendamento.DataAgendamento.Hour &&
-                   DataAgendamento.Minute == agendamento.DataAgendamento.Minute;
-            if (possuiConflito)
-            {
-                throw new HorarioIndisponivelException();
-            }
-            return possuiConflito;
-        }
 
         public Agendamento(int id, Cliente cliente, Veiculo veiculo, List<Servico> listaservicos,
             List<Peca> listapecas, DateTime dataagendamento, StatusOrdemServico status)

@@ -15,7 +15,6 @@ namespace Exercicio_Integrador_2.Controller
             _agendamentoService = agendamentoservice;
         }
 
-
         public void CadastrarAgendamento()
         {
             Console.WriteLine("=== Criar novo Agendamento ===");
@@ -43,50 +42,48 @@ namespace Exercicio_Integrador_2.Controller
                 verificaPlaca = _agendamentoService.PlacaEhValida(placaDoVeiculo);
             }
 
-
-
-
-
-
-
-
             Console.Write("Data e Hora do Agendamento (DD/MM/AAAA HH:MM): ");
             DateTime dataHoraAgendamento;
             string dataHoraAgendamentoString = Console.ReadLine();
-            
-            // PENDENTE - CHAMAR SERVICE PARA VALIDAR
-            //bool ehDataValida = DateTime.TryParse(dataHoraAgendamentoString, out dataHoraAgendamento);
-            //while (!ehDataValida || dataHoraAgendamento == null)
-            //{
-            //    Console.WriteLine("Digite uma data válida!");
-            //    Console.Write("Data e Hora do Agendamento (DD/MM/AAAA HH:MM): ");
-            //    dataHoraAgendamentoString = Console.ReadLine();
-            //    ehDataValida = DateTime.TryParse(dataHoraAgendamentoString, out dataHoraAgendamento);
-            //}
+            bool ehDataValida = DateTime.TryParse(dataHoraAgendamentoString, out dataHoraAgendamento);
+            bool ehHorarioDisponivel = _agendamentoService.EhHorarioDisponivel(dataHoraAgendamento);
+
+            while (!ehDataValida || dataHoraAgendamento == null || !ehHorarioDisponivel)
+            {
+                if (!ehHorarioDisponivel)
+                {
+                    Console.WriteLine("Horário indisponível ou já ocupado.");
+                }
+                else
+                { 
+                    Console.WriteLine("Digite uma data válida!");
+                }
+
+                Console.Write("Data e Hora do Agendamento (DD/MM/AAAA HH:MM): ");
+                dataHoraAgendamentoString = Console.ReadLine();
+                ehDataValida = DateTime.TryParse(dataHoraAgendamentoString, out dataHoraAgendamento);
+                ehHorarioDisponivel = _agendamentoService.EhHorarioDisponivel(dataHoraAgendamento);
+            }
 
             string maisServicos = "";
-            int idDoServico;
-            List<Servico> ServicosSelecionados = [];
+            List<string> ServicosSelecionados = [];
 
             while (maisServicos.ToUpper() != "N")
             {
                 Console.Write("ID do Serviço: ");
                 string idDoServicoString = Console.ReadLine();
-                bool ehIdServicoValida = int.TryParse(idDoServicoString, out idDoServico);
-                Servico servicoParaAddOS = _servicoRepository.PesquisarServicoPorID(idDoServico);
+                bool verificaServico = _agendamentoService.ServicoEhValido(idDoServicoString);
 
-                while (servicoParaAddOS == null)
+                while (!verificaServico)
                 {
-                    Console.WriteLine("Informe um ID de Serviço válido!");
+                    Console.WriteLine("Informe um Serviço válido!");
                     Console.Write("ID do Serviço: ");
                     idDoServicoString = Console.ReadLine();
-                    ehIdServicoValida = int.TryParse(idDoServicoString, out idDoServico);
-                    servicoParaAddOS = _servicoRepository.PesquisarServicoPorID(idDoServico);
+                    verificaServico = _agendamentoService.ServicoEhValido(idDoServicoString);
                 }
 
-                ServicosSelecionados.Add(servicoParaAddOS);
+                ServicosSelecionados.Add(idDoServicoString);
 
-                maisServicos = "";
                 Console.Write("Há mais Serviços para adicionar? (S/N): ");
                 maisServicos = Console.ReadLine();
                 while (maisServicos.ToUpper() != "S" && maisServicos.ToUpper() != "N")
@@ -98,28 +95,24 @@ namespace Exercicio_Integrador_2.Controller
             }
 
             string maisPecas = "";
-            int idDaPeca;
-            List<Peca> PecasSelecionadas = [];
+            List<string> PecasSelecionadas = [];
 
             while (maisPecas.ToUpper() != "N")
             {
                 Console.Write("ID da Peça: ");
                 string idDaPecaString = Console.ReadLine();
-                bool ehIdPecaValida = int.TryParse(idDaPecaString, out idDaPeca);
-                Peca pecasParaAddOS = _pecaRepository.PesquisarPecaPorID(idDaPeca);
+                bool verificaPeca = _agendamentoService.PecaEhValida(idDaPecaString);
 
-                while (pecasParaAddOS == null)
+                while (!verificaPeca)
                 {
-                    Console.WriteLine("Digite um ID de Peça válido!");
+                    Console.WriteLine("Informe uma Peça válida!");
                     Console.Write("ID da Peça: ");
                     idDaPecaString = Console.ReadLine();
-                    ehIdPecaValida = int.TryParse(idDaPecaString, out idDaPeca);
-                    pecasParaAddOS = _pecaRepository.PesquisarPecaPorID(idDaPeca);
+                    verificaPeca = _agendamentoService.PecaEhValida(idDaPecaString);
                 }
 
-                PecasSelecionadas.Add(pecasParaAddOS);
+                PecasSelecionadas.Add(idDaPecaString);
 
-                maisPecas = "";
                 Console.Write("Há mais Peças para adicionar? (S/N): ");
                 maisPecas = Console.ReadLine();
                 while (maisPecas.ToUpper() != "S" && maisPecas.ToUpper() != "N")
@@ -130,53 +123,91 @@ namespace Exercicio_Integrador_2.Controller
                 }
             }
 
-            Agendamento novoAgendamento = new Agendamento(_agendamentoRepository.QtdAgendamentosCriados() + 1,
-                                                          clienteSelecionado,
-                                                          veiculoSelecionado,
-                                                          ServicosSelecionados,
-                                                          PecasSelecionadas,
-                                                          dataHoraAgendamento,
-                                                          StatusOrdemServico.Agendada);
-
             try
             {
-                bool possuiConflito = _agendamentoRepository.Agendamentos.Any(a => a.ConflitaCom(novoAgendamento));
+                _agendamentoService.CadastrarAgendamento(idDoClienteString, 
+                                                         placaDoVeiculo, 
+                                                         dataHoraAgendamento, 
+                                                         ServicosSelecionados, 
+                                                         PecasSelecionadas);
             }
-            catch (HorarioIndisponivelException ex)
+            catch (Exception ex)
             {
-                Console.WriteLine("Conflito de Agenda! " + ex.Message);
+                Console.WriteLine("Erro: " + ex.Message);
                 Console.WriteLine();
-                return; // RETURN É O ESPERADO AQUI?
+                return; // PENDENTE - VALIDAR SE RETURN É O COMPORTAMENTO ESPERADO
             }
-
-            _agendamentoRepository.CadastrarAgendamento(novoAgendamento);
-
-
-
-
             Console.WriteLine("Agendamento realizado com sucesso.");
             Console.WriteLine();
         }
 
-
-        public void CadastrarAgendamento()
+        public void CancelarAgendamento()
         {
-            _agendamentoService.CadastrarAgendamento();
+            Console.WriteLine();
+            Console.WriteLine("=== Cancelar Agendamento ===");
+            Console.Write("Número do Agendamento: ");
+            string numeroAgendamentoString = Console.ReadLine();
+            bool ehAgendamentoValido = _agendamentoService.EhAgendamentoCadastrado(numeroAgendamentoString);
+
+            while (!ehAgendamentoValido)
+            {
+                Console.WriteLine("Informe um Agendamento válido!");
+                Console.Write("Número do Agendamento: ");
+                numeroAgendamentoString = Console.ReadLine();
+                ehAgendamentoValido = _agendamentoService.EhAgendamentoCadastrado(numeroAgendamentoString);
+            }
+
+            string confirmaCancelamento = "";
+            Console.WriteLine();
+            Console.Write("Confirma o Cancelamento do agendamento? (S | N): ");
+            confirmaCancelamento = Console.ReadLine();
+
+            while (confirmaCancelamento.ToUpper() != "S" && confirmaCancelamento.ToUpper() != "N")
+            {
+                Console.WriteLine("Opção inválida!");
+                Console.Write("Confirma o Cancelamento do agendamento? (S | N): ");
+                confirmaCancelamento = Console.ReadLine();
+            }
+
+            if (confirmaCancelamento.ToUpper() == "S")
+            {
+                _agendamentoService.CancelarAgendamento(numeroAgendamentoString);
+                Console.WriteLine("Agendamento cancelado com sucesso.");
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine("Agendamento não foi cancelado.");
+                Console.WriteLine();
+            }
         }
 
         public void ListarAgendamentos()
         {
-            _agendamentoService.ListarAgendamentos();
+            Console.WriteLine("=== Listar Agendamentos ===");
+            foreach (Agendamento agendamento in _agendamentoService.ListarAgendamentos())
+            {
+                Console.WriteLine(agendamento.DetalharAgendamento());
+            }
         }
 
         public void BuscaAgendamento()
         {
-            _agendamentoService.BuscarAgendamento();
-        }
+            Console.WriteLine("=== Buscar Agendamento ===");
+            Console.Write("Número do Agendamento: ");
+            string idDoAgendamentoString = Console.ReadLine();
+            bool ehAgendamentoValido = _agendamentoService.EhAgendamentoCadastrado(idDoAgendamentoString);
 
-        public void CancelarAgendamento()
-        {
-            _agendamentoService.CancelarAgendamento();
+            while (!ehAgendamentoValido)
+            {
+                Console.WriteLine("Digite um ID válido!");
+                Console.Write("Número do Agendamento: ");
+                idDoAgendamentoString = Console.ReadLine();
+                ehAgendamentoValido = _agendamentoService.EhAgendamentoCadastrado(idDoAgendamentoString);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(_agendamentoService.BuscarAgendamento(idDoAgendamentoString));
         }
     }
 }

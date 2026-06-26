@@ -45,7 +45,7 @@ namespace Exercicio_Integrador_2.Repository
 
         public Veiculo PesquisarVeiculoPorPlaca(string placa)
         {
-            return Veiculos.FirstOrDefault(v => v.Placa == placa);
+            return Veiculos.FirstOrDefault(v => v.Placa.ToUpper() == placa.ToUpper());
         }
 
         public List<Veiculo> ListarTodosVeiculos()

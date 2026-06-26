@@ -9,24 +9,10 @@ namespace Exercicio_Integrador_2.Service
     {
         private readonly OrdemServicoRepository _osRepository;
         private readonly ClienteRepository _clienteRepository;
-        private readonly VeiculoRepository _veiculoRepository;
-        private readonly FuncionarioRepository _funcionarioRepository;
-        private readonly ServicoRepository _servicoRepository;
-        private readonly PecaRepository _pecaRepository;
 
-        public OrdemServicoService(OrdemServicoRepository osrepository,
-                                   ClienteRepository clienterepository,
-                                   VeiculoRepository veiculorepository,
-                                   FuncionarioRepository funcionariorepository,
-                                   ServicoRepository servicorepository,
-                                   PecaRepository pecarepository)
+        public OrdemServicoService(OrdemServicoRepository osrepository)
         {
             _osRepository = osrepository;
-            _clienteRepository = clienterepository;
-            _veiculoRepository = veiculorepository;
-            _funcionarioRepository = funcionariorepository;
-            _servicoRepository = servicorepository;
-            _pecaRepository = pecarepository;
         }
 
         public void CriarOrdemServico()
@@ -189,6 +175,23 @@ namespace Exercicio_Integrador_2.Service
             Console.WriteLine("Ordem de Serviço criada com sucesso.");
             Console.WriteLine();
         }
+
+
+        public bool CadastroClienteEhValido(string idClienteString)
+        {
+            int idCliente;
+            bool ehIdValida = int.TryParse(idClienteString, out idCliente);
+            Cliente clienteSelecionado = _clienteRepository.PesquisarClientePorID(idCliente);
+            if (clienteSelecionado == null || ehIdValida == false)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+
+
 
         public void AdicionarServicoNaOS()
         {

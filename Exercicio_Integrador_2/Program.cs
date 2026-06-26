@@ -118,7 +118,6 @@ As operações devem ser tratadas como tarefas demoradas, sem bloquear a execuç
 - Simular envio quando uma ordem for finalizada */
 
 using Exercicio_Integrador_2.Controller;
-using Exercicio_Integrador_2.Excecoes;
 using Exercicio_Integrador_2.Interfaces;
 using Exercicio_Integrador_2.Models;
 using Exercicio_Integrador_2.Repository;
@@ -127,27 +126,37 @@ using Exercicio_Integrador_2.Service;
 int opcaoMenu = -1;
 StatusOrdemServico statusOrdemServico = new StatusOrdemServico();
 ClienteRepository clienteRepository = new ClienteRepository();
-ClienteService clienteService = new ClienteService(clienteRepository);
-ClienteController clienteController = new ClienteController(clienteService);
 FuncionarioRepository funcionarioRepository = new FuncionarioRepository();
-FuncionarioService funcionarioService = new FuncionarioService(funcionarioRepository);
-FuncionarioController funcionarioController = new FuncionarioController(funcionarioService);
 PecaRepository pecaRepository = new PecaRepository();
-PecaService pecaService = new PecaService(pecaRepository);
-PecaController pecaController = new PecaController(pecaService);
 ServicoRepository servicoRepository = new ServicoRepository();
-ServicoService servicoService = new ServicoService(servicoRepository);
-ServicoController servicoController = new ServicoController(servicoService);
 VeiculoRepository veiculoRepository = new VeiculoRepository();
+AgendamentoRepository agendamentoRepository = new AgendamentoRepository();
+OrdemServicoRepository ordemServicoRepository = new OrdemServicoRepository();
+
+DataSeeder.Popular(agendamentoRepository, 
+                   clienteRepository, 
+                   veiculoRepository, 
+                   servicoRepository, 
+                   pecaRepository, 
+                   ordemServicoRepository, 
+                   funcionarioRepository);
+
+ClienteService clienteService = new ClienteService(clienteRepository);
+FuncionarioService funcionarioService = new FuncionarioService(funcionarioRepository);
+PecaService pecaService = new PecaService(pecaRepository);
+ServicoService servicoService = new ServicoService(servicoRepository);
 VeiculoService veiculoService = new VeiculoService(veiculoRepository);
-VeiculoController veiculoController = new VeiculoController(veiculoService);
-AgendamentoRepository agendamentoRepository = new AgendamentoRepository(clienteRepository, veiculoRepository, servicoRepository, pecaRepository);
-AgendamentoService agendamentoService = new AgendamentoService(agendamentoRepository, clienteRepository, veiculoRepository, servicoRepository, pecaRepository);
-AgendamentoController agendamentoController = new AgendamentoController(agendamentoService);
-OrdemServicoRepository ordemServicoRepository = new OrdemServicoRepository(clienteRepository, veiculoRepository, servicoRepository, pecaRepository, funcionarioRepository);
-OrdemServicoService ordemServicoService = new OrdemServicoService(ordemServicoRepository, clienteRepository, veiculoRepository, funcionarioRepository, servicoRepository, pecaRepository);
-OrdemServicoController ordemServicoController = new OrdemServicoController(ordemServicoService);
+AgendamentoService agendamentoService = new AgendamentoService(agendamentoRepository);
+OrdemServicoService ordemServicoService = new OrdemServicoService(ordemServicoRepository);
 RelatorioService relatorioService = new RelatorioService(ordemServicoRepository, statusOrdemServico);
+
+ClienteController clienteController = new ClienteController(clienteService);
+FuncionarioController funcionarioController = new FuncionarioController(funcionarioService);
+PecaController pecaController = new PecaController(pecaService);
+ServicoController servicoController = new ServicoController(servicoService);
+VeiculoController veiculoController = new VeiculoController(veiculoService);
+AgendamentoController agendamentoController = new AgendamentoController(agendamentoService);
+OrdemServicoController ordemServicoController = new OrdemServicoController(ordemServicoService);
 
 Console.WriteLine("=== Bem vindo ao Sistema de Gestão para Oficinas ===");
 
@@ -408,6 +417,7 @@ while (opcaoMenu != 0)
                 Console.WriteLine("1. Criar agendamento");
                 Console.WriteLine("2. Cancelar agendamento");
                 Console.WriteLine("3. Listar agendamentos");
+                Console.WriteLine("4. Buscar agendamento");
                 Console.WriteLine("0. Retornar ao menu anterior");
                 Console.Write("Selecione uma das opções: ");
                 inputUsuario = Console.ReadLine();
@@ -439,6 +449,12 @@ while (opcaoMenu != 0)
                     case 3:
                         Console.WriteLine();
                         agendamentoController.ListarAgendamentos();
+                        break;
+
+                    // Buscar agendamento
+                    case 4:
+                        Console.WriteLine();
+                        agendamentoController.BuscaAgendamento();
                         break;
 
                     default:
