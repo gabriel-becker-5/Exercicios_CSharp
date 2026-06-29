@@ -17,12 +17,16 @@
         <p>Quantidade de Produtos: @qtdProdutos</p>
     </div>
 
-    <div class="cards_produtos">
-    @foreach (Produto produto in Model)
+    @foreach (var grupo in Model.GroupBy(p => p.Categoria))
     {
-            <div class="card_produto">
-                <p>@produto.Nome - @produto.Categoria - R$ @produto.Preco</p>
-            </div>
+        <div class="cabecalho-categoria"><p>Categoria: @grupo.Key </p></div>
+        <div class="cards_produtos">
+            @foreach (var produto in grupo)
+            {
+                <div class="card_produto">
+                    <partial name="_CardProduto" model="produto" />
+                </div>
+            }
+        </div>
     }
-    </div>
 </div>

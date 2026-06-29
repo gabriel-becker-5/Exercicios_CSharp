@@ -15,6 +15,11 @@
 }
 
 .cabecalho-catalogo {
-    justify-items: left;
-    font:italic;
+    text-align: left;
+}
+
+.cabecalho-categoria {
+    text-align: left;
+    font-family: 'Sans Serif Collection';
+    font-weight: 600;
 }
