@@ -166,6 +166,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula_19_Exercicios", "Aula_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula_MVC_02_Exercicios", "Aula_MVC_02_Exercicios\Aula_MVC_02_Exercicios.csproj", "{42056245-519A-4DE6-A622-DEDC38F79FF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula_MVC_03_Exercicios", "Aula_MVC_03_Exercicios\Aula_MVC_03_Exercicios.csproj", "{D3F55152-7C5D-4286-A29A-C00251161723}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -500,6 +502,10 @@ Global
 		{42056245-519A-4DE6-A622-DEDC38F79FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42056245-519A-4DE6-A622-DEDC38F79FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42056245-519A-4DE6-A622-DEDC38F79FF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3F55152-7C5D-4286-A29A-C00251161723}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3F55152-7C5D-4286-A29A-C00251161723}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3F55152-7C5D-4286-A29A-C00251161723}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3F55152-7C5D-4286-A29A-C00251161723}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

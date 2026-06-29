@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Estoque";
+}
+
+<div class="text-center">
+    <h1 class="title-display">Estoque</h1>
+
+    @if (ViewBag.Quantidade <= 0)
+    {
+        <p>Esgotado!</p>
+    }
+    else
+    {
+        <p>Em estoque.</p>
+
+        if (ViewBag.Quantidade < 5)
+        {
+            <p>Últimas unidades!</p>
+        }
+    }
+</div>

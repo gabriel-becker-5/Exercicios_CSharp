@@ -1,0 +1,28 @@
+﻿@model List<Produto>
+
+@{
+    ViewData["Title"] = "Catálogo de Produtos";
+}
+
+<div class="text-center">
+    <h1 class="title-display">Catálogo de Produtos</h1>
+
+    @{
+        decimal total = Model.Sum(m => m.Preco);
+        int qtdProdutos = Model.Count();
+    }
+
+    <div class="cabecalho-catalogo">
+        <p>Preço Total do Catálogo: R$ @total</p>
+        <p>Quantidade de Produtos: @qtdProdutos</p>
+    </div>
+
+    <div class="cards_produtos">
+    @foreach (Produto produto in Model)
+    {
+            <div class="card_produto">
+                <p>@produto.Nome - @produto.Categoria - R$ @produto.Preco</p>
+            </div>
+    }
+    </div>
+</div>

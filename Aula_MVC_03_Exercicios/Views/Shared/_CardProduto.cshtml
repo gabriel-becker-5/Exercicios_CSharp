@@ -1,0 +1,10 @@
+﻿@model Produto
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card-produto">
+    <h3>@Model.Nome - @Model.Categoria</h3>
+    <p>R$ @Model.Preco</p>
+</div>
