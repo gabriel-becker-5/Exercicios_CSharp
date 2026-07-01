@@ -12,71 +12,35 @@ namespace Exercicio_Integrador_2.Service
             _veiculoRepository = veiculorepository;
         }
 
-        public void CadastrarVeiculo()
-        {
-            Console.WriteLine("=== Cadastrar Veículo ===");
-            Console.Write("Placa: ");
-            string placaVeiculo = Console.ReadLine();
+        public void CadastrarVeiculo(string placa, 
+                                     string marca, 
+                                     string modelo, 
+                                     string anofabricacao, 
+                                     string tipoveiculo)
+        {   
+            int AnoFabricacaoInt;
+            int.TryParse(anofabricacao, out AnoFabricacaoInt);
 
-            Console.Write("Marca: ");
-            string marcaVeiculo = Console.ReadLine();
-
-            Console.Write("Modelo: ");
-            string modeloVeiculo = Console.ReadLine();
-
-            Console.Write("Ano de Fabricação: ");
-            string anoFabricacaoString = Console.ReadLine();
-            int anoFabricacao;
-            bool ehAnoFabricacaoValido = int.TryParse(anoFabricacaoString, out anoFabricacao);
-
-            while (!ehAnoFabricacaoValido || anoFabricacao <= 0)
+            if (tipoveiculo.ToUpper() == "M")
             {
-                Console.WriteLine("Digite um número válido!");
-                Console.Write("Ano de Fabricação: ");
-                anoFabricacaoString = Console.ReadLine();
-                ehAnoFabricacaoValido = int.TryParse(anoFabricacaoString, out anoFabricacao);
-            }
-
-            string tipoVeiculo;
-            do
-            {
-                Console.Write("Tipo de Veículo | M - Motocicleta | A - Automóvel | C - Caminhão : ");
-                tipoVeiculo = Console.ReadLine();
-            } while (tipoVeiculo.ToUpper() != "M" && tipoVeiculo.ToUpper() != "A" && tipoVeiculo.ToUpper() != "C");
-
-            if (tipoVeiculo.ToUpper() == "M")
-            {
-                Moto novoVeiculo = new Moto(placaVeiculo, marcaVeiculo, modeloVeiculo, anoFabricacao);
+                Moto novoVeiculo = new Moto(placa, marca, modelo, AnoFabricacaoInt);
                 _veiculoRepository.CadastrarVeiculo(novoVeiculo);
             }
-            else if (tipoVeiculo.ToUpper() == "A")
+            else if (tipoveiculo.ToUpper() == "A")
             {
-                Carro novoVeiculo = new Carro(placaVeiculo, marcaVeiculo, modeloVeiculo, anoFabricacao);
+                Carro novoVeiculo = new Carro(placa, marca, modelo, AnoFabricacaoInt);
                 _veiculoRepository.CadastrarVeiculo(novoVeiculo);
             }
             else
             {
-                Caminhao novoVeiculo = new Caminhao(placaVeiculo, marcaVeiculo, modeloVeiculo, anoFabricacao);
+                Caminhao novoVeiculo = new Caminhao(placa, marca, modelo, AnoFabricacaoInt);
                 _veiculoRepository.CadastrarVeiculo(novoVeiculo);
             }
-
-            Console.WriteLine("Veículo cadastrado com sucesso.");
-            Console.WriteLine();
-            placaVeiculo = "";
-            marcaVeiculo = "";
-            modeloVeiculo = "";
-            anoFabricacao = 0;
         }
 
-        public void ListarVeiculos()
+        public List<Veiculo> ListarVeiculos()
         {
-            Console.WriteLine("=== Listar Veículos ===");
-            List<Veiculo> listaVeiculos = _veiculoRepository.ListarTodosVeiculos();
-            foreach (Veiculo veiculo in listaVeiculos)
-            {
-                Console.WriteLine(veiculo.ApresentarDadosVeiculo());
-            }
-            Console.WriteLine();
+            return _veiculoRepository.ListarTodosVeiculos();
         }
     }
 }

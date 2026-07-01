@@ -1,7 +1,4 @@
-﻿using Exercicio_Integrador_2.Excecoes;
-using Exercicio_Integrador_2.Models;
-using Exercicio_Integrador_2.Pessoas;
-using Exercicio_Integrador_2.Repository;
+﻿using Exercicio_Integrador_2.Models;
 using Exercicio_Integrador_2.Service;
 
 namespace Exercicio_Integrador_2.Controller
@@ -135,7 +132,7 @@ namespace Exercicio_Integrador_2.Controller
             {
                 Console.WriteLine("Erro: " + ex.Message);
                 Console.WriteLine();
-                return; // PENDENTE - VALIDAR SE RETURN É O COMPORTAMENTO ESPERADO
+                return;
             }
             Console.WriteLine("Agendamento realizado com sucesso.");
             Console.WriteLine();

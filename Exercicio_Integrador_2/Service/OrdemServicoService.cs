@@ -189,10 +189,6 @@ namespace Exercicio_Integrador_2.Service
             return true;
         }
 
-
-
-
-
         public void AdicionarServicoNaOS()
         {
             Console.WriteLine("=== Adicionar um Serviço à O.S. ===");

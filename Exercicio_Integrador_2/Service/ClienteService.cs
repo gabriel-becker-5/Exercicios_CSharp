@@ -13,111 +13,55 @@ namespace Exercicio_Integrador_2.Service
             _clienteRepository = repository;
         }
 
-        public void CadastrarCliente()
+        public void CadastrarCliente(string nome, 
+                                     string telefone, 
+                                     string email, 
+                                     string tipocliente, 
+                                     string? nomeempresa, 
+                                     string? qtdveiculos)
         {
-            Console.WriteLine("=== Cadastrar Cliente ===");
-            Console.Write("Nome do Cliente: ");
-            string nomeCliente = Console.ReadLine();
+            Cliente novoCliente;
 
-            Console.Write("Telefone: ");
-            string telefoneCliente = Console.ReadLine();
-
-            Console.Write("E-mail: ");
-            string emailCliente = Console.ReadLine();
-
-            string tipoCliente;
-            do
+            if (tipocliente.ToUpper() == "C")
             {
-                Console.Write("Tipo do Cliente | C - Padrão | V - VIP | F - FROTAS: ");
-                tipoCliente = Console.ReadLine();
-            } while (tipoCliente.ToUpper() != "C" && tipoCliente.ToUpper() != "V" && tipoCliente.ToUpper() != "F");
-
-            string nomeEmpresa = "";
-            int qtdVeiculos = 0;
-            string qtdVeiculosString;
-            if (tipoCliente.ToUpper() == "F")
-            {
-                Console.Write("Nome da Empresa: ");
-                nomeEmpresa = Console.ReadLine();
-                Console.Write("Quantidade de Veículos: ");
-                qtdVeiculosString = Console.ReadLine();
-                bool ehNumeroValido = int.TryParse(qtdVeiculosString, out qtdVeiculos);
-
-                while (!ehNumeroValido || qtdVeiculos <= 0)
-                {
-                    Console.WriteLine("Digite um número válido!");
-                    Console.Write("Quantidade de Veículos: ");
-                    qtdVeiculosString = Console.ReadLine();
-                    ehNumeroValido = int.TryParse(qtdVeiculosString, out qtdVeiculos);
-                }
-            }
-
-            if (tipoCliente.ToUpper() == "C")
-            {
-                Cliente novoCliente = new Cliente(_clienteRepository.QtdClientesCadastrados()+1, 
-                                                  nomeCliente, 
-                                                  telefoneCliente, 
-                                                  emailCliente, 
+                novoCliente = new Cliente(_clienteRepository.QtdClientesCadastrados() + 1,
+                                                  nome,
+                                                  telefone,
+                                                  email,
                                                   TipoDeCliente.Padrão);
-                _clienteRepository.CadastrarCliente(novoCliente);
             }
-            else if (tipoCliente.ToUpper() == "V")
+            else if (tipocliente.ToUpper() == "V")
             {
-                Cliente novoCliente = new Cliente(_clienteRepository.QtdClientesCadastrados()+1, 
-                                                  nomeCliente, 
-                                                  telefoneCliente, 
-                                                  emailCliente, 
+                novoCliente = new Cliente(_clienteRepository.QtdClientesCadastrados() + 1,
+                                                  nome,
+                                                  telefone,
+                                                  email,
                                                   TipoDeCliente.VIP);
-                _clienteRepository.CadastrarCliente(novoCliente);
             }
             else
             {
-                Cliente novoCliente = new Cliente(_clienteRepository.QtdClientesCadastrados()+1, 
-                                                  nomeCliente, 
-                                                  telefoneCliente, 
-                                                  emailCliente, 
-                                                  TipoDeCliente.Frotista, 
-                                                  nomeEmpresa, 
-                                                  qtdVeiculos);
-                _clienteRepository.CadastrarCliente(novoCliente);
-            }
+                int qtdVeiculosInt;
+                bool ehNumeroValido = int.TryParse(qtdveiculos, out qtdVeiculosInt);
 
-            Console.WriteLine("Cliente cadastrado com sucesso.");
-            Console.WriteLine();
-            nomeCliente = "";
-            telefoneCliente = "";
-            emailCliente = "";
-            nomeEmpresa = "";
-            qtdVeiculos = 0;
+                novoCliente = new Cliente(_clienteRepository.QtdClientesCadastrados() + 1,
+                                                  nome,
+                                                  telefone,
+                                                  email,
+                                                  TipoDeCliente.Frotista,
+                                                  nomeempresa,
+                                                  qtdVeiculosInt);
+            }
+            _clienteRepository.CadastrarCliente(novoCliente);
         }
 
-        public void ListarClientes()
+        public List<Cliente> ListarClientes()
         {
-            Console.WriteLine();
-            Console.WriteLine("=== Clientes Cadastrados ===");
-            foreach (Cliente cliente in _clienteRepository.ListarClientes())
-            {
-                Console.WriteLine(cliente.ExibirDados());
-            }
-            Console.WriteLine();
+            return _clienteRepository.ListarClientes();
         }
 
-        public void BuscarCliente()
+        public bool ClienteEhCadastrado(string nome)
         {
-            Console.WriteLine();
-            Console.WriteLine("=== Buscar Cliente ===");
-            Console.Write("Informe o Nome para pesquisar: ");
-            string nomePesquisaCliente = Console.ReadLine();
-
-            if (_clienteRepository.PesquisarClientePorNome(nomePesquisaCliente))
-            {
-                Console.WriteLine("Pessoa cadastrada na base de Clientes.");
-            }
-            else
-            {
-                Console.WriteLine("Pessoa não cadastrada na base de Clientes.");
-            }
-            Console.WriteLine();
+            return _clienteRepository.PesquisarClientePorNome(nome);
         }
     }
 }
