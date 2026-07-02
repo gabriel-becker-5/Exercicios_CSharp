@@ -49,6 +49,18 @@ namespace Exercicio_Integrador_2.Service
             }
             return true;
         }
+
+        public bool TipoVeiculoEhValido(string tipoVeiculo)
+        {
+            if (tipoVeiculo.ToUpper() != "M" &&
+                tipoVeiculo.ToUpper() != "A" &&
+                tipoVeiculo.ToUpper() != "C")
+            {
+                return false;
+            }
+            return true;
+        }
+
         public List<Veiculo> ListarVeiculos()
         {
             return _veiculoRepository.ListarTodosVeiculos();

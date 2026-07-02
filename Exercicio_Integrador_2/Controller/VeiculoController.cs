@@ -38,13 +38,17 @@ namespace Exercicio_Integrador_2.Controller
 
 
             // PENDENTE MÉTODO VERIFICAR TIPO DE VEÍCULO
+            Console.Write("Tipo de Veículo | M - Motocicleta | A - Automóvel | C - Caminhão : ");
+            string tipoVeiculo = Console.ReadLine();
+            bool ehTipoVeiculoValido = _veiculoService.TipoVeiculoEhValido(tipoVeiculo);
 
-            string tipoVeiculo;
-            do
+            while (!ehTipoVeiculoValido)
             {
+                Console.WriteLine("Informe um tipo de veículo válido!");
                 Console.Write("Tipo de Veículo | M - Motocicleta | A - Automóvel | C - Caminhão : ");
                 tipoVeiculo = Console.ReadLine();
-            } while (tipoVeiculo.ToUpper() != "M" && tipoVeiculo.ToUpper() != "A" && tipoVeiculo.ToUpper() != "C");
+                ehTipoVeiculoValido = _veiculoService.TipoVeiculoEhValido(tipoVeiculo);
+            }
 
             try
             {
