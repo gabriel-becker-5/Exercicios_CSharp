@@ -52,6 +52,30 @@ namespace Exercicio_Integrador_2.Service
             }
         }
 
+        public bool EhEstoqueValido(string qtdEstoqueString)
+        {
+            int qtdEstoque;
+            bool ehValido = int.TryParse(qtdEstoqueString, out qtdEstoque);
+
+            if (!ehValido || qtdEstoque <=0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool EhPrecoUnitarioValido(string precoUnitarioString)
+        {
+            decimal precoUnitario;
+            bool ehValido = decimal.TryParse(precoUnitarioString, out precoUnitario);
+
+            if (!ehValido || precoUnitario <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public List<Peca> ListarPecas()
         {
             return _pecaRepository.ListarTodasPecas();

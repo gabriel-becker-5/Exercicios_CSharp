@@ -26,16 +26,18 @@ namespace Exercicio_Integrador_2.Controller
 
             Console.Write("Ano de Fabricação: ");
             string anoFabricacaoString = Console.ReadLine();
-            int anoFabricacao;
-            bool ehAnoFabricacaoValido = int.TryParse(anoFabricacaoString, out anoFabricacao);
+            bool ehAnoFabricacaoValido = _veiculoService.EhAnoFabricacaoValido(anoFabricacaoString);
 
-            while (!ehAnoFabricacaoValido || anoFabricacao <= 0)
+            while (!ehAnoFabricacaoValido)
             {
                 Console.WriteLine("Digite um número válido!");
                 Console.Write("Ano de Fabricação: ");
                 anoFabricacaoString = Console.ReadLine();
-                ehAnoFabricacaoValido = int.TryParse(anoFabricacaoString, out anoFabricacao);
+                ehAnoFabricacaoValido = _veiculoService.EhAnoFabricacaoValido(anoFabricacaoString);
             }
+
+
+            // PENDENTE MÉTODO VERIFICAR TIPO DE VEÍCULO
 
             string tipoVeiculo;
             do
@@ -58,7 +60,6 @@ namespace Exercicio_Integrador_2.Controller
             placaVeiculo = "";
             marcaVeiculo = "";
             modeloVeiculo = "";
-            anoFabricacao = 0;
         }
 
         public void ListarVeiculos()

@@ -4,13 +4,13 @@ namespace Exercicio_Integrador_2.Repository
 {
     public class AgendamentoRepository
     {
-        public List<Agendamento> Agendamentos { get; private set; }
+        public List<Agendamento> Agendamentos = new List<Agendamento>();
 
         public AgendamentoRepository()
         {
         }
 
-    public int QtdAgendamentosCriados()
+        public int QtdAgendamentosCriados()
         {
             return Agendamentos.Count();
         }

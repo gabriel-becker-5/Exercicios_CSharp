@@ -1,5 +1,5 @@
-﻿using Exercicio_Integrador_2.Models;
-using Exercicio_Integrador_2.Pessoas;
+﻿using Exercicio_Integrador_2.Interfaces;
+using Exercicio_Integrador_2.Models;
 using Exercicio_Integrador_2.Service;
 
 namespace Exercicio_Integrador_2.Controller
@@ -13,84 +13,65 @@ namespace Exercicio_Integrador_2.Controller
             _ordemServicoService = ordemservicoservice;
         }
 
-        public void CriarOS()
+        public void CriarOrdemServico()
         {
-            _ordemServicoService.CriarOrdemServico();
-
-
-
             Console.WriteLine();
             Console.WriteLine("=== Criar nova Ordem de Serviço ===");
             Console.Write("ID do Cliente: ");
             string idDoClienteString = Console.ReadLine();
+            bool verificaCliente = _ordemServicoService.CadastroClienteEhValido(idDoClienteString);
 
-
-
-
-
-
-
-            bool ehIdValida = int.TryParse(idDoClienteString, out idDoCliente);
-            Cliente clienteSelecionado = _clienteRepository.PesquisarClientePorID(idDoCliente);
-
-            while (clienteSelecionado == null)
+            while (!verificaCliente)
             {
-                Console.WriteLine("Digite um ID de Cliente válido!");
+                Console.WriteLine("Informe uma ID válida!");
                 Console.Write("ID do Cliente: ");
                 idDoClienteString = Console.ReadLine();
-                ehIdValida = int.TryParse(idDoClienteString, out idDoCliente);
-                clienteSelecionado = _clienteRepository.PesquisarClientePorID(idDoCliente);
+                verificaCliente = _ordemServicoService.CadastroClienteEhValido(idDoClienteString);
             }
 
             Console.Write("Placa do Veículo: ");
             string placaDoVeiculo = Console.ReadLine();
-            Veiculo veiculoSelecionado = _veiculoRepository.PesquisarVeiculoPorPlaca(placaDoVeiculo.ToUpper());
+            bool verificaPlaca = _ordemServicoService.PlacaEhValida(placaDoVeiculo);
 
-            while (veiculoSelecionado == null)
+            while (!verificaPlaca)
             {
                 Console.WriteLine("Informe um veículo válido!");
                 Console.Write("Placa do Veículo: ");
                 placaDoVeiculo = Console.ReadLine();
-                veiculoSelecionado = _veiculoRepository.PesquisarVeiculoPorPlaca(placaDoVeiculo.ToUpper());
+                verificaPlaca = _ordemServicoService.PlacaEhValida(placaDoVeiculo);
             }
 
             Console.Write("ID do Funcionário: ");
-            int idDoFuncionario;
             string idDoFuncionarioString = Console.ReadLine();
-            bool ehIdFuncionarioValida = int.TryParse(idDoFuncionarioString, out idDoFuncionario);
-            Funcionario funcionarioSelecionado = _funcionarioRepository.PesquisarFuncionarioPorID(idDoFuncionario);
+            bool verificaFuncionario = _ordemServicoService.FuncionarioEhValido(idDoFuncionarioString);
 
-            while (funcionarioSelecionado == null)
+            while (!verificaFuncionario)
             {
-                Console.WriteLine("Informe um ID de funcionário válido!");
+                Console.WriteLine("Informe um funcionário válido!");
                 Console.Write("ID do Funcionário: ");
                 idDoFuncionarioString = Console.ReadLine();
-                ehIdFuncionarioValida = int.TryParse(idDoFuncionarioString, out idDoFuncionario);
-                funcionarioSelecionado = funcionarioSelecionado = _funcionarioRepository.PesquisarFuncionarioPorID(idDoFuncionario);
+                verificaFuncionario = _ordemServicoService.FuncionarioEhValido(idDoFuncionarioString);
             }
 
             string maisServicos = "";
-            int idDoServico;
-            List<Servico> ServicosSelecionados = [];
+            List<string> ServicosSelecionados = [];
 
             while (maisServicos.ToUpper() != "N")
             {
                 Console.Write("ID do Serviço: ");
                 string idDoServicoString = Console.ReadLine();
-                bool ehIdServicoValida = int.TryParse(idDoServicoString, out idDoServico);
-                Servico servicoParaAddOS = _servicoRepository.PesquisarServicoPorID(idDoServico);
+                bool verificaServico = _ordemServicoService.ServicoEhValido(idDoServicoString);
 
-                while (servicoParaAddOS == null)
+                while (!verificaServico)
                 {
-                    Console.WriteLine("Informe um ID de Serviço válido!");
+                    Console.WriteLine("Informe um Serviço válido!");
                     Console.Write("ID do Serviço: ");
                     idDoServicoString = Console.ReadLine();
-                    ehIdServicoValida = int.TryParse(idDoServicoString, out idDoServico);
-                    servicoParaAddOS = _servicoRepository.PesquisarServicoPorID(idDoServico);
+                    verificaServico = _ordemServicoService.ServicoEhValido(idDoServicoString);
                 }
 
-                ServicosSelecionados.Add(servicoParaAddOS);
-                maisServicos = "";
+                ServicosSelecionados.Add(idDoServicoString);
+
                 Console.Write("Há mais Serviços para adicionar? (S/N): ");
                 maisServicos = Console.ReadLine();
                 while (maisServicos.ToUpper() != "S" && maisServicos.ToUpper() != "N")
@@ -102,28 +83,24 @@ namespace Exercicio_Integrador_2.Controller
             }
 
             string maisPecas = "";
-            int idDaPeca;
-            List<Peca> PecasSelecionadas = [];
+            List<string> PecasSelecionadas = [];
 
             while (maisPecas.ToUpper() != "N")
             {
                 Console.Write("ID da Peça: ");
                 string idDaPecaString = Console.ReadLine();
-                bool ehIdPecaValida = int.TryParse(idDaPecaString, out idDaPeca);
-                Peca pecasParaAddOS = _pecaRepository.PesquisarPecaPorID(idDaPeca);
+                bool verificaPeca = _ordemServicoService.PecaEhValida(idDaPecaString);
 
-                while (pecasParaAddOS == null)
+                while (!verificaPeca)
                 {
-                    Console.WriteLine("Digite um ID de Peça válido!");
+                    Console.WriteLine("Informe uma Peça válida!");
                     Console.Write("ID da Peça: ");
                     idDaPecaString = Console.ReadLine();
-                    ehIdPecaValida = int.TryParse(idDaPecaString, out idDaPeca);
-                    pecasParaAddOS = _pecaRepository.PesquisarPecaPorID(idDaPeca);
+                    verificaPeca = _ordemServicoService.PecaEhValida(idDaPecaString);
                 }
 
-                PecasSelecionadas.Add(pecasParaAddOS);
+                PecasSelecionadas.Add(idDaPecaString);
 
-                maisPecas = "";
                 Console.Write("Há mais Peças para adicionar? (S/N): ");
                 maisPecas = Console.ReadLine();
                 while (maisPecas.ToUpper() != "S" && maisPecas.ToUpper() != "N")
@@ -138,84 +115,223 @@ namespace Exercicio_Integrador_2.Controller
             Console.Write("Status da Ordem de Serviço: ");
             string statusOrdemServicoString = Console.ReadLine();
             StatusOrdemServico statusOrdem = StatusOrdemServico.Aberta;
+            bool verificaStatusOS = _ordemServicoService.StatusOSEhValido(statusOrdemServicoString);
 
-            while (statusOrdemServicoString.ToUpper() != "A" && statusOrdemServicoString.ToUpper() != "P"
-                && statusOrdemServicoString.ToUpper() != "E" && statusOrdemServicoString.ToUpper() != "F"
-                && statusOrdemServicoString.ToUpper() != "C")
+            while (!verificaStatusOS)
             {
                 Console.WriteLine("Informe um status válido.");
                 Console.WriteLine("A - Aberta  |  P - Aguardando Peças  |  E - Em Andamento  |  F - Finalizada  |  C - Cancelada");
                 Console.Write("Status da Ordem de Serviço: ");
                 statusOrdemServicoString = Console.ReadLine();
+                verificaStatusOS = _ordemServicoService.StatusOSEhValido(statusOrdemServicoString);
             }
 
-            switch (statusOrdemServicoString.ToUpper())
+            try
             {
-                case "A":
-                    statusOrdem = StatusOrdemServico.Aberta;
-                    break;
-                case "P":
-                    statusOrdem = StatusOrdemServico.AguardaPecas;
-                    break;
-                case "E":
-                    statusOrdem = StatusOrdemServico.EmAndamento;
-                    break;
-                case "F":
-                    statusOrdem = StatusOrdemServico.Finalizada;
-                    break;
-                case "C":
-                    statusOrdem = StatusOrdemServico.Cancelada;
-                    break;
-                default:
-                    break;
+                _ordemServicoService.CriarOrdemServico(idDoClienteString, 
+                                                       placaDoVeiculo, 
+                                                       idDoFuncionarioString, 
+                                                       ServicosSelecionados, 
+                                                       PecasSelecionadas, 
+                                                       statusOrdemServicoString);
             }
-
-            OrdemServico novaOrdemDeServico = new OrdemServico(_osRepository.QtdOrdensServicoCriadas() + 1,
-                                                               clienteSelecionado,
-                                                               veiculoSelecionado,
-                                                               funcionarioSelecionado,
-                                                               ServicosSelecionados,
-                                                               PecasSelecionadas,
-                                                               DateTime.UtcNow,
-                                                               statusOrdem);
-
-            _osRepository.CadastrarOS(novaOrdemDeServico);
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             Console.WriteLine("Ordem de Serviço criada com sucesso.");
             Console.WriteLine();
-
-
-
-
-
-
-
-
-
         }
 
         public void AdicionarServicoNaOS()
         {
-            _ordemServicoService.AdicionarServicoNaOS();
+            Console.WriteLine("=== Adicionar um Serviço à O.S. ===");
+            string desejaAddMaisServicos = "";
+            int idServicoAdicionar;
+            List<Servico> ServicosParaAdicionar = [];
+
+            Console.Write("Número da Ordem de Serviço: ");
+            string ordemDeServicoString = Console.ReadLine();
+            bool ehOSValida = _ordemServicoService.OSEhCadastrada(ordemDeServicoString);
+
+            while (!ehOSValida)
+            {
+                Console.WriteLine("Informe uma Ordem de Serviço válida!");
+                Console.Write("Número da Ordem de Serviço: ");
+                ordemDeServicoString = Console.ReadLine();
+                ehOSValida = _ordemServicoService.OSEhCadastrada(ordemDeServicoString);
+            }
+
+            string maisServicos = "";
+            List<string> ServicosSelecionados = [];
+
+            while (maisServicos.ToUpper() != "N")
+            {
+                Console.Write("ID do Serviço: ");
+                string idDoServicoString = Console.ReadLine();
+                bool verificaServico = _ordemServicoService.ServicoEhValido(idDoServicoString);
+
+                while (!verificaServico)
+                {
+                    Console.WriteLine("Informe um Serviço válido!");
+                    Console.Write("ID do Serviço: ");
+                    idDoServicoString = Console.ReadLine();
+                    verificaServico = _ordemServicoService.ServicoEhValido(idDoServicoString);
+                }
+
+                ServicosSelecionados.Add(idDoServicoString);
+
+                Console.Write("Há mais Serviços para adicionar? (S/N): ");
+                maisServicos = Console.ReadLine();
+                while (maisServicos.ToUpper() != "S" && maisServicos.ToUpper() != "N")
+                {
+                    Console.WriteLine("Opção inválida!");
+                    Console.Write("Há mais Serviços para adicionar? (S/N): ");
+                    maisServicos = Console.ReadLine();
+                }
+            }
+
+            try
+            {
+                _ordemServicoService.AdicionarServicoNaOS(ordemDeServicoString, ServicosSelecionados);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            Console.WriteLine("Serviço(s) adicionado(s) com sucesso.");
+            Console.WriteLine();
         }
 
         public void AdicionarPecaNaOS()
         {
-            _ordemServicoService.AdicionarPecaNaOS();
+            Console.WriteLine("=== Adicionar Peça à uma O.S. ===");
+            string desejaAddMaisPecas = "";
+            int idPecaAdicionar;
+            List<Peca> PecasParaAdicionar = [];
+
+            Console.Write("Número da Ordem de Serviço: ");
+            string ordemDeServicoString = Console.ReadLine();
+            bool ehOSValida = _ordemServicoService.OSEhCadastrada(ordemDeServicoString);
+
+            while (!ehOSValida)
+            {
+                Console.WriteLine("Informe uma Ordem de Serviço válida!");
+                Console.Write("Número da Ordem de Serviço: ");
+                ordemDeServicoString = Console.ReadLine();
+                ehOSValida = _ordemServicoService.OSEhCadastrada(ordemDeServicoString);
+            }
+
+            string maisPecas = "";
+            List<string> PecasSelecionadas = [];
+
+            while (maisPecas.ToUpper() != "N")
+            {
+                Console.Write("ID da Peça: ");
+                string idDaPecaString = Console.ReadLine();
+                bool verificaPeca = _ordemServicoService.PecaEhValida(idDaPecaString);
+
+                while (!verificaPeca)
+                {
+                    Console.WriteLine("Informe uma Peça válida!");
+                    Console.Write("ID da Peça: ");
+                    idDaPecaString = Console.ReadLine();
+                    verificaPeca = _ordemServicoService.PecaEhValida(idDaPecaString);
+                }
+
+                PecasSelecionadas.Add(idDaPecaString);
+
+                Console.Write("Há mais Peças para adicionar? (S/N): ");
+                maisPecas = Console.ReadLine();
+                while (maisPecas.ToUpper() != "S" && maisPecas.ToUpper() != "N")
+                {
+                    Console.WriteLine("Opção inválida!");
+                    Console.Write("Há mais Peças para adicionar? (S/N): ");
+                    maisPecas = Console.ReadLine();
+                }
+            }
+
+            try
+            {
+                _ordemServicoService.AdicionarPecasNaOS(ordemDeServicoString, PecasSelecionadas);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            Console.WriteLine("Peça(s) adicionada(s) com sucesso.");
+            Console.WriteLine();
         }
 
         public void FinalizarOS()
         {
-            _ordemServicoService.FinalizarOS();
+            Console.WriteLine("=== Fechar Ordem de Serviço ===");
+            Console.Write("Número da Ordem de Serviço: ");
+            string ordemDeServicoString = Console.ReadLine();
+            bool ehOSValida = _ordemServicoService.OSEhCadastrada(ordemDeServicoString);
+
+            while (!ehOSValida)
+            {
+                Console.WriteLine("Informe uma Ordem de Serviço válida!");
+                Console.Write("Número da Ordem de Serviço: ");
+                ordemDeServicoString = Console.ReadLine();
+                ehOSValida = _ordemServicoService.OSEhCadastrada(ordemDeServicoString);
+            }
+
+            try
+            {
+                _ordemServicoService.FinalizarOS(ordemDeServicoString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            Console.WriteLine($"Ordem de Serviço nº {ordemDeServicoString} foi finalizada com sucesso.");
+            Console.WriteLine();
+            
+            // PENDENTE REIMPLEMENTAR
+            // NotificacaoWPP notificacao = new NotificacaoWPP();
+            // string mensagem = $"Olá, {OrdemDeServicoEmEdicao.Cliente.Nome}, tudo bem? Estamos passando para avisa-lo que os reparos no seu veículo {OrdemDeServicoEmEdicao.Veiculo.Marca} {OrdemDeServicoEmEdicao.Veiculo.Modelo} foram concluídos.";
+            // notificacao.ConclusaoOrdemDeServicoAsync(mensagem);
         }
 
         public void CancelarOS()
         {
-            _ordemServicoService.CancelarOS();
+            Console.WriteLine("=== Cancelar Ordem de Serviço ===");
+            Console.Write("Número da Ordem de Serviço: ");
+            string ordemDeServicoString = Console.ReadLine();
+            bool ehOSValida = _ordemServicoService.OSEhCadastrada(ordemDeServicoString);
+
+            while (!ehOSValida)
+            {
+                Console.WriteLine("Informe uma Ordem de Serviço válida!");
+                Console.Write("Número da Ordem de Serviço: ");
+                ordemDeServicoString = Console.ReadLine();
+                ehOSValida = _ordemServicoService.OSEhCadastrada(ordemDeServicoString);
+            }
+
+            try
+            {
+                _ordemServicoService.CancelarOS(ordemDeServicoString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            Console.WriteLine($"Ordem de Serviço nº {ordemDeServicoString} foi cancelada.");
+            Console.WriteLine();
         }
 
         public void ListarOrdensDeServico()
         {
-            _ordemServicoService.ListarOrdensServicos();
+            Console.WriteLine("=== Listar Ordens de Serviço ===");
+            foreach (OrdemServico os in _ordemServicoService.ListarOrdensServicos())
+            {
+                Console.WriteLine(os.DetalharOrdemServico());
+            }
+            Console.WriteLine();
         }
     }
 }

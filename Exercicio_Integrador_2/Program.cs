@@ -6,9 +6,7 @@ Services: ClienteService, AgendamentoService, OrdemServicoService, RelatorioServ
 Repositories: ClienteRepository, VeiculoRepository, OrdemServicoRepository, AgendamentoRepository
 
 Ordem de Implementação: Models, Controllers, Views, Services e Repositories.
- */
 
-/* 
 Exercício Integrador: Sistema de Gestão de Oficina Mecânica
 Objetivo: Desenvolver uma aplicação console em C# para gerenciamento de uma oficina mecânica.
 A aplicação deverá controlar clientes, funcionários, veículos, serviços, ordens de serviço, estoque de peças e agendamentos.
@@ -132,7 +130,6 @@ ServicoRepository servicoRepository = new ServicoRepository();
 VeiculoRepository veiculoRepository = new VeiculoRepository();
 AgendamentoRepository agendamentoRepository = new AgendamentoRepository();
 OrdemServicoRepository ordemServicoRepository = new OrdemServicoRepository();
-
 DataSeeder.Popular(agendamentoRepository, 
                    clienteRepository, 
                    veiculoRepository, 
@@ -140,7 +137,6 @@ DataSeeder.Popular(agendamentoRepository,
                    pecaRepository, 
                    ordemServicoRepository, 
                    funcionarioRepository);
-
 ClienteService clienteService = new ClienteService(clienteRepository);
 FuncionarioService funcionarioService = new FuncionarioService(funcionarioRepository);
 PecaService pecaService = new PecaService(pecaRepository);
@@ -149,7 +145,6 @@ VeiculoService veiculoService = new VeiculoService(veiculoRepository);
 AgendamentoService agendamentoService = new AgendamentoService(agendamentoRepository);
 OrdemServicoService ordemServicoService = new OrdemServicoService(ordemServicoRepository);
 RelatorioService relatorioService = new RelatorioService(ordemServicoRepository, statusOrdemServico);
-
 ClienteController clienteController = new ClienteController(clienteService);
 FuncionarioController funcionarioController = new FuncionarioController(funcionarioService);
 PecaController pecaController = new PecaController(pecaService);
@@ -157,6 +152,7 @@ ServicoController servicoController = new ServicoController(servicoService);
 VeiculoController veiculoController = new VeiculoController(veiculoService);
 AgendamentoController agendamentoController = new AgendamentoController(agendamentoService);
 OrdemServicoController ordemServicoController = new OrdemServicoController(ordemServicoService);
+RelatorioController relatorioController = new RelatorioController(relatorioService);
 
 Console.WriteLine("=== Bem vindo ao Sistema de Gestão para Oficinas ===");
 
@@ -171,8 +167,8 @@ while (opcaoMenu != 0)
     Console.WriteLine("5. Serviços");
     Console.WriteLine("6. Agendamentos");
     Console.WriteLine("7. Ordens de Serviço");
-    Console.WriteLine("8. Relatórios"); // PENDENTE MÓDULO 8
-    Console.WriteLine("9. Notificações"); // PENDENTE MÓDULO 9
+    Console.WriteLine("8. Relatórios"); 
+    Console.WriteLine("9. Notificações"); // PENDENTE
     Console.WriteLine("0. Sair");
     Console.Write("Selecione uma das opções: ");
     string inputUsuario = Console.ReadLine();
@@ -493,7 +489,7 @@ while (opcaoMenu != 0)
                     // Abrir ordem
                     case 1:
                         Console.WriteLine();
-                        ordemServicoController.CriarOS();
+                        ordemServicoController.CriarOrdemServico();
                         break;
 
                     // Adicionar serviço
@@ -560,27 +556,27 @@ while (opcaoMenu != 0)
                 {
                     // Faturamento total
                     case 1:
-                        relatorioService.FaturamentoTotal();
+                        relatorioController.FaturamentoTotal();
                         break;
 
                     // Serviços mais executados
                     case 2:
-                        relatorioService.ServicosMaisExecutados();
+                        relatorioController.ServicosMaisExecutados();
                         break;
 
                     // Clientes que mais gastaram
                     case 3:
-                        relatorioService.ClientesMaiorFaturamento();
+                        relatorioController.ClientesMaiorFaturamento();
                         break;
 
                     // Peças mais utilizadas
                     case 4:
-                        relatorioService.PecasMaisVendidas();
+                        relatorioController.PecasMaisVendidas();
                         break;
 
                     // Ordens em andamento
                     case 5:
-                        relatorioService.OrdensServicoEmAndamento();
+                        relatorioController.OrdensServicoEmAndamento();
                         break;
 
                     default:

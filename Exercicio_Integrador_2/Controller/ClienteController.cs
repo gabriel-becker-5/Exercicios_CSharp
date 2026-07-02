@@ -17,6 +17,15 @@ namespace Exercicio_Integrador_2.Controller
             Console.WriteLine("=== Cadastrar Cliente ===");
             Console.Write("Nome do Cliente: ");
             string nomeCliente = Console.ReadLine();
+            bool ehNomeValido = _clienteService.EhNomeValido(nomeCliente);
+
+            while(!ehNomeValido)
+            {
+                Console.WriteLine("Informe uma Nome válido!");
+                Console.Write("Nome do Cliente: ");
+                nomeCliente = Console.ReadLine();
+                ehNomeValido = _clienteService.EhNomeValido(nomeCliente);
+            }
 
             Console.Write("Telefone: ");
             string telefoneCliente = Console.ReadLine();
@@ -24,12 +33,17 @@ namespace Exercicio_Integrador_2.Controller
             Console.Write("E-mail: ");
             string emailCliente = Console.ReadLine();
 
-            string tipoCliente;
-            do
+            Console.Write("Tipo do Cliente | C - Padrão | V - VIP | F - FROTAS: ");
+            string tipoCliente = Console.ReadLine();
+            bool ehTipoClienteValido = _clienteService.TipoClienteEhValido(tipoCliente);
+
+            while (!ehTipoClienteValido)
             {
+                Console.WriteLine("Informe um Tipo de Cliente válido!");
                 Console.Write("Tipo do Cliente | C - Padrão | V - VIP | F - FROTAS: ");
                 tipoCliente = Console.ReadLine();
-            } while (tipoCliente.ToUpper() != "C" && tipoCliente.ToUpper() != "V" && tipoCliente.ToUpper() != "F");
+                ehTipoClienteValido = _clienteService.TipoClienteEhValido(tipoCliente);
+            }
 
             string nomeEmpresa = "";
             int qtdVeiculos = 0;
@@ -50,6 +64,7 @@ namespace Exercicio_Integrador_2.Controller
                     ehNumeroValido = int.TryParse(qtdVeiculosString, out qtdVeiculos);
                 }
             }
+
             try
             {
                 if (tipoCliente.ToUpper() == "C" || tipoCliente.ToUpper() == "V") // C - Padrão | V - VIP

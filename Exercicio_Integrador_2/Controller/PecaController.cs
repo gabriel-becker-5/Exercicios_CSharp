@@ -20,28 +20,26 @@ namespace Exercicio_Integrador_2.Controller
 
             Console.Write("Estoque Disponível: ");
             string estoqueDisponivelString = Console.ReadLine();
-            int estoqueDisponivel;
-            bool ehEstoqueDisponivelValido = int.TryParse(estoqueDisponivelString, out estoqueDisponivel);
+            bool ehEstoqueDisponivelValido = _pecaService.EhEstoqueValido(estoqueDisponivelString);
 
-            while (!ehEstoqueDisponivelValido || estoqueDisponivel <= 0)
+            while (!ehEstoqueDisponivelValido)
             {
                 Console.WriteLine("Digite um número válido!");
                 Console.Write("Estoque Disponível: ");
                 estoqueDisponivelString = Console.ReadLine();
-                ehEstoqueDisponivelValido = int.TryParse(estoqueDisponivelString, out estoqueDisponivel);
+                ehEstoqueDisponivelValido = _pecaService.EhEstoqueValido(estoqueDisponivelString);
             }
 
             Console.Write("Preço Unitário R$: ");
             string precoUnitarioString = Console.ReadLine();
-            decimal precoUnitario;
-            bool ehPrecoUnitarioValido = decimal.TryParse(precoUnitarioString, out precoUnitario);
+            bool ehPrecoUnitarioValido = _pecaService.EhPrecoUnitarioValido(precoUnitarioString);
 
-            while (!ehPrecoUnitarioValido || precoUnitario <= 0)
+            while (!ehPrecoUnitarioValido)
             {
                 Console.WriteLine("Digite um número válido!");
                 Console.Write("Preço Unitário R$: ");
                 precoUnitarioString = Console.ReadLine();
-                ehPrecoUnitarioValido = decimal.TryParse(precoUnitarioString, out precoUnitario);
+                ehPrecoUnitarioValido = _pecaService.EhPrecoUnitarioValido(precoUnitarioString);
             }
 
             try
@@ -76,15 +74,14 @@ namespace Exercicio_Integrador_2.Controller
 
             Console.Write("Quantidade para repor: ");
             string qtdReposicaoString = Console.ReadLine();
-            int qtdReposicao;
-            bool ehQtdReposicaoValida = int.TryParse(qtdReposicaoString, out qtdReposicao);
+            bool ehQtdReposicaoValida = _pecaService.EhEstoqueValido(qtdReposicaoString);
 
-            while (!ehQtdReposicaoValida || qtdReposicao <= 0)
+            while (!ehQtdReposicaoValida)
             {
                 Console.WriteLine("Digite um número válido!");
                 Console.Write("Quantidade para repor: ");
                 qtdReposicaoString = Console.ReadLine();
-                ehQtdReposicaoValida = int.TryParse(qtdReposicaoString, out qtdReposicao);
+                ehQtdReposicaoValida = _pecaService.EhEstoqueValido(qtdReposicaoString);
             }
 
             try

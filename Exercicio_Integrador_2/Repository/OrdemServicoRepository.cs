@@ -4,7 +4,7 @@ namespace Exercicio_Integrador_2.Repository
 {
     public class OrdemServicoRepository
     {
-        public List<OrdemServico> OrdensDeServico { get; set; }
+        public List<OrdemServico> OrdensDeServico = new List<OrdemServico>();
 
         public OrdemServicoRepository()
         {
@@ -18,6 +18,32 @@ namespace Exercicio_Integrador_2.Repository
         public void CadastrarOS(OrdemServico os)
         {
             OrdensDeServico.Add(os);
+        }
+
+        public void AddServicoNaOS(OrdemServico os, List<Servico> listaServicos)
+        {
+            foreach (var servico in listaServicos)
+            {
+                os.ListaServicos.Add(servico);
+            }
+        }
+
+        public void AddPecaNaOS(OrdemServico os, List<Peca> listaPecas)
+        {
+            foreach (var peca in listaPecas)
+            {
+                os.ListaPecas.Add(peca);
+            }
+        }
+
+        public void FinalizarOS(OrdemServico os)
+        {
+            os.FinalizarOrdemServico();
+        }
+
+        public void CancelarOS(OrdemServico os)
+        {
+            os.CancelarOrdemServico();
         }
 
         public OrdemServico PesquisarOSporID(int id)

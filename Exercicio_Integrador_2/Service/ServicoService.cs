@@ -34,6 +34,30 @@ namespace Exercicio_Integrador_2.Service
             }          
         }
 
+        public bool EhValorServicoValido(string valorServicoString)
+        {
+            decimal valorServico;
+            bool ehValido = decimal.TryParse(valorServicoString, out valorServico);
+
+            if (!ehValido || valorServico <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool EhTempoEstimadoValido(string tempoEstimadoString)
+        {
+            decimal tempoEstimado;
+            bool ehValido = decimal.TryParse(tempoEstimadoString, out tempoEstimado);
+
+            if (!ehValido || tempoEstimado <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public List<Servico> ListarServicos()
         {
             return _servicoRepository.ListarTodosServicos();

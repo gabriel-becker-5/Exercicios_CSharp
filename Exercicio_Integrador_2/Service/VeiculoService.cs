@@ -38,6 +38,17 @@ namespace Exercicio_Integrador_2.Service
             }
         }
 
+        public bool EhAnoFabricacaoValido(string anoFabricacaoString)
+        {
+            int anoFabricacao;
+            bool ehValido = int.TryParse(anoFabricacaoString, out anoFabricacao);
+
+            if (!ehValido || anoFabricacao <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
         public List<Veiculo> ListarVeiculos()
         {
             return _veiculoRepository.ListarTodosVeiculos();

@@ -63,5 +63,25 @@ namespace Exercicio_Integrador_2.Service
         {
             return _clienteRepository.PesquisarClientePorNome(nome);
         }
+
+        public bool EhNomeValido(string nome)
+        {
+            if (nome.Length < 5) // Mínimo de caracteres do Nome informado
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool TipoClienteEhValido(string tipoCliente)
+        {
+            if (tipoCliente.ToUpper() != "C" &&
+                tipoCliente.ToUpper() != "V" &&
+                tipoCliente.ToUpper() != "F")
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }
