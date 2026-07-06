@@ -1,0 +1,107 @@
+﻿@model List<Aluno>
+
+@{
+    ViewData["Title"] = "Alunos Matriculados";
+}
+
+<style>
+    table, th, td {
+        border: 1px solid gray;
+        justify-content: left;
+        width: 950px;
+        text-wrap: nowrap;
+    }
+
+    h4 {
+        font-weight: 800;
+    }
+
+    td {
+        height: 30px;
+        text-wrap: wrap;
+    }
+
+    th {
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .body-matriculas {
+        justify-items: center;
+    }
+
+    .divisorias {
+        border: 10px;
+        height: 15px;
+    }
+
+    .menu-opcoes-aluno {
+        display: flex;
+        gap: 15px;
+    }
+
+    .containerBuscas, .topo {
+        display: flex;
+        gap: 10px;
+    }
+</style>
+
+<div class="body-matriculas">
+
+    <div class="menu-opcoes-aluno">
+        <a href="/aluno/" title="ExibirAlunosMatriculados">Exibir Alunos Matriculados</a>
+        <a href="/aluno/criar" title="NovaMatricula">Nova Matrícula</a>
+    </div>
+
+    <div class="divisorias"></div>
+    
+    <div class="topo">
+
+    <form action="/aluno" method="get">
+        <div class="containerBuscas">
+            <div class="labelPesquisaAluno">Nome do Aluno:</div>
+            <div class="inputNomePesquisaAluno"><input id="PesquisaAlunoNome" maxlength="300" name="nomeAluno" placeholder="Nome do Aluno" size="30" type="text" value=""></div>
+            <button type="submit">Pesquisar</button>
+        </div>
+    </form>
+
+    <div class="divisorias"></div>
+
+    <form method="get">
+        <div class="containerBuscas">
+        <div class="labelPesquisaAluno">ID do Aluno:</div>
+        <input type="text" name="idAluno" placeholder="ID do Aluno">
+        <button type="submit" formaction="/aluno/editar">Editar</button>
+        <button type="submit" formaction="/aluno/excluir">Excluir</button>
+        </div>
+    </form>
+
+    </div>
+
+    <div class="divisorias"></div>
+    <h4>Alunos Matriculados</h4>
+    <table class="alunos-matriculados">
+        <thead>
+            <tr>
+                <th class="col1">Id</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th>Data Nascimento</th>
+            </tr>
+        </thead>
+
+        @foreach (var aluno in Model)
+        {
+            <tbody>
+                <tr>
+                    <td>@aluno.Id</td>
+                    <td>@aluno.Nome</td>
+                    <td>@aluno.Telefone</td>
+                    <td>@aluno.Email</td>
+                    <td>@aluno.DataNascimento</td>
+                </tr>
+            </tbody>
+        }
+    </table>
+</div>
