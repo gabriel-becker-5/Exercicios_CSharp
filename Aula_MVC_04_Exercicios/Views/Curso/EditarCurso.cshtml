@@ -19,6 +19,8 @@
 </style>
 
 <div class="containerPagina">
+    <partial name="_MenuCurso" />
+    <p></p>
     <h4>Editar Curso</h4>
     <p></p>
     <form asp-controller="curso" asp-action="editar" asp-route-idCurso="@Model.Id" method="post">

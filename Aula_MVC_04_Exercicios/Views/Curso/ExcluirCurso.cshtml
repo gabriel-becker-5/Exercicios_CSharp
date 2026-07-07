@@ -19,6 +19,8 @@
 </style>
 
 <div class="containerPagina">
+    <partial name="_MenuCurso" />
+    <p></p>
     <h4>Excluir Curso</h4>
     <p></p>
     <form asp-controller="curso" asp-action="excluir" asp-route-idCurso="@Model.Id" method="post">

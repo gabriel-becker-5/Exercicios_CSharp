@@ -29,11 +29,50 @@
         font-weight: 800;
         text-align: left;
     }
+
+    .barraAcoesCurso {
+        display: flex;
+        gap: 30px;
+    }
+
+    .editdeleteCursos, .pesquisaCurso {
+        display: flex;
+        gap: 7px;
+    }
 </style>
 
 <div class="containerPagina">
+
+    <partial name="_MenuCurso" />
+    <p></p>
+
     <h3>Lista de Cursos</h3>
     <p></p>
+
+
+
+
+    <form method="get" asp-controller="curso" asp-action="index">
+    <div class="barraAcoesCurso">
+        <div class="pesquisaCurso">
+            <a>Curso: </a>
+            <input placeholder="Curso" name="nomeCurso" value="" type="text" />
+            <button type="submit">Pesquisar</button>
+        </div>
+    </form>
+
+        <form method="get" asp-controller="curso">
+            <div class="editdeleteCursos">
+                <a>ID do Curso: </a>
+                <input placeholder="ID" name="idCurso" value="" type="number" />
+                <button asp-action="editar" type="submit">Editar</button>
+                <button asp-action="excluir" type="submit">Excluir</button>
+            </form>
+        </div>
+    </div>
+
+    <p></p>
+
     <div class="cursosCadastrados">Cursos Cadastrados: @qtdCursosCadastrados</div>
     <p></p>
     @if (msgSucessoCadastrarCurso != null ||

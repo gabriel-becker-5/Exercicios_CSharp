@@ -15,9 +15,14 @@ namespace Aula_MVC_04_Exercicios.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? nomeCurso)
         {
-            var cursos = await _context.Cursos.OrderByDescending(c => c.CargaHoraria).ToListAsync();
+            List<Curso> cursos = await _context.Cursos.Where(c => c.Nome.Contains(nomeCurso)).ToListAsync();
+            if (cursos.Count() == 0)
+            {
+                List<Curso> todosCursos = await _context.Cursos.ToListAsync();
+                return View(todosCursos);
+            }
             return View(cursos);
         }
 
