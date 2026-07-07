@@ -1,0 +1,37 @@
+@model Curso
+
+@{
+    ViewData["Title"] = "Cadastrar Curso";
+}
+
+<style>
+    .CamposNomeCurso, .CamposCargaHoraria {
+        display: flex;
+        gap: 20px;
+    }
+
+    .CamposCadastrarCurso {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+</style>
+
+<div class="containerPagina">
+    <h4>Cadastrar Curso</h4>
+    <p></p>
+    <form asp-controller="curso" asp-action="cadastrar" method="post">
+        <div class="CamposCadastrarCurso">
+            <div class="CamposNomeCurso">
+                <div class="labelNomeCurso">Nome do Curso:</div>
+                <input class="inputNomeCurso" asp-for="Nome" type="text" placeholder="Nome do Curso" value="" />
+            </div>
+            <div class="CamposCargaHoraria">
+                <div class="labelCargaHoraria">Carga Horária:</div>
+                <input class="inputCargaHoraria" asp-for="CargaHoraria" type="number" placeholder="Carga Horária" value="" />
+            </div>
+        </div>
+        <button type="submit" class="buttonCadastrar">Cadastrar</button>
+    </form>
+</div>

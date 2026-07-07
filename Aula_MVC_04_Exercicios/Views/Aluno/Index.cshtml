@@ -7,7 +7,6 @@
 <style>
     table, th, td {
         border: 1px solid gray;
-        justify-content: left;
         width: 950px;
         text-wrap: nowrap;
     }
@@ -31,7 +30,6 @@
     }
 
     .divisorias {
-        border: 10px;
         height: 15px;
     }
 
@@ -48,38 +46,35 @@
 
 <div class="body-matriculas">
 
-    <div class="menu-opcoes-aluno">
-        <a href="/aluno/" title="ExibirAlunosMatriculados">Exibir Alunos Matriculados</a>
-        <a href="/aluno/criar" title="NovaMatricula">Nova Matrícula</a>
-    </div>
-
-    <div class="divisorias"></div>
-    
-    <div class="topo">
-
-    <form action="/aluno" method="get">
-        <div class="containerBuscas">
-            <div class="labelPesquisaAluno">Nome do Aluno:</div>
-            <div class="inputNomePesquisaAluno"><input id="PesquisaAlunoNome" maxlength="300" name="nomeAluno" placeholder="Nome do Aluno" size="30" type="text" value=""></div>
-            <button type="submit">Pesquisar</button>
-        </div>
-    </form>
-
-    <div class="divisorias"></div>
-
-    <form method="get">
-        <div class="containerBuscas">
-        <div class="labelPesquisaAluno">ID do Aluno:</div>
-        <input type="text" name="idAluno" placeholder="ID do Aluno">
-        <button type="submit" formaction="/aluno/editar">Editar</button>
-        <button type="submit" formaction="/aluno/excluir">Excluir</button>
-        </div>
-    </form>
-
-    </div>
+    <partial name="_MenuAluno" />
 
     <div class="divisorias"></div>
     <h4>Alunos Matriculados</h4>
+    <div class="divisorias"></div>
+    <div class="topo">
+
+        <form asp-controller="aluno" method="get">
+            <div class="containerBuscas">
+                <div class="labelPesquisaAluno">Nome do Aluno:</div>
+                <div class="inputNomePesquisaAluno"><input id="PesquisaAlunoNome" maxlength="300" asp-for="nomeAluno" placeholder="Nome do Aluno" size="30" type="text" value=""></div>
+                <button type="submit">Pesquisar</button>
+            </div>
+        </form>
+
+        <div class="divisorias"></div>
+
+        <form method="get">
+            <div class="containerBuscas">
+                <div class="labelPesquisaAluno">ID do Aluno:</div>
+                <input type="text" name="idAluno" placeholder="ID do Aluno">
+                <button type="submit" asp-controller="aluno" asp-action="editar">Editar</button>
+                <button type="submit" asp-controller="aluno" asp-action="excluir">Excluir</button>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="divisorias"></div>
     <table class="alunos-matriculados">
         <thead>
             <tr>
@@ -99,7 +94,7 @@
                     <td>@aluno.Nome</td>
                     <td>@aluno.Telefone</td>
                     <td>@aluno.Email</td>
-                    <td>@aluno.DataNascimento</td>
+                    <td>@aluno.DataNascimento.ToString("dd/MM/yyyy")</td>
                 </tr>
             </tbody>
         }

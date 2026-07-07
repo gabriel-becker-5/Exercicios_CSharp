@@ -23,21 +23,20 @@ namespace Aula_MVC_04_Exercicios.Controllers
                 List<Aluno> todosAlunos = await _context.Alunos.ToListAsync();
                 return View(todosAlunos);
             }
-            return View(alunos);            
+            return View(alunos);
         }
 
         [HttpPost("criar")]
-        public async Task<IActionResult> Criar(string nome, string email, DateTime datanascimento, string telefone)
+        public async Task<IActionResult> Criar(Aluno aluno)
         {
-            Aluno aluno = new Aluno(nome, email, datanascimento, telefone);
             _context.Alunos.Add(aluno);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         [HttpGet("criar")]
-        public IActionResult Criar() 
-        { 
+        public IActionResult Criar()
+        {
             return View();
         }
 

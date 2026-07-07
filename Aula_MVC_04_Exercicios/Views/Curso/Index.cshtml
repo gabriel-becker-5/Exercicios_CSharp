@@ -1,0 +1,64 @@
+@model List<Curso>
+
+@{
+    ViewData["Title"] = "Index";
+    int qtdCursosCadastrados = Model.Count();
+    var msgSucessoCadastrarCurso = TempData["msg_Create_Sucess"];
+    var msgSucessoEditarCurso = TempData["msg_Edit_Sucess"];
+    var msgExclusaoCurso = TempData["msg_Delete"];
+}
+
+<style>
+    table, th, td {
+        border: 1px solid gray;
+        text-align: center;
+    }
+
+    .tableCursos {
+        color: white;
+        background: black;
+        width: 700px;
+    }
+
+    td {
+        background: lightblue;
+        color: black;
+    }
+
+    .cursosCadastrados {
+        font-weight: 800;
+        text-align: left;
+    }
+</style>
+
+<div class="containerPagina">
+    <h3>Lista de Cursos</h3>
+    <p></p>
+    <div class="cursosCadastrados">Cursos Cadastrados: @qtdCursosCadastrados</div>
+    <p></p>
+    @if (msgSucessoCadastrarCurso != null ||
+     msgSucessoEditarCurso != null ||
+     msgExclusaoCurso != null)
+    {
+        <p>@msgSucessoCadastrarCurso</p>
+        <p>@msgSucessoEditarCurso</p>
+        <p>@msgExclusaoCurso</p>
+    }
+    <table class="tableCursos">
+        <thead>
+            <th style="width: 35px;">ID</th>
+            <th style="width: auto;">Curso</th>
+            <th style="width: 80px;">Carga Horária</th>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td style="text-wrap: wrap;">@item.Nome</td>
+                    <td>@item.CargaHoraria</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,13 +1,12 @@
 ﻿@model Aluno
 
 @{
-    ViewData["Title"] = "Matricular Aluno";
+    ViewData["Title"] = "Excluir Matrícula";
 }
 
 <style>
     table, th, td {
         border: 1px solid gray;
-        justify-content: left;
         width: 950px;
         text-wrap: nowrap;
     }
@@ -21,7 +20,6 @@
     }
 
     .divisorias {
-        border: 10px;
         height: 15px;
     }
 
@@ -46,42 +44,36 @@
     }
 </style>
 
-<div class="body-matriculas">
-    <div class="menu-opcoes-aluno">
-        <a href="/aluno/" title="ExibirAlunosMatriculados">Exibir Alunos Matriculados</a>
-        <a href="/aluno/criar" title="NovaMatricula">Nova Matrícula</a>
-    </div>
+<partial name="_MenuAluno" />
 
-    <div class="divisorias"></div>
-    <h4>Matricular Aluno</h4>
-    <div class="containerCamposMatricula">
+<div class="divisorias"></div>
+<h4>Excluir Matrícula</h4>
+<div class="containerCamposMatricula">
 
-        <form action="/aluno/excluirConfirmado?idAluno=@Model.Id" method="post">
-            
-            <div class="divisorias"></div>
-            <div class="camposNomeAluno">
-                <div class="labelnomealuno">Nome:</div>
-                <div class="inputnomealuno"><input id="nomeAluno" name="Nome" maxlength="300" placeholder="Nome completo" size="40" type="text" value="@Model.Nome"></div>
-            </div>
-            <div class="divisorias"></div>
-            <div class="camposEmailAluno">
-                <div class="labelemailaluno">E-mail:</div>
-                <div class="inputEmailAluno"><input id="emailAluno" name="Email" maxlength="300" placeholder="E-mail" size="40" type="text" value="@Model.Email"></div>
-            </div>
-            <div class="divisorias"></div>
-            <div class="camposDataNascimentoAluno">
-                <div class="labeldataNascimentoaluno">Data de Nascimento:</div>
-                <div class="inputDataNascimentoAluno"><input id="dataNascimentoAluno" name="DataNascimento" maxlength="300" placeholder="Data (DD/MM/AAAA)" size="40" type="text" value="@Model.DataNascimento"></div>
-            </div>
-            <div class="divisorias"></div>
-            <div class="camposTelefoneAluno">
-                <div class="labelTelefoneAluno">Telefone:</div>
-                <div class="inputTelefoneAluno"><input id="telefoneAluno" maxlength="300" name="Telefone" placeholder="Telefone / Celular" size="40" type="text" value="@Model.Telefone"></div>
-            </div>
-            <div class="divisorias"></div>
+    <form asp-controller="aluno" asp-action="excluirConfirmado" asp-route-idAluno="@Model.Id" method="post">
+        <div class="divisorias"></div>
+        <div class="camposNomeAluno">
+            <div class="labelnomealuno">Nome:</div>
+            <div class="inputnomealuno"><input id="nomeAluno" asp-for="Nome" maxlength="300" placeholder="Nome completo" size="40" type="text" value="@Model.Nome" disabled></div>
+        </div>
+        <div class="divisorias"></div>
+        <div class="camposEmailAluno">
+            <div class="labelemailaluno">E-mail:</div>
+            <div class="inputEmailAluno"><input id="emailAluno" asp-for="Email" maxlength="300" placeholder="E-mail" size="40" type="text" value="@Model.Email" disabled></div>
+        </div>
+        <div class="divisorias"></div>
+        <div class="camposDataNascimentoAluno">
+            <div class="labeldataNascimentoaluno">Data de Nascimento:</div>
+            <div class="inputDataNascimentoAluno"><input id="dataNascimentoAluno" asp-for="DataNascimento" maxlength="300" placeholder="Data (DD/MM/AAAA)" size="40" type="date" value="@Model.DataNascimento.ToString("yyyy-MM-dd")" disabled></div>
+        </div>
+        <div class="divisorias"></div>
+        <div class="camposTelefoneAluno">
+            <div class="labelTelefoneAluno">Telefone:</div>
+            <div class="inputTelefoneAluno"><input id="telefoneAluno" maxlength="300" asp-for="Telefone" placeholder="Telefone / Celular" size="40" type="text" value="@Model.Telefone" disabled="true"></div>
+        </div>
+        <div class="divisorias"></div>
 
-            <button type="submit">Confirma a Exclusão?</button>
+        <button type="submit">Confirma a Exclusão?</button>
 
-        </form>
-    </div>
+    </form>
 </div>

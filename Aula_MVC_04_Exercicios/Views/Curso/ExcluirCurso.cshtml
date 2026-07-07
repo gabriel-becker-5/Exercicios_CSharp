@@ -1,0 +1,37 @@
+@model Curso
+
+@{
+    ViewData["Title"] = "Excluir Curso";
+}
+
+<style>
+    .CamposNomeCurso, .CamposCargaHoraria {
+        display: flex;
+        gap: 20px;
+    }
+
+    .CamposCadastrarCurso {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+</style>
+
+<div class="containerPagina">
+    <h4>Excluir Curso</h4>
+    <p></p>
+    <form asp-controller="curso" asp-action="excluir" asp-route-idCurso="@Model.Id" method="post">
+        <div class="CamposCadastrarCurso">
+            <div class="CamposNomeCurso">
+                <div class="labelNomeCurso">Nome do Curso:</div>
+                <input class="inputNomeCurso" asp-for="Nome" type="text" placeholder="Nome do Curso" value="@Model.Nome" disabled />
+            </div>
+            <div class="CamposCargaHoraria">
+                <div class="labelCargaHoraria">Carga Horária:</div>
+                <input class="inputCargaHoraria" asp-for="CargaHoraria" type="number" placeholder="Carga Horária" value="@Model.CargaHoraria" disabled />
+            </div>
+        </div>
+        <button type="submit" class="buttonCadastrar">Confirma Exclusão?</button>
+    </form>
+</div>
