@@ -16,6 +16,10 @@
         gap: 15px;
     }
 
+    .messageDiasCurso {
+        color: darkred;
+        font-size: 12.5px;
+    }
 </style>
 
 <div class="containerPagina">
@@ -24,6 +28,7 @@
     <h4>Editar Curso</h4>
     <p></p>
     <form asp-controller="curso" asp-action="editar" asp-route-idCurso="@Model.Id" method="post">
+        <div asp-validation-summary="All"></div>
         <div class="CamposCadastrarCurso">
             <div class="CamposNomeCurso">
                 <div class="labelNomeCurso">Nome do Curso:</div>
@@ -33,6 +38,7 @@
                 <div class="labelCargaHoraria">Carga Horária:</div>
                 <input class="inputCargaHoraria" asp-for="CargaHoraria" type="number" placeholder="Carga Horária" value="@Model.CargaHoraria" />
             </div>
+            <p class="messageDiasCurso">Equivale a aproximadamente @ViewBag.diasDeCurso dias úteis de aula.</p>
         </div>
         <button type="submit" class="buttonCadastrar">Editar</button>
     </form>

@@ -1,4 +1,5 @@
 ﻿using Aula_MVC_04_Exercicios.Data;
+using Aula_MVC_04_Exercicios.Interfaces;
 using Aula_MVC_04_Exercicios.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +10,12 @@ namespace Aula_MVC_04_Exercicios.Controllers
     public class CursoController : Controller
     {
         private readonly AppDbContext _context;
-        public CursoController(AppDbContext context)
+        private readonly ICalculadoraCargaHorariaService _calculadoraCargaHoraria;
+
+        public CursoController(AppDbContext context, ICalculadoraCargaHorariaService calculadoracargahoraria)
         {
             _context = context;
+            _calculadoraCargaHoraria = calculadoracargahoraria;
         }
 
         [HttpGet]
@@ -35,10 +39,11 @@ namespace Aula_MVC_04_Exercicios.Controllers
         [HttpPost("cadastrar")]
         public async Task<IActionResult> CriarCurso(Curso curso)
         {
-            if (curso.CargaHoraria <= 0)
+            if (!ModelState.IsValid)
             {
-                return NotFound("Informe uma carga horária válida.");
-            }           
+                return View(curso);
+            }
+           
             _context.Cursos.Add(curso);
             await _context.SaveChangesAsync();
             TempData["msg_Create_Sucess"] = $"Curso '{curso.Nome}' cadastrado com sucesso!";
@@ -53,18 +58,21 @@ namespace Aula_MVC_04_Exercicios.Controllers
             {
                 return NotFound("Curso não encontrado.");
             }
+
+            int diasDeCurso = _calculadoraCargaHoraria.ConverterHorasEmDias(curso.CargaHoraria);
+            ViewBag.diasDeCurso = diasDeCurso;
             return View(curso);
         }
 
         [HttpPost("editar")]
         public async Task<IActionResult> EditarCurso(int idCurso, Curso dados)
         {
-            if (dados.CargaHoraria <= 0)
-            {
-                return NotFound("Informe uma carga horária válida.");
-            }
-
             Curso curso = await _context.Cursos.FindAsync(idCurso);
+            
+            if (!ModelState.IsValid)
+            {
+                return View(curso);
+            }
 
             if (curso == null)
             {

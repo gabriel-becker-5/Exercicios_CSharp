@@ -1,8 +1,14 @@
-﻿@{
+﻿@using Aula_MVC_04_Exercicios.Interfaces
+@model IDataHoraService
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <p>Data/Hora Atual: @Model.ObterDataAtual()</p>
+    <p>Identificador: @Model.identificador</p>
 </div>

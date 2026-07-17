@@ -29,6 +29,10 @@ namespace Aula_MVC_04_Exercicios.Controllers
         [HttpPost("criar")]
         public async Task<IActionResult> Criar(Aluno aluno)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(aluno);
+            }
             _context.Alunos.Add(aluno);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -52,6 +56,12 @@ namespace Aula_MVC_04_Exercicios.Controllers
         public async Task<IActionResult> Editar(int idAluno, Aluno model)
         {
             Aluno aluno = await _context.Alunos.FindAsync(idAluno);
+            
+            if (!ModelState.IsValid) 
+            {
+                return View(aluno);
+            }
+
             if (aluno == null) return NotFound("Aluno não matriculado.");
             aluno.Nome = model.Nome;
             aluno.Telefone = model.Telefone;
@@ -60,7 +70,6 @@ namespace Aula_MVC_04_Exercicios.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
 
         [HttpGet("excluir")]
         public async Task<IActionResult> Excluir(int idAluno)

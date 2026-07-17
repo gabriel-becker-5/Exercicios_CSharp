@@ -24,6 +24,7 @@
     <h4>Cadastrar Curso</h4>
     <p></p>
     <form asp-controller="curso" asp-action="cadastrar" method="post">
+        <div asp-validation-summary="All"></div>
         <div class="CamposCadastrarCurso">
             <div class="CamposNomeCurso">
                 <div class="labelNomeCurso">Nome do Curso:</div>

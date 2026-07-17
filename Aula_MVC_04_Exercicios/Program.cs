@@ -36,6 +36,8 @@
 // - Use TempData para exibir uma mensagem de sucesso após criar/editar/excluir
 
 using Aula_MVC_04_Exercicios.Data;
+using Aula_MVC_04_Exercicios.Interfaces;
+using Aula_MVC_04_Exercicios.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,6 +47,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseMySQL(
     builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IDataHoraService, DataHoraService>();
+builder.Services.AddScoped<ICalculadoraCargaHorariaService, CalculadoraCargaHorariaService>();
 
 var app = builder.Build();
 
