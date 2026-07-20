@@ -25,11 +25,49 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <div>
+                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                                        <button type="submit" class="nav-link btn btn-link text-dark">Sair</button>
+                                    </form>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <div class="nav-link btn btn-link text-dark"><a href="/Admin">Painel Admin</a></div>
+                                }
+                            </li>
+                            <li class="nav-item">
+                                <div style="margin-top:9px; margin-left:15px;"><p>Olá @User.Identity.Name</p></div>
+                            </li>
+
+                            <li class="nav-item">
+                                <div class="badge admin">
+                                    <svg viewBox="0 0 140 36">
+                                        <rect class="background" x="1" y="1" width="138" height="34" rx="17" />
+                                        <text x="70" y="23" text-anchor="middle">ADMIN</text>
+                                    </svg>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <div class="nav-link text-dark"><a href="/Identity/Account/Login">Logar</a></div>
+                            </li>
+                            <li class="nav-item">
+                                <div class="nav-link text-dark"><a href="/Identity/Account/Register">Registrar</a></div>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

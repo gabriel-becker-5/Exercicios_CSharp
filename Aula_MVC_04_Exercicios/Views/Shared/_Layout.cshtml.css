@@ -46,3 +46,31 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
+
+.badge svg {
+    width: 140px;
+    height: 36px;
+}
+
+.badge .background {
+    fill: #888;
+}
+
+.badge text {
+    fill: #fff;
+    font-size: 14px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.badge.admin .background {
+    fill: #000000;
+}
+
+.badge.professor .background {
+    fill: #d0850b;
+}
+
+.badge.aluno .background {
+    fill: #105397;
+}

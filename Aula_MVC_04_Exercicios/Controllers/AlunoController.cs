@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Aula_MVC_04_Exercicios.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Aula_MVC_04_Exercicios.Controllers
 {
+    [Authorize]
     [Route("aluno")]
     public class AlunoController : Controller
     {
@@ -26,6 +28,7 @@ namespace Aula_MVC_04_Exercicios.Controllers
             return View(alunos);
         }
 
+        [Authorize(Roles = "Professor,Admin")]
         [HttpPost("criar")]
         public async Task<IActionResult> Criar(Aluno aluno)
         {
@@ -38,12 +41,14 @@ namespace Aula_MVC_04_Exercicios.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Professor,Admin")]
         [HttpGet("criar")]
         public IActionResult Criar()
         {
             return View();
         }
 
+        [Authorize(Roles = "Professor,Admin")]
         [HttpGet("editar")]
         public async Task<IActionResult> Editar(int idAluno)
         {
@@ -52,6 +57,7 @@ namespace Aula_MVC_04_Exercicios.Controllers
             return View(aluno);
         }
 
+        [Authorize(Roles = "Professor,Admin")]
         [HttpPost("editar")]
         public async Task<IActionResult> Editar(int idAluno, Aluno model)
         {
@@ -71,6 +77,7 @@ namespace Aula_MVC_04_Exercicios.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Professor,Admin")]
         [HttpGet("excluir")]
         public async Task<IActionResult> Excluir(int idAluno)
         {
@@ -79,6 +86,7 @@ namespace Aula_MVC_04_Exercicios.Controllers
             return View(aluno);
         }
 
+        [Authorize(Roles = "Professor,Admin")]
         [HttpPost("excluirConfirmado")]
         public async Task<IActionResult> ExcluirConfirmado(int idAluno)
         {
