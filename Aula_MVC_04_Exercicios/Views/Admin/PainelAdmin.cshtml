@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "PAINEL ADMINISTRATIVO";
+}
+
+@model AlterarRoleViewModel
+
+<div class="text-center">
+    <form asp-controller="admin" asp-action="atribuiruserrole" method="post">
+        <div class="roleUsers">
+            <div class="label" style="text-align:left;">
+                <strong><p>Cadastrar Usuário em uma Role</p></strong>
+            </div>
+            <div class="userEmail" style="margin-bottom:15px; display:flex; gap:15px;">
+                <label for="userEmail">E-mail: </label>
+                <div class="selectUser">
+                    <input asp-for="userEmail" maxlength="300" placeholder="E-mail Cadastrado" size="40" type="text">
+                </div>
+            </div>
+
+            <div class="role" style="margin-bottom:15px; display:flex; gap:29px;">
+                <label for="role">Role: </label>
+                <div class="selectRole">
+                    <select asp-for="Role">
+                        <option value="Admin">Admin</option>
+                        <option value="Professor">Professor</option>
+                        <option value="Aluno">Aluno</option>
+                    </select>
+                </div>
+            </div>
+            <div class="btnAlterar" style="display:flex;">
+                <button type="submit">Alterar</button>
+            </div>
+        </form>
+    </div>
+</div>
