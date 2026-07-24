@@ -5,5 +5,5 @@ Accept: application/json
 
 ###
 
-GET {{Aula_REST_API_01_Exercicios_HostAddress}}/api/Produtos/listar
-Accept: application/json
+# GET {{Aula_REST_API_01_Exercicios_HostAddress}}/api/Produtos/listar
+# Accept: application/json
