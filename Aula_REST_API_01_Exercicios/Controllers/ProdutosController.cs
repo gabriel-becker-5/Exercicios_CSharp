@@ -1,5 +1,6 @@
 ﻿using Aula_REST_API_01_Exercicios.Data;
 using Aula_REST_API_01_Exercicios.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +38,7 @@ namespace Aula_REST_API_01_Exercicios.Controllers
         }
 
         [HttpPost("criar")]
+        [Authorize]
         public async Task<IActionResult> Criar(ProdutoDto dto)
         {
             Produto novoProduto = new Produto
@@ -60,6 +62,7 @@ namespace Aula_REST_API_01_Exercicios.Controllers
         }
 
         [HttpPut("atualizar")]
+        [Authorize]
         public async Task<IActionResult> Atualizar(int id, ProdutoDto dto)
         {
             Produto produto = await _context.Produtos.FindAsync(id);
@@ -78,7 +81,8 @@ namespace Aula_REST_API_01_Exercicios.Controllers
             return NoContent();
         }
 
-        [HttpDelete("deletar")]
+        [HttpDelete("deletar/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Deletar(int id)
         {
             Produto produto = await _context.Produtos.FindAsync(id);
