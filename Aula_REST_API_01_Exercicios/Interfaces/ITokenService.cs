@@ -2,6 +2,6 @@
 {
     public interface ITokenService
     {
-        public string GerarToken(string usuario, string role);
+        public string GerarToken(string usuario, List<string> listaDeRoles);
     }
 }

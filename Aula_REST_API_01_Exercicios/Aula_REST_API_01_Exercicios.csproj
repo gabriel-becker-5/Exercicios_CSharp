@@ -23,6 +23,7 @@
     </PackageReference>
     <PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.26" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="ZendeskApi_v2" Version="3.12.4" />
   </ItemGroup>
 
 </Project>

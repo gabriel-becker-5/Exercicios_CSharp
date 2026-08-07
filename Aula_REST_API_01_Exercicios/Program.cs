@@ -1,5 +1,6 @@
 using Aula_REST_API_01_Exercicios.Data;
 using Aula_REST_API_01_Exercicios.Interfaces;
+using Aula_REST_API_01_Exercicios.Repositories;
 using Aula_REST_API_01_Exercicios.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
+// Interfaces
 builder.Services.AddSingleton<ITokenService, TokenService>();
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<IProdutoService, ProdutoService>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseMySQL(
@@ -77,4 +85,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleservice = scope.ServiceProvider.GetRequiredService<IRoleService>();
+    var usuarioservice = scope.ServiceProvider.GetRequiredService<IUsuarioService>();
+    await SeedData.Initializer(roleservice, usuarioservice);
+}
+
 app.Run();

@@ -13,13 +13,18 @@ namespace Aula_REST_API_01_Exercicios.Services
         public TokenService(IConfiguration config)
             => _chave = config["Jwt:Secret"];
 
-        public string GerarToken(string usuario, string role)
+        public string GerarToken(string usuario, List<string> listaDeRoles)
         {
-            var claims = new[]
+            List<Claim> claims = [];
+
+            var claimName = new Claim(JwtRegisteredClaimNames.Name, usuario);
+            claims.Add(claimName);
+
+            for (int i = 0; i < listaDeRoles.Count; i++)
             {
-                new Claim(JwtRegisteredClaimNames.Name, usuario),
-                new Claim(ClaimTypes.Role, role)
-            };
+                var claimRole = new Claim(ClaimTypes.Role, listaDeRoles[i]);
+                claims.Add(claimRole);
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_chave));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

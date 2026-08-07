@@ -1,33 +1,37 @@
-﻿using Aula_REST_API_01_Exercicios.Data;
-using Aula_REST_API_01_Exercicios.Models;
+﻿using Aula_REST_API_01_Exercicios.Models;
+using Aula_REST_API_01_Exercicios.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Aula_REST_API_01_Exercicios.Interfaces;
 
 namespace Aula_REST_API_01_Exercicios.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ProdutosController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IProdutoService _produtoService;
 
-        public ProdutosController(AppDbContext context)
+        public ProdutosController(IProdutoService produtoService)
         {
-            _context = context;
+            _produtoService = produtoService;
         }
 
         [HttpGet("listarTodos")]
-        public async Task<IActionResult> GetTodos()
+        [Authorize(Roles = $"{Roles.Admin},{Roles.Default}")]
+        public async Task<IActionResult> GetTodosAsync()
         {
-            List<Produto> produtosCadastrados = await _context.Produtos.ToListAsync();
+            List<Produto> produtosCadastrados = await _produtoService.GetTodosAsync();
             return Ok(produtosCadastrados);
         }
 
+        [ActionName(nameof(GetPorIdAsync))]
         [HttpGet("buscar/{id}")]
-        public async Task<IActionResult> GetPorId(int id)
+        [Authorize(Roles = $"{Roles.Admin},{Roles.Default}")]
+        public async Task<IActionResult> GetPorIdAsync(int id)
         {
-            Produto produto = await _context.Produtos.FindAsync(id);
+            Produto produto = await _produtoService.GetPorIdAsync(id);
 
             if (produto == null)
             {
@@ -38,112 +42,95 @@ namespace Aula_REST_API_01_Exercicios.Controllers
         }
 
         [HttpPost("criar")]
-        [Authorize]
-        public async Task<IActionResult> Criar(ProdutoDto dto)
+        [Authorize(Roles = $"{Roles.Admin},{Roles.Default}")]
+        public async Task<IActionResult> CriarAsync(ProdutoDto dto)
         {
-            Produto novoProduto = new Produto
-            {
-                Nome = dto.Nome,
-                Preco = dto.Preco,
-                EmailFornecedor = dto.EmailFornecedor
-            };
-
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            _context.Produtos.Add(novoProduto);
-            await _context.SaveChangesAsync();
+            var novoProduto = await _produtoService.CriarAsync(dto);
 
-            return CreatedAtAction(nameof(GetPorId),
+            return CreatedAtAction(nameof(GetPorIdAsync),
                 new { id = novoProduto.Id },
                 novoProduto);
         }
 
         [HttpPut("atualizar")]
         [Authorize]
-        public async Task<IActionResult> Atualizar(int id, ProdutoDto dto)
+        [Authorize(Roles = $"{Roles.Admin},{Roles.Default}")]
+        public async Task<IActionResult> AtualizarAsync(int id, ProdutoDto dto)
         {
-            Produto produto = await _context.Produtos.FindAsync(id);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
-            if (produto == null)
+            var resultado = await _produtoService.AtualizarAsync(id, dto);
+
+            if (!resultado)
             {
                 return NotFound();
             }
-
-            produto.Nome = dto.Nome;
-            produto.Preco = dto.Preco;
-            produto.EmailFornecedor = dto.EmailFornecedor;
-
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
         [HttpDelete("deletar/{id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Deletar(int id)
+        [Authorize(Roles = Roles.Admin)]
+        public async Task<IActionResult> DeletarAsync(int id)
         {
-            Produto produto = await _context.Produtos.FindAsync(id);
+            var resultado = await _produtoService.DeletarAsync(id);
 
-            if (produto == null)
+            if (!resultado)
             {
                 return NotFound();
             }
-
-            _context.Produtos.Remove(produto);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
         [HttpGet("buscar")]
-        public async Task<IActionResult> PesquisaRangePreco(
+        [Authorize(Roles = $"{Roles.Admin},{Roles.Default}")]
+        public async Task<IActionResult> PesquisaRangePrecoAsync(
             [FromQuery] decimal? precoMin,
             [FromQuery] decimal? precoMax)
         {
-            if (precoMax < precoMin)
+            var resultado = await _produtoService.PesquisaRangePrecoAsync(precoMin, precoMax);
+
+            if (resultado == null)
             {
                 return BadRequest();
             }
 
-            var consulta = _context.Produtos.AsQueryable();
-
-            if (precoMin != null)
-                consulta = consulta.Where(p => p.Preco >= precoMin.Value);
-
-            if (precoMax != null)
-                consulta = consulta.Where(p => p.Preco <= precoMax.Value);
-
-            var produtosCadastrados = await consulta.ToListAsync();
-            return Ok(produtosCadastrados);
+            return Ok(resultado);
         }
 
         // Exercícios Aula 01
-        string[] produtos = ["Produto 0", "Produto 1", "Produto 2", "Produto 3", "Produto 4"];
+        //string[] produtos = ["Produto 0", "Produto 1", "Produto 2", "Produto 3", "Produto 4"];
 
-        [HttpGet("listar")]
-        public IActionResult ListarProdutos()
-        {
-            return Ok(produtos);
-        }
+        //[HttpGet("listar")]
+        //public IActionResult ListarProdutos()
+        //{
+        //    return Ok(produtos);
+        //}
 
-        [HttpGet]
-        public IActionResult ConsultaProduto(int id)
-        {
-            string produtoSelecionado;
+        //[HttpGet]
+        //public IActionResult ConsultaProduto(int id)
+        //{
+        //    string produtoSelecionado;
 
-            try
-            {
-                produtoSelecionado = produtos[id];
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return NotFound();
-            }
+        //    try
+        //    {
+        //        produtoSelecionado = produtos[id];
+        //    }
+        //    catch (IndexOutOfRangeException)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(produtoSelecionado);
-        }
+        //    return Ok(produtoSelecionado);
+        //}
     }
 }

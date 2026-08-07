@@ -2,15 +2,12 @@
 
 namespace Aula_REST_API_01_Exercicios.Models
 {
-    public class ProdutoDto
+    public class UsuarioUpdateDto
     {
-        [Required]
+        [Required, MinLength(3), MaxLength(200)]
         public string Nome { get; set; }
-        
-        [Required]
-        public decimal Preco { get; set; }
 
         [Required, EmailAddress]
-        public string? EmailFornecedor { get; set; }
+        public string Email { get; set; }
     }
 }
