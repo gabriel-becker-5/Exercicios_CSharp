@@ -1,4 +1,5 @@
-﻿using Aula_REST_API_01_Exercicios.Interfaces;
+﻿using Asp.Versioning;
+using Aula_REST_API_01_Exercicios.Interfaces;
 using Aula_REST_API_01_Exercicios.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Aula_REST_API_01_Exercicios.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [Authorize]
     public class AuthenticationController : ControllerBase
     {
@@ -25,6 +27,11 @@ namespace Aula_REST_API_01_Exercicios.Controllers
             _roleService = roleService;
         }
 
+        /// <summary>
+        /// Logar no sistema e gerar token JWT.
+        /// </summary>
+        /// <response code="200">Credenciais corretas.</response>
+        /// <response code="401">Não autorizado, login/senha incorretos.</response>
         [HttpPost("login")]
         [AllowAnonymous]
         [ProducesResponseType(401)]
@@ -45,7 +52,7 @@ namespace Aula_REST_API_01_Exercicios.Controllers
                 return Unauthorized();
             }
 
-            List<int> UserRolesInt = await _usuarioService.GetUserRoles(usuario);
+            List<int> UserRolesInt = await _usuarioService.GetUserRolesAsync(usuario);
             List<string> UserRolesString = await _roleService.GetRoleNameByIdAsync(UserRolesInt);
             var token = _tokenservice.GerarToken(login.Email, UserRolesString);
 

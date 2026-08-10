@@ -7,6 +7,16 @@ namespace Aula_REST_API_01_Exercicios.Controllers
     [Route("api/[controller]")]
     public class SaudacaoController : ControllerBase
     {
+        /// <summary>
+        /// Saudação Personalizada - exercício de aulas anteriores.
+        /// </summary>
+        /// <param name="nome">Nome do usuário.</param>
+        /// <returns>Retorna uma saudação personalizada com o nome informado.</returns>
+
+        /// <response code="200">Ok, retorna saudação.</response>
+        /// <response code="400">Preenchimento incorreto.</response>
+        [ProducesResponseType(400)]
+        [ProducesResponseType(200)]
         [HttpGet("{nome}")]
         public IActionResult SaudacaoPersonalizada(string nome)
         {

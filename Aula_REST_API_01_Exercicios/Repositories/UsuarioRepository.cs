@@ -78,8 +78,11 @@ namespace Aula_REST_API_01_Exercicios.Repositories
             UserRole? resultado = await _context.UserRoles.Where(ur => ur.UsuarioId == userId &&
                                                                  ur.RoleId == roleId).
                                                                  FirstOrDefaultAsync();
-            _context.UserRoles.Remove(resultado);
-            await _context.SaveChangesAsync();
+            if (resultado != null)
+            {
+                _context.UserRoles.Remove(resultado);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task RemoveAllRolesFromUserAsync(int userId)

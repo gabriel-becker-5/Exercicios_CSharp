@@ -1,13 +1,15 @@
-﻿using Aula_REST_API_01_Exercicios.Models;
+﻿using Asp.Versioning;
 using Aula_REST_API_01_Exercicios.Authorization;
+using Aula_REST_API_01_Exercicios.Interfaces;
+using Aula_REST_API_01_Exercicios.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Aula_REST_API_01_Exercicios.Interfaces;
 
 namespace Aula_REST_API_01_Exercicios.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [Authorize]
     public class ProdutosController : ControllerBase
     {
@@ -18,6 +20,12 @@ namespace Aula_REST_API_01_Exercicios.Controllers
             _produtoService = produtoService;
         }
 
+        /// <summary>
+        /// Lista todos os produtos cadastrados.
+        /// </summary>
+        /// <returns>Lista com todos os produtos ou lista vazia.</returns>
+        /// <response code="200">Sucesso.</response>
+        [ProducesResponseType(200)]
         [HttpGet("listarTodos")]
         [Authorize(Roles = $"{Roles.Admin},{Roles.Default}")]
         public async Task<IActionResult> GetTodosAsync()
@@ -26,6 +34,15 @@ namespace Aula_REST_API_01_Exercicios.Controllers
             return Ok(produtosCadastrados);
         }
 
+        /// <summary>
+        /// Pesquisa um produto pela sua Id.
+        /// </summary>
+        /// <param name="id">ID única do produto.</param>
+        /// <returns>O cadastro do produto correspondente ao ID informado.</returns>
+        /// <response code="200">Produto encontrado.</response>
+        /// <response code="404">Produto não encontrado.</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         [ActionName(nameof(GetPorIdAsync))]
         [HttpGet("buscar/{id}")]
         [Authorize(Roles = $"{Roles.Admin},{Roles.Default}")]
@@ -41,6 +58,15 @@ namespace Aula_REST_API_01_Exercicios.Controllers
             return Ok(produto);
         }
 
+        /// <summary>
+        /// Cadastra um produto novo no banco de dados.
+        /// </summary>
+        /// <param name="dto">Campos: Nome do Produto, Preço e Email do fornecedor.</param>
+        /// <returns>O cadastro do produto criado.</returns>
+        /// <response code="201">Produto criado.</response>
+        /// <response code="400">Informações fornecidas inválidas.</response>
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
         [HttpPost("criar")]
         [Authorize(Roles = $"{Roles.Admin},{Roles.Default}")]
         public async Task<IActionResult> CriarAsync(ProdutoDto dto)
@@ -57,8 +83,18 @@ namespace Aula_REST_API_01_Exercicios.Controllers
                 novoProduto);
         }
 
+        /// <summary>
+        /// Atualiza o cadastro de um produto.
+        /// </summary>
+        /// <param name="id">ID única do Produto.</param>
+        /// <param name="dto">Campos: Nome do Produto, Preço e Email do fornecedor.</param>
+        /// <returns>O cadastro do produto criado.</returns>
+        /// <response code="204">Ok, produto atualizado.</response>
+        /// <response code="400">Informações fornecidas inválidas.</response>
+        /// <response code="404">Produto não encontrado.</response>
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
         [HttpPut("atualizar")]
-        [Authorize]
         [Authorize(Roles = $"{Roles.Admin},{Roles.Default}")]
         public async Task<IActionResult> AtualizarAsync(int id, ProdutoDto dto)
         {
@@ -77,6 +113,14 @@ namespace Aula_REST_API_01_Exercicios.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Deleta um produto do banco de dados.
+        /// </summary>
+        /// <param name="id">ID única do Produto.</param>
+        /// <response code="204">Ok, produto deletado.</response>
+        /// <response code="404">Produto não encontrado.</response>
+        [ProducesResponseType(404)]
+        [ProducesResponseType(204)]
         [HttpDelete("deletar/{id}")]
         [Authorize(Roles = Roles.Admin)]
         public async Task<IActionResult> DeletarAsync(int id)
@@ -91,6 +135,16 @@ namespace Aula_REST_API_01_Exercicios.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Pesquisa produtos que estejam no range de preço mínimo e preço máximo definidos.
+        /// </summary>
+        /// <param name="precoMin">Preço mínimo.</param>
+        /// <param name="precoMax">Preço máximo.</param>
+        /// <returns>Lista com todos os produtos no range de preço, ou lista vazia.</returns>
+        /// <response code="200">Ok, retorna lista de produtos.</response>
+        /// <response code="400">Informações fornecidas inválidas.</response>
+        [ProducesResponseType(400)]
+        [ProducesResponseType(200)]
         [HttpGet("buscar")]
         [Authorize(Roles = $"{Roles.Admin},{Roles.Default}")]
         public async Task<IActionResult> PesquisaRangePrecoAsync(

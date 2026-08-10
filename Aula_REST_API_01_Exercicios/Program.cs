@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Aula_REST_API_01_Exercicios.Data;
 using Aula_REST_API_01_Exercicios.Interfaces;
 using Aula_REST_API_01_Exercicios.Repositories;
@@ -6,12 +7,22 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+// CORS - Cross-Origin Resource Sharing
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirFrontend", policy =>
+        policy.WithOrigins("http://127.0.0.1:5500")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
 
 // Interfaces
 builder.Services.AddSingleton<ITokenService, TokenService>();
@@ -44,6 +55,14 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Produtos API",
+        Version = "v1",
+        Description = "API REST para gerenciar os cadastros de usuários e catálogo de produtos.",
+        Contact = new() { Name = "Suporte da API - Entra 21 C#" }
+    });
+
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -68,6 +87,18 @@ builder.Services.AddSwaggerGen(options =>
             new string[] {}
         }
     });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+    options.IncludeXmlComments(xmlPath);
+});
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
 });
 
 var app = builder.Build();
@@ -82,6 +113,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
+app.UseCors("PermitirFrontend");
 app.UseAuthorization();
 
 app.MapControllers();

@@ -7,6 +7,8 @@ namespace Aula_REST_API_01_Exercicios.Interfaces
     {
         public Task<Usuario> CreateUserAsync(UsuarioDto dto);
 
+        public Task<bool> EmailEhCadastradoAsync(string email);
+
         public Task<UserRole?> CreateUserRoleAsync(Usuario usuario, Role role);
 
         public Task RemoveRoleFromUserAsync(Usuario usuario, Role role);
@@ -19,9 +21,7 @@ namespace Aula_REST_API_01_Exercicios.Interfaces
 
         public PasswordVerificationResult GetSenhaCorreta(Usuario usuario, string senhaDto);
 
-        public Task<List<int>> GetUserRoles(Usuario usuario);
-
-        public Task<List<UserRoleDto?>> GetUserRolesObject(Usuario usuario);
+        public Task<List<int>> GetUserRolesAsync(Usuario usuario);
 
         public Task<List<Usuario>> GetAllUsersAsync();
 

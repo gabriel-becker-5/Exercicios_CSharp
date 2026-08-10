@@ -15,6 +15,6 @@ namespace Aula_REST_API_01_Exercicios.Models
         [Required]
         public string SenhaHash { get; set; }
 
-        public ICollection<UserRole> UserRole { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
     }
 }

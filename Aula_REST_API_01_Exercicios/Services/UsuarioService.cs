@@ -1,7 +1,6 @@
 ﻿using Aula_REST_API_01_Exercicios.Interfaces;
 using Aula_REST_API_01_Exercicios.Models;
 using Microsoft.AspNetCore.Identity;
-using ZendeskApi_v2.Models.Constants;
 
 namespace Aula_REST_API_01_Exercicios.Services
 {
@@ -33,6 +32,11 @@ namespace Aula_REST_API_01_Exercicios.Services
             novoUsuario.SenhaHash = senhaHash;
 
             return await _UsuarioRepository.CreateUserAsync(novoUsuario);
+        }
+
+        public async Task<bool> EmailEhCadastradoAsync(string email)
+        {
+            return await _UsuarioRepository.EmailEhCadastradoAsync(email);
         }
 
         public async Task<UserRole?> CreateUserRoleAsync(Usuario usuario, Role role)
@@ -85,7 +89,7 @@ namespace Aula_REST_API_01_Exercicios.Services
             return passwordHasher.VerifyHashedPassword(usuario, usuario.SenhaHash, senhaDto);
         }
 
-        public async Task<List<int>> GetUserRoles(Usuario usuario)
+        public async Task<List<int>> GetUserRolesAsync(Usuario usuario)
         {
             List<UserRole?> rolesDoUser = await _UsuarioRepository.GetUserRoles(usuario.Id);
 
@@ -97,27 +101,6 @@ namespace Aula_REST_API_01_Exercicios.Services
             }
 
             return rolesInt;
-        }
-
-        public async Task<List<UserRoleDto?>> GetUserRolesObject(Usuario usuario)
-        {
-            List<UserRole> allUserRoles = await _UsuarioRepository.GetUserRoles(usuario.Id);
-            List<UserRoleDto> allUserRolesDto = [];
-
-            for (int i = 0; i < allUserRoles.Count; i++)
-            {
-                //UserRoleDto userRoleDTO = new()
-                //{
-                //    allUserRolesDto[i].Id = allUserRoles[i].Id,
-                //    allUserRolesDto[i].UsuarioId = allUserRoles[i].UsuarioId,
-                //    allUserRolesDto[i].RoleId = allUserRoles[i].RoleId
-                //};
-
-
-
-            }
-
-            return allUserRolesDto;
         }
 
         public async Task<List<Usuario>> GetAllUsersAsync()

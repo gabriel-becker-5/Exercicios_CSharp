@@ -29,7 +29,7 @@ namespace Aula_REST_API_01_Exercicios.Services
             return await _RoleRepository.CreateRoleAsync(newRole);
         }
 
-        public async Task<List<Role?>?> GetAllRolesAsync()
+        public async Task<List<Role?>> GetAllRolesAsync()
         {
             return await _RoleRepository.GetAllRolesAsync();
         }
