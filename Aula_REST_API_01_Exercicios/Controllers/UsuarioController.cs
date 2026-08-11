@@ -65,9 +65,15 @@ namespace Aula_REST_API_01_Exercicios.Controllers
 
             await _usuarioService.CreateUserRoleAsync(novoUsuario, role);
 
+            UsuarioUpdateDto usuarioDto = new UsuarioUpdateDto
+            {
+                Email = novoUsuario.Email,
+                Nome = novoUsuario.Nome
+            };
+
             return CreatedAtAction(nameof(GetUserByIdAsync),
                 new { id = novoUsuario.Id },
-                novoUsuario);
+                usuarioDto);
         }
 
         /// <summary>
