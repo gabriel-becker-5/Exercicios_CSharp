@@ -15,7 +15,7 @@ namespace Aula_REST_API_01_Exercicios.Interfaces
         public Task<bool> DeletarAsync(int id);
 
         public Task<List<Produto>> PesquisaRangePrecoAsync(
-            decimal? precoMin,
-            decimal? precoMax);
+            double? precoMin,
+            double? precoMax);
     }
 }

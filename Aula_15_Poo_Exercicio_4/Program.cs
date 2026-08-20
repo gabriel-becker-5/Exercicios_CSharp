@@ -6,7 +6,6 @@
 // Liste os smells encontrados e reescreva o método corrigido
 
 
-
 // Code Smells Identificados:
 // 1. Nome das variáveis de dificil identificação: int x, y, z, w
 // 2. Cálculo repetido: x+y
@@ -14,7 +13,7 @@
 // 4. Muitas responsabilidades para um método: Calcula e exibe o resultado
 
 // Código refatorado sem Code Smells:
-public int CalcularResultado(int primeiroValor, int segundoValor, int terceiroValor, int quartoValor)
+int CalcularResultado(int primeiroValor, int segundoValor, int terceiroValor, int quartoValor)
 {
     int somaBase = primeiroValor + segundoValor;
     return (somaBase * 2) + terceiroValor + quartoValor;

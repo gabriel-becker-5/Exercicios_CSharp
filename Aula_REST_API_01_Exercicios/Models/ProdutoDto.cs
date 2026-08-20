@@ -7,8 +7,8 @@ namespace Aula_REST_API_01_Exercicios.Models
         [Required]
         public string Nome { get; set; }
         
-        [Required]
-        public decimal Preco { get; set; }
+        [Required, Range(0.01, 99999)]
+        public double Preco { get; set; }
 
         [Required, EmailAddress]
         public string? EmailFornecedor { get; set; }

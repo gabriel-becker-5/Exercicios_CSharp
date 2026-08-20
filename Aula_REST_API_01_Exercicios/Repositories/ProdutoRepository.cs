@@ -43,8 +43,8 @@ namespace Aula_REST_API_01_Exercicios.Repositories
         }
 
         public async Task<List<Produto>> PesquisaRangePrecoAsync(
-             decimal? precoMin,
-             decimal? precoMax)
+             double? precoMin,
+             double? precoMax)
         {
             var consulta = _context.Produtos.AsQueryable();
 

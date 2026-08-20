@@ -148,8 +148,8 @@ namespace Aula_REST_API_01_Exercicios.Controllers
         [HttpGet("buscar")]
         [Authorize(Roles = $"{Roles.Admin},{Roles.Default}")]
         public async Task<IActionResult> PesquisaRangePrecoAsync(
-            [FromQuery] decimal? precoMin,
-            [FromQuery] decimal? precoMax)
+            [FromQuery] double? precoMin,
+            [FromQuery] double? precoMax)
         {
             var resultado = await _produtoService.PesquisaRangePrecoAsync(precoMin, precoMax);
 

@@ -67,8 +67,8 @@ namespace Aula_REST_API_01_Exercicios.Services
         }
 
         public async Task<List<Produto>> PesquisaRangePrecoAsync(
-            decimal? precoMin,
-            decimal? precoMax)
+            double? precoMin,
+            double? precoMax)
         {
             if (precoMax < precoMin)
             {

@@ -172,6 +172,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula_MVC_04_Exercicios", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula_REST_API_01_Exercicios", "Aula_REST_API_01_Exercicios\Aula_REST_API_01_Exercicios.csproj", "{A1C6679F-00A3-4F6D-B167-DDFEFFC97B0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aula_Rest_API_01_Exercicios.Tests", "Aula_Rest_API_01_Exercicios.Tests\Aula_Rest_API_01_Exercicios.Tests.csproj", "{7AEB3A4D-C779-5A7E-3495-DB619F2574E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -518,6 +520,10 @@ Global
 		{A1C6679F-00A3-4F6D-B167-DDFEFFC97B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1C6679F-00A3-4F6D-B167-DDFEFFC97B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1C6679F-00A3-4F6D-B167-DDFEFFC97B0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AEB3A4D-C779-5A7E-3495-DB619F2574E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AEB3A4D-C779-5A7E-3495-DB619F2574E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AEB3A4D-C779-5A7E-3495-DB619F2574E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AEB3A4D-C779-5A7E-3495-DB619F2574E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
